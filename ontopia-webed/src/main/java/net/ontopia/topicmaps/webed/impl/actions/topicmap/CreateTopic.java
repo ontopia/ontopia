@@ -28,9 +28,6 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.schema.impl.osl.TopicNameConstraint;
-import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
-import net.ontopia.topicmaps.schema.impl.osl.ScopeSpecification;
 import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
@@ -70,7 +67,7 @@ public class CreateTopic extends AbstractTopicMapAction {
     }
 
     // modify this topic based on the schema information
-    createTopicNames(topicmap, topic, builder, getSchema());
+    createTopicNames(topicmap, topic, builder);
     // FIXME: need occurrences and association roles here as well
     
     response.addParameter(Constants.RP_TOPIC_ID, topic.getObjectId());
@@ -85,30 +82,8 @@ public class CreateTopic extends AbstractTopicMapAction {
    * and create topic names in proper scope in accordance to the schema.
    */
   private void createTopicNames(TopicMapIF topicmap, TopicIF topic,
-                               TopicMapBuilderIF builder, OSLSchema schema) {
-    if (schema != null) {
-      SchemaUtils su = new SchemaUtils();
-      Collection bnC = su.getAllTopicNameConstraints(schema, topic);
-      if (bnC.size() > 0) {
-        Iterator itC = bnC.iterator();
-        // loop over all topic name constraints
-        while (itC.hasNext()) {
-          TopicNameConstraint constraint = (TopicNameConstraint) itC.next();
-          int min = constraint.getMinimum();
-          //! int max = constraint.getMaximum();
-          ScopeSpecification scsp = constraint.getScopeSpecification();
-          Collection topicThemes = su.getMatchingTopics(topicmap, scsp);
-          // create a new topic name if at least one is need for this context
-          if (min > 0) {
-            TopicNameIF name = builder.makeTopicName(topic, "");
-            // set the scope of this name
-            Iterator itT = topicThemes.iterator();
-            while (itT.hasNext())
-              name.addTheme((TopicIF) itT.next());
-          }
-        } // while itC
-      }
-    } // if schema
+                               TopicMapBuilderIF builder) {
+    TopicNameIF name = builder.makeTopicName(topic, "");
   }
   
 }

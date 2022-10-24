@@ -71,7 +71,6 @@ public class TestCreateTopic extends AbstractWebedTestCase {
     
     assertFalse("created topic not found", topic == null);
     assertFalse("created topic in wrong TM", !(topic.getTopicMap() == tm));
-    assertFalse("created topic has basename", !(topic.getTopicNames().isEmpty()));
     assertFalse("created topic has roles", !(topic.getRoles().isEmpty()));      
     
   }
@@ -100,7 +99,6 @@ public class TestCreateTopic extends AbstractWebedTestCase {
     TopicIF topic = (TopicIF) tm.getObjectById(id);
     assertFalse("created topic not found", topic == null);
     assertFalse("created topic in wrong TM", topic.getTopicMap() != tm);
-    assertFalse("created topic has basename", !(topic.getTopicNames().isEmpty()) );
     assertFalse("created topic has roles", !(topic.getRoles().isEmpty()));
     
   }

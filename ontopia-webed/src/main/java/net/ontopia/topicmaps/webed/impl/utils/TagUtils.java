@@ -52,9 +52,6 @@ import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.query.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.QName;
-import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
-import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
-import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaReader;
 import net.ontopia.topicmaps.webed.impl.basic.ActionDataSet;
 import net.ontopia.topicmaps.webed.impl.basic.ActionInGroup;
 import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
@@ -124,50 +121,6 @@ public final class TagUtils {
       throw new JspTagException("Object with name '" + obj_name + "' " +
                                 "cannot be casted to TMObjectIF.");
     return ((TMObjectIF) obj);
-  }
-
-  public static Map getSchemaRegistry(ServletContext servletContext) {
-    Map schemas = (Map)servletContext.getAttribute(Constants.AA_SCHEMAS);
-    if (schemas != null)
-      return schemas;
-
-    // Read in schemas for the topicmaps and provide them to the app context
-    String schemasRootDir = servletContext.getInitParameter(Constants.SCTXT_SCHEMAS_ROOTDIR);
-    if (schemasRootDir != null)
-      schemasRootDir = servletContext.getRealPath(schemasRootDir);
-    
-    schemas = new HashMap();
-    if (schemasRootDir == null) {
-      servletContext.setAttribute(Constants.AA_SCHEMAS, schemas);
-      log.debug("No schema directory configured; registry empty");
-      return schemas;
-    }
-
-    log.debug("Reading schemas from " + schemasRootDir);
-    TopicMapRepositoryIF repository = NavigatorUtils.getTopicMapRepository(servletContext);
-    Collection refkeys = repository.getReferenceKeys();
-    Iterator iter = refkeys.iterator();
-    while (iter.hasNext()) {
-      String refkey = (String) iter.next();
-      TopicMapReferenceIF reference = repository.getReferenceByKey(refkey);
-      String tmid = reference.getId();
-      try {
-        OSLSchemaReader reader = new OSLSchemaReader(new File(schemasRootDir, tmid + ".osl"));
-        OSLSchema schema = (OSLSchema) reader.read();
-        schemas.put(tmid, schema);
-        log.info("Loaded schema for " + tmid);
-      } catch (java.io.IOException e) {
-        log.info("Warning: " + e.getMessage());
-      } catch (SchemaSyntaxException e) {
-        log.error("Schema syntax error: " + e.getMessage());
-        Locator loc = e.getErrorLocation();
-        log.error("Location: " + loc.getSystemId() + ":" + 
-                  loc.getLineNumber() + ":" + loc.getColumnNumber() + ".");
-      }
-    }
-
-    servletContext.setAttribute(Constants.AA_SCHEMAS, schemas);
-    return schemas;
   }
 
   public static synchronized NamedLockManager getNamedLockManager(ServletContext servletContext) {

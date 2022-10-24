@@ -41,12 +41,10 @@ import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
 import net.ontopia.topicmaps.webed.core.ActionIF;
 import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
-import net.ontopia.topicmaps.webed.core.OSLSchemaAwareIF;
 import net.ontopia.topicmaps.webed.impl.actions.DefaultAction;
 import net.ontopia.topicmaps.webed.impl.actions.DummyAction;
 import net.ontopia.topicmaps.webed.impl.basic.ActionContext;
@@ -240,10 +238,6 @@ public final class ProcessServlet extends HttpServlet {
         // and set it as a request attribute (can be retrieved via actionCtxt)
         request.setAttribute(Constants.RA_TOPICMAP, topicmap);
 
-        // setup schema information
-        Map schemaRegistry = TagUtils.getSchemaRegistry(getServletContext());
-        OSLSchema schema = (OSLSchema) schemaRegistry.get(topicmapId);
-
         // --- (A): find all actions to be executed
         // Create WebEdRequest object
         Map actionmap = new HashMap();
@@ -327,9 +321,6 @@ public final class ProcessServlet extends HttpServlet {
           
           ActionInGroup action = data.getAction();
           
-          if (action.getAction() instanceof OSLSchemaAwareIF)
-            ((OSLSchemaAwareIF) action.getAction()).setSchema(schema);
-          
           ActionParametersIF aparams = new ActionParameters(param, values, params.getFile(param),
                                                             TagUtils.deserializeParameters(data.getParameters(), topicmap),
                                                             topicmap, werequest);
@@ -357,8 +348,6 @@ public final class ProcessServlet extends HttpServlet {
           while (it2.hasNext()) {
             ActionData subdata = (ActionData) it2.next();
             ActionInGroup subaction = subdata.getAction();
-            if (subaction instanceof OSLSchemaAwareIF)
-              ((OSLSchemaAwareIF) subaction).setSchema(schema);
             
             ActionParametersIF subparams = new ActionParameters(null, null, null,
                                                                 TagUtils.deserializeParameters(subdata.getParameters(), topicmap),
