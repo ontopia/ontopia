@@ -1,9 +1,0 @@
-
-<tm-schema match="loose">
-
-  <topic match="loose">
-    <instanceOf><internalTopicRef href="#opera"/>
-    </instanceOf>
-  </topic>
-
-</tm-schema>
