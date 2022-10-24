@@ -67,12 +67,6 @@
 			<li><a href="${root}query/predicate-reference.html">Predicate reference</a></li>
 		</ul>
 	</li>
-	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-star"></i>Schema Language</i></a>
-		<ul class="nav">
-			<li><a href="${root}schema/tutorial.html">Tutorial</a></li>
-			<li><a href="${root}schema/spec.html">Reference specification</a></li>
-		</ul>
-	</li>
 	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-file"></i>Technology notes </i></a>
 		<ul class="nav">
 			<li><a href="${root}misc/ltm.html">Linear Topic Map Notation</a></li>
