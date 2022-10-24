@@ -138,7 +138,6 @@ standard and has a host of powerful features, such as the ability to
 <!--generate reports of the topic map's "vital statistics";-->
 <u><a href="/omnigator/plugins/customise/user.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">customize</a></u> different views;
 produce <u><a href="/omnigator/plugins/filter/userContextFilter.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">filtered subsets</a></u> based on scope;
-perform semantic <u><a href="/omnigator/plugins/validator/validate.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm"/>validation</a></u>;
 and much more besides.</p>
 
 <p align="center"><a
