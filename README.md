@@ -13,10 +13,10 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [the Ontopia.net website](http://ontopia.net).
 
 ## Get Ontopia
-[<img src="https://ontopia.net/images/download-button.png"/>](../releases/latest)
+[<img src="https://ontopia.net/images/download-button.png"/>](https://github.com/ontopia/ontopia/releases/latest)
 
 ### Older versions
- * [Ontopia 5.2.2](../releases/tag/ontopia-5.2.2)
+ * [Ontopia 5.3.0](https://github.com/ontopia/ontopia/releases/tag/release-5.3.0)
 
 > **Note**: Using older versions is not advised
 
@@ -41,7 +41,7 @@ applications yourself:
     <dependency>
         <groupId>net.ontopia</groupId>
         <artifactId>ontopia-engine</artifactId>
-        <version>5.3.0</version>
+        <version>5.4.0</version>
     </dependency>
 </dependencies>
 ````
