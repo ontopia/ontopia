@@ -138,7 +138,6 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     classes = new HashMap<String, String>();
     // package base name for all tag classes
     String tlpackage = "net.ontopia.topicmaps.nav2.taglibs.";
-    String tlpackage2 = "net.ontopia.topicmaps.webed.taglibs.";
     String ptlpackage = "net.ontopia.topicmaps.nav2.portlets.taglib.";
     String core = "org.apache.taglibs.standard.tag.el.core.";
 
@@ -202,14 +201,6 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     classes.put("framework:getcontext", tlpackage + "framework.GetContextTag");
     classes.put("framework:setcontext", tlpackage + "framework.SetContextTag");
     classes.put("framework:pluginList", tlpackage + "framework.PluginListTag");
-
-    classes.put("webed:form", tlpackage2 + "form.FormTag");
-    classes.put("webed:list", tlpackage2 + "form.ListTag");
-    classes.put("webed:field", tlpackage2 + "form.FieldTag");
-    classes.put("webed:button", tlpackage2 + "form.ButtonTag");
-    classes.put("webed:checkbox", tlpackage2 + "form.CheckboxTag");
-    classes.put("webed:invoke", tlpackage2 + "form.InvokeTag");
-    classes.put("webed:actionid", tlpackage2 + "form.ActionIDTag");
 
     classes.put("tolog:choose", tlpackage + "tolog.ChooseTag");
     classes.put("tolog:context", tlpackage + "logic.ContextTag");

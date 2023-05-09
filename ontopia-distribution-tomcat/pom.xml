@@ -47,11 +47,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-webed</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>ontopia-rest</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>

@@ -37,21 +37,6 @@
     </description>
   </context-param>
 
-  <!-- Declare servlets -->
-
-  <servlet>
-    <servlet-name>WebEditorProcessServlet</servlet-name>
-    <description>Controller Servlet getting in all requests</description>
-    <servlet-class>
-      net.ontopia.topicmaps.webed.servlets.ProcessServlet
-    </servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>WebEditorProcessServlet</servlet-name>
-    <url-pattern>/process</url-pattern>
-  </servlet-mapping>
-
   <!-- Session parameters for this web application -->
   <session-config>
     <session-timeout>30</session-timeout><!-- in minutes -->

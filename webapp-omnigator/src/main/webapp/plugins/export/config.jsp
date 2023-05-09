@@ -104,28 +104,6 @@
             <td colspan='2' align='right'><input type='submit' value="Export">
         </form>
 
-        <tr>
-          <td colspan='5'>&nbsp;<br/><hr/><br/></td>
-        </tr>
-
-        <!-- Generate schema functionality -->
-        <form action="generate-schema.jsp" method="get">
-        <input type="hidden" name="tm" value="<%= request.getParameter("tm") %>">
-        <tr valign="top"><td><input type='radio' name='schema_format' value='osl' checked='checked'>
-            <td>OSL syntax
-            <td>&nbsp; &nbsp;
-            <td><input type='radio' name='schema_type' value='octet' checked='checked'>
-            <td>Download
-        <tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;
-            <td>Save as: <input type='text' name='filename' value='<%= request.getParameter("tm") %>.osl'>
-        <tr><td>
-            <td>
-            <td>&nbsp; &nbsp;
-            <td><input type='radio' name='schema_type' value='xml'>
-            <td>View
-        <tr><td colspan='3'></td>
-            <td colspan='2' align='right'><input type='submit' value="Generate schema">
-        </form>
         </table>
       </center>
     </template:put>

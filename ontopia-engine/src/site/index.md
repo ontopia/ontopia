@@ -37,11 +37,6 @@ API](api/index.html)
 *  [tolog - Tutorial](query/tutorial.html)
 *  [tolog - Predicate Reference](query/predicate-reference.html)
 
-### Schema language ###
-
-*  [The Ontopia Schema Language, Tutorial](schema/tutorial.html)
-*  [The Ontopia Schema Language, Reference Guide](schema/spec.html)
-
 ### Technology notes ###
 
 *  [The Linear Topic Map Notation, Definition and introduction, version 1.3](misc/ltm.html)

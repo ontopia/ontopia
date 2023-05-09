@@ -933,11 +933,6 @@ maps merged into the base topic map will be replaced by automatically generated 
 `id#`, where `#` is a decimal number. In order to prevent clashes, IDs that have the form `id#`; in
 the source topic map are never preserved.
 
-The Export plug-in also allows you to generate a basic schema for your topic map, expressed in
-[Ontopia Schema Language (OSL)](../schema/tutorial.html). That schema can then be further refined by
-hand and used to validate the original topic map or other topic maps that conform to the same
-ontology.
-
 ##### The RDF2TM plug-in #####
 
 This plug-in provides an easy point-and-click interface for configuring RDF2TM mappings as described
@@ -1009,27 +1004,6 @@ application development and offers much more efficient data retrieval. Tolog has
 candidate for Topic Maps Query Language, the standard query language being developed by the ISO
 Topic Maps working group. For a more detailed description, refer to the [Query Language
 Tutorial](../query/tutorial.html).
-
-##### The Validate plug-in #####
-
-The Validate plug-in lets you check the validity of your topic map against an OSL *(Ontopia Schema
-Language)* schema. If you have such a schema for your topic map, clicking on the **Validate** button
-will cause the topic map to be validated and any constraint violations to be displayed on a new
-page. (If you don’t already have a schema, you can generate a skeletal one from your topic map via
-the Export plug-in.)
-
-OSL is a constraint language for topic maps developed by Ontopia. It was created both to provide
-input to the process of developing a standard Topic Maps Constraint Language in the ISO Topic Maps
-working group and to fulfill urgent customer needs. (In addition to validation, a schema makes it
-possible to optimize applications and build more intuitive user interfaces.) The Omnigator
-distribution includes complete schema for the Scripts and Languages topic map (`i18n.ltm.osl`) and a
-partial schema for the Italian Opera Topic Map (`opera.ltm.osl`), both of which reside in the
-`{Ontopia}/topicmaps` directory. (Note that the Opera topic map schema may cause some errors to be
-reported during validation depending on the current state of experimentation. If so, regard it as
-being intentional!)
-
-For a more detailed description of OSL, refer to the [Schema Language
-Tutorial](../schema/tutorial.html).
 
 ##### The Full-text Search Plug-in #####
 

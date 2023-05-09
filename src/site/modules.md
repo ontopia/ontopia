@@ -62,9 +62,6 @@ your POM:
 `ontopia-rest`
 :    Contains the Ontopia REST API implementation.
 
-`ontopia-schema`
-:    Contains code to apply schema constraints to a Topic Map, **Deprecated**
-
 `ontopia-tmprefs`
 :    Contains code that allows a Topic Map to serve as Java Preferences API store.
 
@@ -76,9 +73,6 @@ your POM:
 
 `ontopia-vizigator`
 :    Contains the core code of the [Vizigator](vizigator/userguide.html) and Vizlet.
-
-`ontopia-webed`
-:    Contains the [Web Editor Framework](webed/devguide.html) code, **Deprecated**
 
 `ontopoly-editor`
 :    Contains the core code of the [Ontopoly Topic Maps editor](ontopoly/user-guide.html).

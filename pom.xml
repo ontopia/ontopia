@@ -42,7 +42,6 @@
 	<modules>
 		<module>ontopia-engine</module>
 		<module>ontopia-navigator</module>
-		<module>ontopia-webed</module>
 		<module>ontopia-contentstore</module>
 		<module>ontopia-db2tm</module>
 		<module>ontopia-tmrap</module>
@@ -53,7 +52,6 @@
 		<module>ontopoly-editor</module>
 		<module>ontopia-tmprefs</module>
 		<module>ontopia-rdf</module>
-		<module>ontopia-schema</module>
 		<module>ontopia-jdbcspy7</module>
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
@@ -244,8 +242,6 @@
 							<group><title>Core Information Set Packages</title><packages>net.ontopia.infoset*</packages></group>
 							<group><title>Query Engine Packages</title><packages>net.ontopia.topicmaps.query*</packages></group>
 							<group><title>Full-text Integration Packages</title><packages>net.ontopia.infoset.fulltext*</packages></group>
-							<group><title>Schema Tools Packages</title><packages>net.ontopia.topicmaps.schema*</packages></group>
-							<group><title>Web Editor Packages</title><packages>net.ontopia.topicmaps.webed*</packages></group>
 							<group><title>Navigator Framework Packages</title><packages>net.ontopia.topicmaps.nav*:net.ontopia.topicmaps.nav2*</packages></group>
 							<group><title>RDBMS Backend Connector Packages</title><packages>net.ontopia.topicmaps.impl.rdbms</packages></group>
 						</groups>

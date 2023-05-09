@@ -1,3 +1,0 @@
-## Template used by net.ontopia.topicmaps.webed.taglibs.form.InvokeTag
-## -----------------------------------------------------------------------
-<input type="hidden" name="${name}" value="${value}" />

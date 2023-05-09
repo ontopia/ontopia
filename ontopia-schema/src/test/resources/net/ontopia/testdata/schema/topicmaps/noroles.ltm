@@ -1,6 +1,0 @@
-
-/* This association shouldn't validate */
-
-[peer-gynt : novel]
-[henrik-ibsen : person]
-written-by(peer-gynt : work, henrik-ibsen : author)
