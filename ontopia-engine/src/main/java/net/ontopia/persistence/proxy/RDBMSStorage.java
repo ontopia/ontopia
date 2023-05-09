@@ -631,7 +631,7 @@ public class RDBMSStorage implements StorageIF {
     }
     
     if (log.isDebugEnabled()) {
-      log.debug("Generating query '" + name + "' from descriptor.");
+     log.debug("Generating query '" + name + "' from descriptor.");
     }
     
     return qdesc;
@@ -830,7 +830,7 @@ public class RDBMSStorage implements StorageIF {
     return transactions;
   }
 
-  protected synchronized Connection getNonTransactionalReadConnection() {
+  protected Connection getNonTransactionalReadConnection() {
     if (!nonTransactionalReadAllowed) {
       throw new TransactionNotActiveException();
     }
@@ -843,20 +843,17 @@ public class RDBMSStorage implements StorageIF {
         if (connection != null) {
           if (connection.isClosed()) {
             nonTransactionalReadConnections.remove(thread);
-            // boem
           } else {
             connection.touch();
             return connection;
           }
         }
-      }
-      connection = new NonTransactionalReadConnection(getConnectionFactory(true).requestConnection());
+        connection = new NonTransactionalReadConnection(getConnectionFactory(true).requestConnection());
 
-      synchronized (nonTransactionalReadConnections) {
         nonTransactionalReadConnections.put(thread, connection);
-      }
 
-      new NonTransactionalReadConnectionCleanup(connection, thread);
+        new NonTransactionalReadConnectionCleanup(connection, thread);
+      }
     } catch (SQLException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -896,13 +893,13 @@ public class RDBMSStorage implements StorageIF {
     }
 
     private void clean() {
-      log.debug("Closing NonTransactionalRead connection {} for {}", Integer.toHexString(connection.hashCode()), thread);
-      try {
-          connection.close();
-      } catch (SQLException e) {
-        throw new OntopiaRuntimeException(e);
-      } finally {
-        synchronized (nonTransactionalReadConnections) {
+      synchronized (nonTransactionalReadConnections) {
+        log.debug("Closing NonTransactionalRead connection {} for {}", Integer.toHexString(connection.hashCode()), thread);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+          throw new OntopiaRuntimeException(e);
+        } finally {
           nonTransactionalReadConnections.remove(thread);
         }
       }
