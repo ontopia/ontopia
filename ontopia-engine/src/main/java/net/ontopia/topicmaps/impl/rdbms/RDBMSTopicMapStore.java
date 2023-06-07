@@ -345,6 +345,8 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   @Override
   public void close(boolean returnStore) {
+    if (closed) { return; }
+
     if (returnStore) {
 
       // return store
