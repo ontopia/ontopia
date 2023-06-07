@@ -108,6 +108,7 @@ public class RDBMSStorage implements StorageIF {
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Password");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Platforms");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.QueriesFile");
+    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MaximumSize");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MinimumSize");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum");
@@ -919,7 +920,7 @@ public class RDBMSStorage implements StorageIF {
     private void touch() {
       lastUsed = System.currentTimeMillis();
     }
-
+    
     private long getLastUsed() {
       return lastUsed;
     }
@@ -932,7 +933,7 @@ public class RDBMSStorage implements StorageIF {
       connection.rollback();
       connection.close();
     }
-
+    
     private boolean isClosed() throws SQLException {
       return connection.isClosed();
     }
