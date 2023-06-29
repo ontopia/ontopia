@@ -21,7 +21,7 @@
 	<repositories>
 		<repository>
 			<id>Restlet</id>
-			<url>https://maven.restlet.org</url>
+			<url>https://maven.restlet.talend.com</url>
 		</repository>
 	</repositories>
 
