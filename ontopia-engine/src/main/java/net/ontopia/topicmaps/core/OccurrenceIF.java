@@ -21,8 +21,10 @@
 package net.ontopia.topicmaps.core;
 
 import java.io.Reader;
+import java.util.Objects;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 
 /**
  * PUBLIC: Implemented by objects representing occurrences in the
@@ -87,7 +89,9 @@ public interface OccurrenceIF extends ScopedIF, TypedIF, ReifiableIF {
    * DataTypes.TYPE_STRING)</code>. This method is here primarily for
    * backwards compatibility.
    */
-  void setValue(String value);
+  default void setValue(String value) {
+    setValue(value, DataTypes.TYPE_STRING);
+  }
   
   /**
    * PUBLIC: Returns a LocatorIF representation of the occurrence
@@ -95,14 +99,22 @@ public interface OccurrenceIF extends ScopedIF, TypedIF, ReifiableIF {
    * xsd:anyURI (same as <code>DataType.TYPE_URI</code>). This method
    * is here primarily for backwards compatibility.
    */
-  LocatorIF getLocator();
+  default LocatorIF getLocator() {
+    if (!DataTypes.TYPE_URI.equals(getDataType())) { return null; }
+    String value = getValue();
+    return (value == null ? null : URILocator.create(value));
+  }
   
   /**
    * PUBLIC: Same as <code>setValue(locator.getAddress(),
    * DataTypes.TYPE_URI)</code>. This method is here primarily for
    * backwards compatibility.
    */
-  void setLocator(LocatorIF locator);
+  default void setLocator(LocatorIF locator) {
+    Objects.requireNonNull(locator, "Occurrence locator must not be null.");
+    if (!"URI".equals(locator.getNotation())) { throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator); }
+    setValue(locator.getAddress(), DataTypes.TYPE_URI);
+  }
 
   // public Object getObject();
   // public void setObject(Object value);

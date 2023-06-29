@@ -100,9 +100,9 @@ public class AssociationWalker {
   /**
    * PUBLIC: Creates a walker which uses deciders to traverse the associations.
    *
-   * @param assocDecider ; an object implementing DeciderIF.
-   * @param fromRoleDecider ; an object implementing DeciderIF.
-   * @param toRoleDecider ; an object implementing DeciderIF.
+   * @param assocDecider ; an object implementing Predicate.
+   * @param fromRoleDecider ; an object implementing Predicate.
+   * @param toRoleDecider ; an object implementing Predicate.
    */
   public AssociationWalker(Predicate<AssociationIF> assocDecider, Predicate<AssociationRoleIF> fromRoleDecider, Predicate<AssociationRoleIF> toRoleDecider) {
     this.assocDecider = assocDecider;

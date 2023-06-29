@@ -26,14 +26,12 @@ import java.io.StringReader;
 import java.util.Collection;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ContentReader;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.OnDemandValue;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.DuplicateReificationException;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -192,11 +190,6 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   @Override
-  public void setValue(String value) {
-    setValue(value, DataTypes.TYPE_STRING);
-  }
-
-  @Override
   public void setValue(String value, LocatorIF datatype) {
     Objects.requireNonNull(value, "Variant value must not be null.");
     Objects.requireNonNull(datatype, "Variant value datatype must not be null.");
@@ -242,24 +235,6 @@ public class VariantName extends TMObject implements VariantNameIF {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     }
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
-  }
-
-  @Override
-  public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) {
-      return null;
-    }
-    String value = getValue();
-    return (value == null ? null : URILocator.create(value));
-  }
-  
-  @Override
-  public void setLocator(LocatorIF locator) {
-    Objects.requireNonNull(locator, "Variant locator must not be null.");
-    if (!"URI".equals(locator.getNotation())) {
-      throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
-    }
-    setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
   @Override

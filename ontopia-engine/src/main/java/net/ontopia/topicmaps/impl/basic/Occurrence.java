@@ -27,10 +27,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.DuplicateReificationException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
@@ -116,11 +114,6 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   @Override
-  public void setValue(String value) {
-    setValue(value, DataTypes.TYPE_STRING);
-  }
-
-  @Override
   public void setValue(String value, LocatorIF datatype) {
     Objects.requireNonNull(value, "Occurrence value must not be null.");
     Objects.requireNonNull(datatype, "Occurrence value datatype must not be null.");
@@ -167,24 +160,6 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   //! public boolean isBinary() {
   //!   return Objects.equals(getDataType(), DataTypes.TYPE_BINARY);
   //! }
-  
-  @Override
-  public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) {
-      return null;
-    }
-    String value = getValue();
-    return (value == null ? null : URILocator.create(value));
-  }
-  
-  @Override
-  public void setLocator(LocatorIF locator) {
-    Objects.requireNonNull(locator, "Occurrence locator must not be null.");
-    if (!"URI".equals(locator.getNotation())) {
-      throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
-    }
-    setValue(locator.getAddress(), DataTypes.TYPE_URI);
-  }
 
   @Override
   public long getLength() {

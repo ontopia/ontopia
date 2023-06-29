@@ -31,7 +31,7 @@ import net.ontopia.persistence.proxy.RDBMSAccess;
 
 public class RDBMSQuery implements QueryIF {
 
-  protected RDBMSAccess access;
+  protected final RDBMSAccess access;
   protected DetachedQueryIF query;
   
   public RDBMSQuery(RDBMSAccess access, DetachedQueryIF query) {
@@ -41,17 +41,23 @@ public class RDBMSQuery implements QueryIF {
 
   @Override
   public Object executeQuery() throws Exception {
-    return query.executeQuery(access.getConnection());
+    synchronized (access) {
+      return query.executeQuery(access.getConnection());
+    }
   }
 
   @Override
   public Object executeQuery(Object[] params) throws Exception {
-    return query.executeQuery(access.getConnection(), params);
+    synchronized (access) {
+      return query.executeQuery(access.getConnection(), params);
+    }
   }
 
   @Override
   public Object executeQuery(Map params) throws Exception {
-    return query.executeQuery(access.getConnection(), params);
+    synchronized (access) {
+      return query.executeQuery(access.getConnection(), params);
+    }
   }
   
 }

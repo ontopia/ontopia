@@ -58,7 +58,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
-import org.apache.commons.dbcp.DelegatingConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.jgroups.util.DefaultThreadFactory;
 import org.slf4j.Logger;
@@ -109,6 +108,7 @@ public class RDBMSStorage implements StorageIF {
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Password");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.Platforms");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.QueriesFile");
+    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MaximumSize");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MinimumSize");
     known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum");
@@ -631,7 +631,7 @@ public class RDBMSStorage implements StorageIF {
     }
     
     if (log.isDebugEnabled()) {
-      log.debug("Generating query '" + name + "' from descriptor.");
+     log.debug("Generating query '" + name + "' from descriptor.");
     }
     
     return qdesc;
@@ -830,7 +830,7 @@ public class RDBMSStorage implements StorageIF {
     return transactions;
   }
 
-  protected synchronized Connection getNonTransactionalReadConnection() {
+  protected Connection getNonTransactionalReadConnection() {
     if (!nonTransactionalReadAllowed) {
       throw new TransactionNotActiveException();
     }
@@ -843,25 +843,22 @@ public class RDBMSStorage implements StorageIF {
         if (connection != null) {
           if (connection.isClosed()) {
             nonTransactionalReadConnections.remove(thread);
-            // boem
           } else {
             connection.touch();
-            return connection;
+            return connection.connection;
           }
         }
-      }
-      connection = new NonTransactionalReadConnection(getConnectionFactory(true).requestConnection());
+        connection = new NonTransactionalReadConnection(getConnectionFactory(true).requestConnection());
 
-      synchronized (nonTransactionalReadConnections) {
         nonTransactionalReadConnections.put(thread, connection);
-      }
 
-      new NonTransactionalReadConnectionCleanup(connection, thread);
+        new NonTransactionalReadConnectionCleanup(connection, thread);
+      }
     } catch (SQLException e) {
       throw new OntopiaRuntimeException(e);
     }
-    log.debug("Requested NonTransactionalRead connection " + Integer.toHexString(connection.hashCode()) + " for " + thread);
-    return connection;
+    log.debug("Requested NonTransactionalRead connection " + connection.id + " for " + thread);
+    return connection.connection;
   }
 
   protected void touch(Connection connection) {
@@ -883,10 +880,11 @@ public class RDBMSStorage implements StorageIF {
 
     @Override
     public NonTransactionalReadConnection call() throws Exception {
-      if (!connection.isClosed() && thread.isAlive() && connection.lastUsed() > 0) {
-        long timeout = connection.lastUsed() + TimeUnit.SECONDS.toMillis(nonTransactionalReadConnectionTimeout);
+      if (!connection.isClosed() && thread.isAlive() && connection.getLastUsed() > 0) {
+        long timeout = connection.getLastUsed() + TimeUnit.SECONDS.toMillis(nonTransactionalReadConnectionTimeout);
         if (timeout > System.currentTimeMillis()) {
-          log.debug("NonTransactionalRead connection {} was used, resetting timeout for {}", Integer.toHexString(connection.hashCode()), thread);
+          log.debug("NonTransactionalRead connection {} was used, resetting timeout for {}", connection.id, thread);
+          connection.resetLastUsed();
           nonTransactionalReadConnectionTimer.schedule(this, nonTransactionalReadConnectionTimeout, TimeUnit.SECONDS);
           return connection;
         }
@@ -896,37 +894,48 @@ public class RDBMSStorage implements StorageIF {
     }
 
     private void clean() {
-      log.debug("Closing NonTransactionalRead connection {} for {}", Integer.toHexString(connection.hashCode()), thread);
-      try {
-          connection.close();
-      } catch (SQLException e) {
-        throw new OntopiaRuntimeException(e);
-      } finally {
-        synchronized (nonTransactionalReadConnections) {
+      synchronized (nonTransactionalReadConnections) {
+        log.debug("Closing NonTransactionalRead connection {} for {}", connection.id, thread);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+          throw new OntopiaRuntimeException(e);
+        } finally {
           nonTransactionalReadConnections.remove(thread);
         }
       }
     }
   }
 
-  private class NonTransactionalReadConnection extends DelegatingConnection {
+  private class NonTransactionalReadConnection {
+    private final Connection connection;
+    private final String id;
+    private long lastUsed = 0;
 
-    public NonTransactionalReadConnection(Connection c) {
-      super(c);
+    public NonTransactionalReadConnection(Connection connection) {
+      this.connection = connection;
+      this.id = Integer.toHexString(connection.hashCode());
     }
 
     private void touch() {
-      setLastUsed();
+      lastUsed = System.currentTimeMillis();
+    }
+    
+    private long getLastUsed() {
+      return lastUsed;
     }
 
-    private long lastUsed() {
-      return getLastUsed();
+    private void resetLastUsed() {
+      lastUsed = 0;
     }
 
-    @Override
-    public void close() throws SQLException {
-      // skip passivate, as it registers as 'already closed', blocking the return to the pool
-      getDelegate().close();
+    private void close() throws SQLException {
+      connection.rollback();
+      connection.close();
+    }
+    
+    private boolean isClosed() throws SQLException {
+      return connection.isClosed();
     }
   }
 }

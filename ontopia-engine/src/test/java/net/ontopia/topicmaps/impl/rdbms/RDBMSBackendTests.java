@@ -395,14 +395,8 @@ public class RDBMSBackendTests {
       store1.abort();
 
       // test topic1 after rollback
-      try {
-        // should not be possible to access same objects after
-        // rollback, must instead reacquire all topic map objects.
-        topic1.getTopicNames().size();
-        Assert.fail("Could access topic1.baseNames after rollback");
-      } catch (TransactionNotActiveException e) {
-        // ok
-      }
+      // this is possible since connection pooling changes, via non transactional reads
+      topic1.getTopicNames().size();
 
       // reaquire topic map instance and topic1 
       topic1 = getTopic(store1.getTopicMap(), "test:topic1");

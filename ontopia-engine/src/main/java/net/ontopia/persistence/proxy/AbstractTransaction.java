@@ -207,7 +207,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public boolean isObjectLoaded(IdentityIF identity) {
-    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // check identity map
     synchronized (identity_map) { // read
@@ -222,7 +221,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public boolean isFieldLoaded(IdentityIF identity, int field) {
-    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // check identity map
     synchronized (identity_map) { // read
@@ -241,7 +239,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public <F> F loadField(IdentityIF identity, int field) {
-    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     // NOTE: this methods is always called by a PersistentIF
     // NOTE: no need to check identity map first
@@ -293,7 +290,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public PersistentIF _getObject(IdentityIF identity) {
-    if (!isactive && isaborted) { throw new TransactionNotActiveException(); }
     
     Objects.requireNonNull(identity, "null identities should not be looked up.");
     
@@ -527,9 +523,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public Object executeQuery(String name, Object[] params) {
-    if (!isactive) {
-      throw new TransactionNotActiveException();
-    }
     
     try {
       // Look up query
@@ -548,9 +541,6 @@ public abstract class AbstractTransaction implements TransactionIF {
   
   @Override
   public QueryIF createQuery(JDOQuery jdoquery, boolean resolve_identities) {
-    if (!isactive) {
-      throw new TransactionNotActiveException();
-    }
     
     // FIXME: Move this method elsewhere?
     return access.createQuery(jdoquery, oaccess, registrar, resolve_identities);

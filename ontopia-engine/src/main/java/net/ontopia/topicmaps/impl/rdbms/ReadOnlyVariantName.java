@@ -23,8 +23,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 import java.io.Reader;
 import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -92,11 +90,6 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   }
 
   @Override
-  public void setValue(String value) {
-    setValue(value, DataTypes.TYPE_STRING);
-  }
-
-  @Override
   public void setValue(String value, LocatorIF datatype) {
     throw new ReadOnlyException();
   }
@@ -109,15 +102,6 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
   @Override
   public void setReader(Reader value, long length, LocatorIF datatype) {
     throw new UnsupportedOperationException();
-  }
-  
-  @Override
-  public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) {
-      return null;
-    }
-    String value = getValue();
-    return (value == null ? null : URILocator.create(value));
   }
   
   @Override

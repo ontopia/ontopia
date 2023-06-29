@@ -106,7 +106,7 @@ public class RDBMSAccess implements StorageAccessIF {
   /**
    * INTERNAL: Requests a normal connection from the storage, to be used in a transaction.
    */
-  private void requestConnectionFromStorage() {
+  private synchronized void requestConnectionFromStorage() {
     try {
       this.connection = storage.getConnectionFactory(readonly).requestConnection();
     } catch (SQLException e) {
@@ -121,7 +121,7 @@ public class RDBMSAccess implements StorageAccessIF {
    * from the storage. The connection is validated using validateConnection and renewed if not
    * validated.
    */
-  public Connection getConnection() {
+  public synchronized Connection getConnection() {
     if (this.connection == null) {
       this.connection = storage.getNonTransactionalReadConnection();
     } else {
@@ -277,7 +277,7 @@ public class RDBMSAccess implements StorageAccessIF {
   }
   
   @Override
-  public void close() {
+  public synchronized void close() {
     try {
       // Close/release connections
       if (this.connection != null) {

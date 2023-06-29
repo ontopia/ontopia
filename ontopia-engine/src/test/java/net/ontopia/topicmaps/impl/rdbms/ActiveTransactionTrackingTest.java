@@ -70,7 +70,6 @@ public class ActiveTransactionTrackingTest extends AbstractTopicMapTest {
     
     // should be 1 after closing of RW store
     rwStore1.close();
-    trans.close(); // store close keeps transaction open, and returns to pool
     Assert.assertEquals("Incorrect count after closing rw-store", 1, storage.getActiveTransactionCount());
   }
 }

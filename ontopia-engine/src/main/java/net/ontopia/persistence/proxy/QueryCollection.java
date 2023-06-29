@@ -21,10 +21,8 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.AbstractCollection;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -76,11 +74,6 @@ public class QueryCollection<E> extends AbstractCollection<E> {
   //! }
   
   @Override
-  public boolean isEmpty() {
-    return (size() == 0);
-  }
-  
-  @Override
   public Iterator<E> iterator() {
     QueryResultIF result = null;
     try {
@@ -126,64 +119,6 @@ public class QueryCollection<E> extends AbstractCollection<E> {
       }
       throw new OntopiaRuntimeException(e);
     }
-  }
-
-  @Override
-  public Object[] toArray() {
-    List result = new ArrayList();
-    Iterator it = iterator();
-    while (it.hasNext()) {
-      result.add(it.next());
-    }
-    return result.toArray();
-  }
-  
-  @Override
-  public <T> T[] toArray(T a[]) {
-    List<E> result = new ArrayList<E>();
-    Iterator<E> it = iterator();
-    while (it.hasNext()) {
-      result.add(it.next());
-    }
-    return result.toArray(a);
-
-    //! // NOTE: implementation below does not work. got too complex,
-    //!    then decided to chicken out going the naive route.
-
-    //! int orglen = a.length;
-    //! Iterator it=iterator();
-    //! int i=0;
-    //! for (; it.hasNext(); i++) {
-    //!   Object next = it.next();
-    //!   if (i+1 > a.length) {
-    //!     // Iterator returned more elements than the call to size
-    //!     // did. This probably means that some other transaction added
-    //!     // new rows and that these changes are now visible to this
-    //!     // transaction. Fix by allocating new longer array.
-    //!     int newCapacity = (a.length * 3)/2 + 1;
-    //!     Object[] na = (Object[])java.lang.reflect.Array.newInstance(
-    //!     		a.getClass().getComponentType(), newCapacity);
-    //!     System.arraycopy(a, 0, na, 0, a.length);
-    //!     a = na;
-    //!   }
-    //!   a[i] = next;
-    //! }
-    //! 
-    //! if (i+1 > orglen && a.length > i+1) {
-    //!   // chop down to actual length if exceeding input size and
-    //!   // temporary allocation too big
-    //!   Object[] na = (Object[])java.lang.reflect.Array.newInstance(
-    //!     	      a.getClass().getComponentType(), i+1);
-    //!   
-    //!   System.arraycopy(a, 0, na, 0, i+1);
-    //!   return na;
-    //! 
-    //! } else if (i+1 < a.length) {
-    //!   // if input size too big set next element to null as specified
-    //!   // by contract
-    //!   a[i+1] = null;    
-    //! }
-    //! return a;
   }
 
 }

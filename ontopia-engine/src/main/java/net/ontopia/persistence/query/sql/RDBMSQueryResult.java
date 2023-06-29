@@ -20,7 +20,6 @@
 
 package net.ontopia.persistence.query.sql;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -147,13 +146,10 @@ public class RDBMSQueryResult implements QueryResultIF {
     try {
       synchronized (this) {
         Statement _stm = rs.getStatement();
-        Connection c = _stm.getConnection();
-        synchronized (c) {
-          rs.close();
-          rs = null;
-          if (_stm != null) {
-            _stm.close();
-          }
+        rs.close();
+        rs = null;
+        if (_stm != null) {
+          _stm.close();
         }
       }
     } catch (SQLException e) {
