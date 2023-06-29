@@ -216,7 +216,7 @@ public class TMLoginModule implements LoginModule {
   @Override
   public boolean logout() throws LoginException {    
     // clear out principals
-    subject.getPrincipals().remove(userPrincipal);
+    if (userPrincipal != null) { subject.getPrincipals().remove(userPrincipal); }
 
     Iterator<RolePrincipal> iter = rolePrincipals.iterator();
     while (iter.hasNext()) {
