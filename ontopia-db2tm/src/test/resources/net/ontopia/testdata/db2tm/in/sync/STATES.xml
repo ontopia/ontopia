@@ -21,7 +21,7 @@
 
     <changelog table="STATES_CHANGELOG"
                primary-key="O2OID"
-               order-column="SEQUENCE">
+               order-column="cSEQUENCE">
     </changelog>
   </relation>   
 

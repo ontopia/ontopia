@@ -1,7 +1,7 @@
 <topicMap reifier="1">
 <topic number="1">
 <occurrence number="1">
-<value>fellesdata:second:second_changes:2</value>
+<value>fellesdata:tsecond:tsecond_changes:2</value>
 <datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
 <type topicref="2"></type>
 </occurrence>

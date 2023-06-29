@@ -6,7 +6,7 @@
     <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
   </sources>
 
-  <relation name='first' columns='a b c d' synctype='changelog'
+  <relation name='tfirst' columns='a b c d' synctype='changelog'
             primary-key='a'>
     <topic id='over'>
       <subject-identifier>psi:first/${c}</subject-identifier>
@@ -19,11 +19,11 @@
         <other player='#over' rtype='px:overordnet'></other>
       </player>
     </topic>
-    <changelog table='first_changes' order-column='cd' primary-key='a'>
+    <changelog table='tfirst_changes' order-column='cd' primary-key='a'>
     </changelog>
   </relation>
 
-  <relation name='second' columns='a b c d' synctype='changelog'
+  <relation name='tsecond' columns='a b c d' synctype='changelog'
             primary-key='a'>
     <topic id='over'>
       <subject-identifier>psi:first/${c}</subject-identifier>
@@ -36,7 +36,7 @@
         <other player='#over' rtype='px:overordnet'></other>
       </player>
     </topic>
-    <changelog table='second_changes' order-column='cd' primary-key='a'>
+    <changelog table='tsecond_changes' order-column='cd' primary-key='a'>
     </changelog>
   </relation>
 

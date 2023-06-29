@@ -14,8 +14,8 @@
 
     <changelog table="ACTIVITYLOG_CHANGELOG"
                primary-key="PARSED_ID"
-               order-column="SEQUENCE"
-               condition="TABLE = 'ACTIVITYLOG'">
+               order-column="cSEQUENCE"
+               condition="cTABLE = 'ACTIVITYLOG'">
       <expression-column name='PARSED_ID'>
         <!-- turns 'columnname=value' into 'value' -->
         substring(PKEY, position('=', PKEY) + 1)
