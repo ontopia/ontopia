@@ -227,7 +227,6 @@
 					<exclude>WEB-INF/lib/jgroups*</exclude>
 					<exclude>WEB-INF/lib/jing*</exclude>
 					<exclude>WEB-INF/lib/jstl*</exclude>
-					<exclude>WEB-INF/lib/jtidy*</exclude>
 					<exclude>WEB-INF/lib/log4j*</exclude>
 					<exclude>WEB-INF/lib/lucene*</exclude>
 					<exclude>WEB-INF/lib/ontopia*</exclude>

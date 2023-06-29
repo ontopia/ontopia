@@ -69,7 +69,6 @@
 				<exclude>com.thaiopensource:jing:*</exclude>
 				<exclude>com.ibm.icu:icu4j:*</exclude>
 				<exclude>urbanophile:java-getopt:*</exclude>
-				<exclude>org.hibernate:jtidy:*</exclude>
 				<exclude>stax:stax:*</exclude>
 				<exclude>stax:stax-api:*</exclude>
 				<exclude>xml-apis:xml-apis:*</exclude>
