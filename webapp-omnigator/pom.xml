@@ -113,13 +113,13 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>com.github.warmuuh</groupId>
-        <artifactId>libsass-maven-plugin</artifactId>
+		<groupId>io.github.cleydyr</groupId>
+		<artifactId>dart-sass-maven-plugin</artifactId>
         <executions>
           <execution>
             <id>site-default</id>
             <configuration>
-              <outputPath>${project.build.directory}/${project.build.finalName}/docs</outputPath>
+              <outputFolder>${project.build.directory}/${project.build.finalName}/docs</outputFolder>
             </configuration>
           </execution>
         </executions>

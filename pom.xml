@@ -331,22 +331,22 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>com.github.warmuuh</groupId>
-					<artifactId>libsass-maven-plugin</artifactId>
-					<version>0.2.9-libsass_3.4.7</version>
+					<groupId>io.github.cleydyr</groupId>
+					<artifactId>dart-sass-maven-plugin</artifactId>
+					<version>0.3.0</version>
 					<executions>
 						<execution>
 							<id>site-default</id>
 							<phase>prepare-package</phase>
-							<goals><goal>compile</goal></goals>
-							<configuration>
-								<outputStyle>nested</outputStyle>
-								<inputPath>${basedir}/../src/sass/</inputPath>
-								<outputPath>${basedir}/target/site/</outputPath>
-							</configuration>
+							<goals><goal>compile-sass</goal></goals>
 						</execution>
 					</executions>
-				</plugin>
+					<configuration>
+						<quietDeps>true</quietDeps>
+						<inputFolder>${basedir}/../src/sass/</inputFolder>
+						<outputFolder>${basedir}/target/site/</outputFolder>
+					</configuration>
+				</plugin>				
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -373,8 +373,8 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.github.warmuuh</groupId>
-				<artifactId>libsass-maven-plugin</artifactId>
+				<groupId>io.github.cleydyr</groupId>
+				<artifactId>dart-sass-maven-plugin</artifactId>
 				<executions>
 					<execution>
 						<id>site-default</id>
