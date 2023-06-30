@@ -35,7 +35,7 @@ import org.restlet.resource.Post;
 public class IndexResource extends AbstractTransactionalResource {
 	private static final String TYPE_ERROR_MESSAGE = "Expected type one of value, prefix, gte, lte";
 
-	@Post("text:json")
+	@Post("txt:json")
 	public Collection<?> getOccurrences(String value) {
 		return getOccurrences(value, null);
 	}

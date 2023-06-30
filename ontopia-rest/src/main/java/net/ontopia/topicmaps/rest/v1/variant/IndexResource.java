@@ -32,8 +32,8 @@ import org.restlet.data.Form;
 import org.restlet.resource.Post;
 
 public class IndexResource extends AbstractTransactionalResource {
-	
-	@Post("text:json")
+
+	@Post("txt:json")
 	public Collection<VariantNameIF> getVariantNames(String value) {
 		return getVariantNames(value, null);
 	}
