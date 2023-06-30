@@ -68,7 +68,7 @@ public class OntopiaStatusService extends StatusService {
 		
 		if (throwable instanceof JsonProcessingException) {
 			// error parsing json which is a client exception
-			return new Status(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, throwable, throwable.getMessage());
+			return new Status(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, throwable, throwable.getMessage().replace('\n', ' ').replace('\r', ' '));
 		}
 		
 		// fallback
