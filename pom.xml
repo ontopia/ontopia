@@ -86,7 +86,7 @@
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
-		<jena.version>4.2.0</jena.version>
+		<jena.version>4.8.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 		<poi.version>5.2.3</poi.version>
 		
@@ -496,6 +496,17 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-core</artifactId>
+				<version>${jena.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-arq</artifactId>
 				<version>${jena.version}</version>
 				<exclusions>
 					<exclusion>

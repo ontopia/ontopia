@@ -664,11 +664,6 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     }
 
     @Override
-    public String getParseType() {
-      return null;
-    }
-
-    @Override
     public String toString() {
       return value;
     }

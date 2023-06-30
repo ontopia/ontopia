@@ -42,11 +42,6 @@ public class ALiteralWrapper implements ALiteral {
   }
 
   @Override
-  public String getParseType() {
-    return null;
-  }
-
-  @Override
   public String toString() {
     try {
       return literal.getString();
