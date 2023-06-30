@@ -15,7 +15,7 @@
 	<description>Ontopia Rest services</description>
 	
 	<properties>
-		<restlet.version>2.3.12</restlet.version>
+		<restlet.version>2.4.3</restlet.version>
 	</properties>
 
 	<repositories>

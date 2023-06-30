@@ -78,23 +78,23 @@ public class JacksonRepresentationImpl<T> extends JacksonRepresentation<T> {
 	@Override
 	protected ObjectMapper createObjectMapper() {
 		ObjectMapper mapper = super.createObjectMapper();
-		mapper.addMixInAnnotations(LocatorIF.class, MLocator.class);
-		mapper.addMixInAnnotations(TopicIF.class, MTopic.class);
-		mapper.addMixInAnnotations(TopicNameIF.class, MTopicName.class);
-		mapper.addMixInAnnotations(VariantNameIF.class, MVariantName.class);
-		mapper.addMixInAnnotations(OccurrenceIF.class, MOccurrence.class);
-		mapper.addMixInAnnotations(AssociationIF.class, MAssociation.class);
-		mapper.addMixInAnnotations(AssociationRoleIF.class, MAssociationRole.class);
-		mapper.addMixInAnnotations(TopicMapIF.class, MTopicMapAsValue.class);
-		mapper.addMixInAnnotations(TopicMapReferenceIF.class, MTopicMapReference.class);
-		mapper.addMixInAnnotations(TopicMapSourceIF.class, MTopicMapSource.class);
+		mapper.addMixIn(LocatorIF.class, MLocator.class);
+		mapper.addMixIn(TopicIF.class, MTopic.class);
+		mapper.addMixIn(TopicNameIF.class, MTopicName.class);
+		mapper.addMixIn(VariantNameIF.class, MVariantName.class);
+		mapper.addMixIn(OccurrenceIF.class, MOccurrence.class);
+		mapper.addMixIn(AssociationIF.class, MAssociation.class);
+		mapper.addMixIn(AssociationRoleIF.class, MAssociationRole.class);
+		mapper.addMixIn(TopicMapIF.class, MTopicMapAsValue.class);
+		mapper.addMixIn(TopicMapReferenceIF.class, MTopicMapReference.class);
+		mapper.addMixIn(TopicMapSourceIF.class, MTopicMapSource.class);
 		
 		@SuppressWarnings("unchecked")
 		Map<Class<?>, Class<?>> additional = (Map<Class<?>, Class<?>>) Response.getCurrent().getAttributes().get(ADDITIONAL_MIXINS_ATTRIBUTE);
 
 		if ((additional != null) && (!additional.isEmpty())) {
 			for (Map.Entry<Class<?>, Class<?>> entry : additional.entrySet()) {
-				mapper.addMixInAnnotations(entry.getKey(), entry.getValue());
+				mapper.addMixIn(entry.getKey(), entry.getValue());
 			}
 		}
 		

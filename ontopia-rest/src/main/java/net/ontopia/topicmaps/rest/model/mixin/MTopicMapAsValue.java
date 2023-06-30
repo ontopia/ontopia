@@ -20,16 +20,24 @@
 package net.ontopia.topicmaps.rest.model.mixin;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "objectId")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(value = {
+	"readOnly", "topicMap", "classIndicator",  // in memory
+	"classIndicator", "transient", "persistent", "inDatabase", "deleted", "dirtyFlushed", "newObject", "dirty" // rdbms
+})
 @JsonAutoDetect(
 		fieldVisibility = JsonAutoDetect.Visibility.NONE, 
 		getterVisibility = JsonAutoDetect.Visibility.NONE, 
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, 
 		setterVisibility = JsonAutoDetect.Visibility.NONE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public interface MTopicMapAsValue extends TopicMapIF {
 
 	@Override

@@ -20,10 +20,22 @@
 
 package net.ontopia.topicmaps.rest.model.mixin;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Reader;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "objectId")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY, setterVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonIgnoreProperties(value = {
+	"readOnly", "topicMap", "classIndicator",  // in memory
+	"classIndicator", "transient", "persistent", "inDatabase", "deleted", "dirtyFlushed", "newObject", "dirty" // rdbms
+})
 public interface MOccurrence extends MTMObject, OccurrenceIF {
 
 	@Override
