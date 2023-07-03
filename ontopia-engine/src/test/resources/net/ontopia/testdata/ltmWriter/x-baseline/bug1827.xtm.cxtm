@@ -1,10 +1,10 @@
 <topicMap>
 <topic number="1">
 <subjectIdentifiers>
-<locator>http://foo.bar/#1</locator>
+<locator>http://foo.bar#1</locator>
 </subjectIdentifiers>
 <subjectLocators>
-<locator>http://foo.bar/#1</locator>
+<locator>http://foo.bar#1</locator>
 </subjectLocators>
 <itemIdentifiers>
 <locator>#topic1</locator>
@@ -16,10 +16,10 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://foo.bar/#2</locator>
+<locator>http://foo.bar#2</locator>
 </subjectIdentifiers>
 <subjectLocators>
-<locator>http://foo.bar/#2</locator>
+<locator>http://foo.bar#2</locator>
 </subjectLocators>
 <itemIdentifiers>
 <locator>#topic2</locator>
@@ -31,10 +31,10 @@
 </topic>
 <topic number="3">
 <subjectIdentifiers>
-<locator>http://foo.bar/#3</locator>
+<locator>http://foo.bar#3</locator>
 </subjectIdentifiers>
 <subjectLocators>
-<locator>http://foo.bar/#3</locator>
+<locator>http://foo.bar#3</locator>
 </subjectLocators>
 <itemIdentifiers>
 <locator>#topic3</locator>

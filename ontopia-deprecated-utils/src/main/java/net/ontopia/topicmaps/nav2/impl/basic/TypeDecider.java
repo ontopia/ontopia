@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
@@ -51,7 +51,7 @@ public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<Topic
    * specify to which type should be compared.
    */
   public TypeDecider(String type)
-    throws MalformedURLException {
+    throws URISyntaxException {
     // typingTopic
     String refTypingTopicURL = null;
     if (type.equals(OCC_METADATA))
@@ -66,7 +66,7 @@ public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<Topic
    * related topic types from the navigator configuration
    */
   public TypeDecider(NavigatorPageIF contextTag, String type)
-    throws MalformedURLException {
+    throws URISyntaxException {
 
     if (hierUtils == null)
       hierUtils = new TypeHierarchyUtils();

@@ -110,22 +110,14 @@ public abstract class TopicMapListenerTests extends AbstractTopicMapTest {
     String type_oid = type.getObjectId();
       
     // make locators
-    URILocator srcloc = null;
-    URILocator subind = null;
-    URILocator subloc = null;
-    URILocator occloc = null;
     String occval = "ivalue";
     String bnval = "bvalue";
     String vnval = "vvalue";
-    URILocator vnloc = null;
-    try {
-      srcloc = new URILocator("test:1");
-      subind = new URILocator("test:2");
-      subloc = new URILocator("test:3");
-      occloc = new URILocator("test:4");
-      vnloc = new URILocator("test:5");
-    } catch (java.net.MalformedURLException e) {
-    }
+    URILocator srcloc = URILocator.create("test:1");
+    URILocator subind = URILocator.create("test:2");
+    URILocator subloc = URILocator.create("test:3");
+    URILocator occloc = URILocator.create("test:4");
+    URILocator vnloc = URILocator.create("test:5");
     // add identities
     topic.addItemIdentifier(srcloc);
     topic.addSubjectIdentifier(subind);

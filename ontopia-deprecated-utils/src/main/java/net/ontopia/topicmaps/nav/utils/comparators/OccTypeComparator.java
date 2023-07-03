@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
 import net.ontopia.utils.DeciderIF;
@@ -49,7 +49,7 @@ public class OccTypeComparator extends TopicComparator {
     try {
       metadataDecider = new TypeDecider(TypeDecider.OCC_METADATA);
       descriptionDecider = new TypeDecider(TypeDecider.OCC_DESCRIPTION);
-    } catch (MalformedURLException mue) {
+    } catch (URISyntaxException mue) {
       log.info("Could not find metadata occurrence type topic");
     }
   }

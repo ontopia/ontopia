@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.core;
 
-import java.net.MalformedURLException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -65,7 +64,7 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
   @Test
   public void testDuplicateSourceLocator() {
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       object.addItemIdentifier(loc);
 
       // if this is a topic map we stop, since new object will be
@@ -83,9 +82,6 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
         }
       }
     }
-    catch (MalformedURLException e) {
-      Assert.fail("(INTERNAL) bad URL given" + e);
-    }
     catch (ConstraintViolationException e) {
       Assert.fail("spurious ConstraintViolationException");
     }
@@ -94,15 +90,12 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
   @Test
   public void testTopicSubjectIndicatorSourceLocator() {
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
 
       TopicIF topic = builder.makeTopic();                      
       object.addItemIdentifier(loc);
                         
       topic.addSubjectIdentifier(loc);
-    }
-    catch (MalformedURLException e) {
-      Assert.fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
       Assert.fail("spurious ConstraintViolationException");
@@ -112,15 +105,12 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
   @Test
   public void testSourceLocatorTopicSubjectIndicator() {
     try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
 
       TopicIF topic = builder.makeTopic();
       topic.addSubjectIdentifier(loc);
                         
       object.addItemIdentifier(loc);
-    }
-    catch (MalformedURLException e) {
-      Assert.fail("(INTERNAL) bad URL given" + e);
     }
     catch (ConstraintViolationException e) {
       Assert.fail("spurious ConstraintViolationException");
@@ -129,7 +119,7 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
         
   //! public void _testSourceLocatorUnassignable() {
   //!   try {
-  //!     URILocator loc = new URILocator("http://www.opera.com");
+  //!     URILocator loc = URILocator.create("http://www.opera.com");
   //!     TMObjectIF object = makeParentlessObject();
   //!     if (object == null) return; // makes no sense for topic maps :)
   //!     object.addItemIdentifier(loc);
@@ -150,7 +140,7 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
 
     try {
       // STATE 2: has only one source locator
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       object.addItemIdentifier(loc);
         
       Assert.assertTrue("source locator not added",
@@ -162,7 +152,7 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
       TMObjectIF found = topicmap.getObjectByItemIdentifier(loc);
       Assert.assertTrue("can't look up by resid", found.equals(object));
 
-      found = topicmap.getObjectByItemIdentifier(new URILocator("http://www.ontopia.net"));
+      found = topicmap.getObjectByItemIdentifier(URILocator.create("http://www.ontopia.net"));
       Assert.assertTrue("can't look up by resid", found.equals(object));
         
       object.addItemIdentifier(loc);
@@ -180,9 +170,6 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
       // removing locator that is not present works OK
       object.removeItemIdentifier(loc);
     }
-    catch (MalformedURLException e) {
-      Assert.fail("(INTERNAL) bad URL given" + e);
-    }
     catch (ConstraintViolationException e) {
       Assert.fail("spurious ConstraintViolationException");
     }
@@ -190,14 +177,13 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
 
   @Test
   public void testMoveSourceLocators() { // bug #273
-    try {
-      URILocator loc = new URILocator("http://www.ontopia.net");
+      URILocator loc = URILocator.create("http://www.ontopia.net");
       TopicIF topic = builder.makeTopic();
       object.addItemIdentifier(loc);
 
       // we do this here to make the RDBMS backend write the
       // changes in the transaction to the DB
-      URILocator loc2 = new URILocator("http://www.ontopia.com");
+      URILocator loc2 = URILocator.create("http://www.ontopia.com");
       TMObjectIF lookedup = topicmap.getObjectByItemIdentifier(loc2);
       // </end>
       
@@ -208,10 +194,6 @@ public abstract class AbstractTMObjectTest extends AbstractTopicMapTest {
       lookedup = topicmap.getObjectByItemIdentifier(loc);
       Assert.assertTrue("wrong object returned on lookup: " + lookedup,
              lookedup == topic);
-    }
-    catch (MalformedURLException e) {
-      Assert.fail("(INTERNAL) bad URL given" + e);
-    }
   }
   
   @Test

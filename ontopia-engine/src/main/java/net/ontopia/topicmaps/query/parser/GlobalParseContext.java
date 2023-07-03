@@ -20,15 +20,14 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.net.MalformedURLException;
-
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.BadObjectReferenceException;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -81,12 +80,12 @@ public class GlobalParseContext implements ParseContextIF {
       }
     } catch (OntopiaRuntimeException e) {
       if (e.getCause() != null &&
-          e.getCause() instanceof MalformedURLException) {
+          e.getCause() instanceof URISyntaxException) {
         throw new AntlrWrapException(new InvalidQueryException(
                  "URI reference '" + uriref+"' is not a valid URI reference."));
       }
       throw e;
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException | IllegalArgumentException e) {
       throw new AntlrWrapException(new InvalidQueryException("URI reference '" +
                                                 uriref + "' not a valid URI."));
     }

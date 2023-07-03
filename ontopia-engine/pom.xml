@@ -127,7 +127,7 @@
 								<artifactItem>
 									<groupId>net.ontopia</groupId>
 									<artifactId>cxtm-tests</artifactId>
-									<version>1</version>
+									<version>2</version>
 									<type>zip</type>
 									<outputDirectory>target/test-classes/net/ontopia/testdata</outputDirectory>
 								</artifactItem>

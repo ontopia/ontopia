@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -51,7 +51,7 @@ public class TopicMapSynchronizerBKTest {
   private final static String testdataDirectory = "tmsync";
 
   @Before
-  public void setUp() throws MalformedURLException {
+  public void setUp() throws URISyntaxException {
     String DECL = "using bk for i\"http://psi.bergen.kommune.no/portal/\" ";
     ttopicq = DECL + "select $T from  "+
       "instance-of($T, $TT), { " +
@@ -137,7 +137,7 @@ public class TopicMapSynchronizerBKTest {
 
   @Test
   public void testSameAssociation()
-    throws InvalidQueryException, IOException {
+    throws InvalidQueryException, IOException, URISyntaxException {
     // Instead of having one relevant-for in LivsIT, and another
     // association type locally (livsit-relevant-for) we have just one
     // association type; and associations of this type are
@@ -162,7 +162,7 @@ public class TopicMapSynchronizerBKTest {
   }
 
   @Test
-  public void testSingleTopicTwoFilter() throws IOException {
+  public void testSingleTopicTwoFilter() throws IOException, URISyntaxException {
     // Set up deciders
     tchard = (o) -> true;
 
@@ -225,7 +225,7 @@ public class TopicMapSynchronizerBKTest {
   static class TypePSIDecider implements Predicate {
     private Collection okpsis;
     
-    public TypePSIDecider(Collection okpsis) throws MalformedURLException {
+    public TypePSIDecider(Collection okpsis) throws URISyntaxException {
       this.okpsis = new HashSet();
       Iterator it = okpsis.iterator();
       while (it.hasNext()) {

@@ -86,7 +86,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 		Association association = createAssociation();
 		AssociationRole role = new AssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		role.setType(topic);
 		role.setPlayer(topic);
 		association.getRoles().clear();
@@ -161,7 +161,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTypeByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		association.setType(topic);
 		Association added = put(association, Association.class);
 
@@ -174,12 +174,12 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithItemIdentifier() {
 		Association association = createAssociation();
-		association.getItemIdentifiers().add(URILocator.create("foo:association:bar"));
+		association.getItemIdentifiers().add(URILocator.create("foo:barassociation:bar"));
 		Association added = put(association, Association.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
-		Assert.assertEquals("foo:association:bar", added.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barassociation:bar", added.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
@@ -238,7 +238,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopeByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		association.getScope().add(topic);
 
 		Association added = put(association, Association.class);
@@ -264,7 +264,7 @@ public class AssociationResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithReificationByItemIdentifier() {
 		Association association = createAssociation();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		association.setReifier(topic);
 
 		Association added = put(association, Association.class);

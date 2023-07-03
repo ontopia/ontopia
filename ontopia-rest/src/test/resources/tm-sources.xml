@@ -4,7 +4,7 @@
 		<param name="path" value="${CWD}"/>
 		<param name="suffix" value=".ltm"/>
 		<param name="duplicateSuppression" value="true"/>
-		<param name="baseAddress" value="foo:"/>
+		<param name="baseAddress" value="foo:bar"/>
 		<param name="maintainFulltextIndexes" value="true"/>
 		<param name="indexDirectory" value="${CWD}/indexes"/>
 		<param name="alwaysReindexOnLoad" value="true"/>
@@ -13,6 +13,6 @@
 		<param name="path" value="${CWD}"/>
 		<param name="suffix" value=".xtm"/>
 		<param name="duplicateSuppression" value="true"/>
-		<param name="baseAddress" value="foo:"/>
+		<param name="baseAddress" value="foo:bar"/>
 	</source>
 </repository>

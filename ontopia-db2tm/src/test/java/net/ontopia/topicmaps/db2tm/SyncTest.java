@@ -305,7 +305,7 @@ public class SyncTest {
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF topictype = builder.makeTopic();
     TopicIF t2 = builder.makeTopic();
-    URILocator psi = new URILocator("psi:test/2");
+    URILocator psi = URILocator.create("psi:test/2");
     t2.addSubjectIdentifier(psi); // will cause test data to match it
 
     // verify that t2 has a topic type

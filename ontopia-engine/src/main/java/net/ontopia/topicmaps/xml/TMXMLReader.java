@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -88,7 +88,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
   /**
    * PUBLIC: Creates a reader reading from the given url.
    */
-  public TMXMLReader(URL url) throws MalformedURLException {
+  public TMXMLReader(URL url) {
     super(url);
   }
 
@@ -99,7 +99,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
   /**
    * PUBLIC: Creates a reader reading from the given file name.
    */
-  public TMXMLReader(File file) throws MalformedURLException {
+  public TMXMLReader(File file) {
     super(file);
   }
 
@@ -358,7 +358,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
         if (isuri) {
           try {
             vn = builder.makeVariantName(basename, new URILocator(buffer.toString()), Collections.emptySet());
-          } catch (MalformedURLException e) {
+          } catch (URISyntaxException e) {
             throw new SAXException("Invalid URI for variant name", e);
           }
         } else {
@@ -421,7 +421,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       
       try {
         return getTopicBySubjectIdentifier(new URILocator(uri + name));
-      } catch (java.net.MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new SAXException("Invalid URI: " + uri + name);
       }
     }    
@@ -492,7 +492,7 @@ public class TMXMLReader extends AbstractXMLFormatReader implements TopicMapRead
       try {
         LocatorIF psi = new URILocator(nsprefixes.get(prefix) + local);
         return getTopicBySubjectIdentifier(psi);
-      } catch (java.net.MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("Invalid namespace URI from qname " +
                                           qname + ": " + prefix + local);
       }
