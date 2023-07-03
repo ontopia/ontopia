@@ -55,8 +55,7 @@
 		<module>ontopia-jdbcspy7</module>
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
-		<module>ontopia-deprecated-utils</module>
-		
+
 		<!-- Web Apps -->
 		<module>webapp-root</module>
 		<module>webapp-accessctl</module>
@@ -609,6 +608,11 @@
 				<groupId>org.apache.axis2</groupId>
 				<artifactId>axis2-java2wsdl</artifactId>
 				<version>${axis2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.ontopia</groupId>
+				<artifactId>ontopia-deprecated-utils</artifactId>
+				<version>5.4.0</version>
 			</dependency>
 
 			<!-- provided dependencies -->
