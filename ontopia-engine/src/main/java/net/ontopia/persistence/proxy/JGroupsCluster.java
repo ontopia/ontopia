@@ -30,6 +30,7 @@ import net.ontopia.utils.StreamUtils;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
+import org.jgroups.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,9 +86,11 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
       }
       
       dchannel.setReceiver(this);
+      dchannel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
 
       this.dchannel.connect(clusterId);
-      
+
+      log.info("Connected to cluster {} as {}", clusterId, this.dchannel.getAddress());
     } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
@@ -263,5 +266,10 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }
+  }
+
+  @Override
+  public void viewAccepted(View view) {
+    log.info("Cluster members changes: {}", view.getMembers());
   }
 }
