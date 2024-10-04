@@ -93,7 +93,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.2.19.v20160908</version>
+				<version>9.4.56.v20240826</version>
 				<configuration>
 					<stopPort>9999</stopPort>
 					<stopKey>ontopia</stopKey>
@@ -113,7 +113,9 @@
 							<useTestClasspath>true</useTestClasspath>
 							<webApp>
 								<contextPath>/</contextPath>
+								<webInfIncludeJarPattern>__NONE__</webInfIncludeJarPattern>
 							</webApp>
+							<supportedPackagings>jar</supportedPackagings>
 						</configuration>
 					</execution>
 					<execution>
