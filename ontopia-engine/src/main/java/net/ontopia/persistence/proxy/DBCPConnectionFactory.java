@@ -214,6 +214,10 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     return datasource.getConnection();
   }
 
+  public GenericObjectPool getConnectionPool() {
+    return pool;
+  }
+
     @Override
   public void close() {
     // Release generic pool
