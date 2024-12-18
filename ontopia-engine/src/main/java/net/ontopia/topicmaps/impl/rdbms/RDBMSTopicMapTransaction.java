@@ -245,7 +245,13 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     }
     return txn;
   }
-  
+
+  @Override
+  public TopicMapIF getTopicMap() {
+    if (txn == null) { throw new TransactionNotActiveException(); }
+    return topicmap;
+  }
+
   // ---------------------------------------------------------------------------
   // EventManagerIF implementation
   // ---------------------------------------------------------------------------
