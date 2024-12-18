@@ -117,6 +117,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     pool.setMaxWait(getIntProperty(USER_TIMEOUT, DEFAULT_USER_TIMEOUT)); // -1 = never
     int etime = getIntProperty(IDLE_TIMEOUT, DEFAULT_IDLE_TIMEOUT); // -1 = never
     pool.setTimeBetweenEvictionRunsMillis(etime);
+    pool.setMinEvictableIdleTimeMillis(etime);
     pool.setSoftMinEvictableIdleTimeMillis(etime);
     boolean softmax = MapUtils.getBoolean(properties, SOFT_MAXIMUM, DEFAULT_SOFT_MAXIMUM);
     pool.setWhenExhaustedAction(softmax ? GenericObjectPool.WHEN_EXHAUSTED_GROW : GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
