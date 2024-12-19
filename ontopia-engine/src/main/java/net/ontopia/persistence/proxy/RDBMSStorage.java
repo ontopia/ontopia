@@ -867,6 +867,12 @@ public class RDBMSStorage implements StorageIF {
     }
   }
 
+  public int getNonTransactionalReadConnectionCount() {
+    synchronized (nonTransactionalReadConnections) {
+      return nonTransactionalReadConnections.size();
+    }
+  }
+
   private class NonTransactionalReadConnectionCleanup implements Callable<NonTransactionalReadConnection> {
 
     private final NonTransactionalReadConnection connection;
