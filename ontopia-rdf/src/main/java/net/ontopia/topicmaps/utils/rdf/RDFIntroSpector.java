@@ -170,11 +170,6 @@ public class RDFIntroSpector {
     }
 
     @Override
-    public String getParseType() {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isWellFormedXML() {
       throw new UnsupportedOperationException();
     }
