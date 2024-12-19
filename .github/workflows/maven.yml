@@ -17,5 +17,13 @@ jobs:
         distribution: 'temurin'
         java-version-file: '.java-version'
         cache: 'maven'
+    - name: Restore Maven cache
+      uses: skjolber/maven-cache-github-action@v3.1.1
+      with:
+        step: restore
     - name: Build with Maven
       run: mvn -B -Dstyle.color=always package --file pom.xml
+    - name: Save Maven cache
+      uses: skjolber/maven-cache-github-action@v3.1.1
+      with:
+        step: save
