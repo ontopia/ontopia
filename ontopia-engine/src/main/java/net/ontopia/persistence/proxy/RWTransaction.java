@@ -239,7 +239,16 @@ public class RWTransaction extends AbstractTransaction {
     if (flushing) {
       return;
     }
-    
+
+    // Only flush when changes has actually happened.
+    // Also covers read-only operations in non-transactional reads
+    if (chgcre.isEmpty() && chgdty.isEmpty() && chgdel.isEmpty()) {
+      return;
+    }
+    //! System.out.println("SC: " + chgcre.size());
+    //! System.out.println("SD: " + chgdty.size());
+    //! System.out.println("SR: " + chgdel.size());
+
     // Complain if the transaction is not active
     if (!isactive) {
       throw new TransactionNotActiveException();
@@ -254,16 +263,7 @@ public class RWTransaction extends AbstractTransaction {
       
       // All dirty [modified, created and deleted]objects have strong
       // references to them.
-      
-      // Only flush when changes has actually happened.
-      if (chgcre.isEmpty() && chgdty.isEmpty() && chgdel.isEmpty()) {
-        return;
-      }
-      
-      //! System.out.println("SC: " + chgcre.size());
-      //! System.out.println("SD: " + chgdty.size());
-      //! System.out.println("SR: " + chgdel.size());
-      
+
       // Store all pending changes in the database
       if (log.isDebugEnabled()) {
         log.debug(getId() + ": Storing transaction changes.");
