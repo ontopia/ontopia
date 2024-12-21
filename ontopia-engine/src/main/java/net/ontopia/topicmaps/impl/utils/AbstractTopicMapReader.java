@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.impl.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -180,6 +181,7 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
 
   public static Reader makeReader(InputStream stream, String encoding,
                                   EncodingSnifferIF sniffer) throws IOException {
+    if (stream == null) { throw new FileNotFoundException(); }
     if (encoding == null) {
       // BEWARE: next statements means we make a reader from the pushbackstream!
       // this is crucial, since otherwise the first 50 bytes of the stream are lost
@@ -192,7 +194,14 @@ public abstract class AbstractTopicMapReader implements TopicMapReaderIF {
   public static Reader makeReader(LocatorIF locator, EncodingSnifferIF sniffer) throws IOException {
     return makeReader(StreamUtils.getInputStream(locator.getExternalForm()), null, sniffer);
   }
-  
+
+  public static Reader makeReader(URL base, LocatorIF locator, EncodingSnifferIF sniffer) throws IOException {
+    if (base == null) {
+      return makeReader(locator, sniffer);
+    }
+    return makeReader(new URL(base, locator.getAddress()).openStream(), null, sniffer);
+  }
+
   protected Reader makeReader(String encoding, EncodingSnifferIF sniffer) throws IOException {
     if (reader != null) {
       return reader;

@@ -105,6 +105,7 @@ public class LTMTopicMapReader extends AbstractTopicMapReader {
        // Parse!
       LTMLexer lexer = new LTMLexer(reader);
       LTMParser parser = new LTMParser(lexer);
+      parser.setURL(url);
       parser.setBase(getBaseAddress());
       parser.setTopicMap(topicmap);
       parser.init();
