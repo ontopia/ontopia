@@ -349,7 +349,11 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
   private synchronized boolean isRunningEviction() {
     return (eviction > 0);
   }
-  
+
+  long getSize() {
+    return datacache.size();
+  }
+
   private class Ticket implements TicketIF {
     private long value;
     private Ticket(long value) {

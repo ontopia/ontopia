@@ -23,6 +23,7 @@ package net.ontopia.persistence.proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -40,13 +41,15 @@ import org.slf4j.LoggerFactory;
  * from the JNDI environment given a JNDI name.
  */
 
-public class JNDIConnectionFactory implements ConnectionFactoryIF {
+public class JNDIConnectionFactory implements ConnectionFactoryIF, ConnectionFactoryMetricsIF {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
 
   protected static final String propname = "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource";
   protected String jndiname;
+
+  protected AtomicLong counter = new AtomicLong();
 
   public JNDIConnectionFactory(String jndiname) {
     this.jndiname = jndiname;
@@ -77,6 +80,7 @@ public class JNDIConnectionFactory implements ConnectionFactoryIF {
       // disable auto-commit
       conn.setAutoCommit(false);
 
+      counter.incrementAndGet();
       return conn;
 
     } catch (NamingException e) {
@@ -88,5 +92,9 @@ public class JNDIConnectionFactory implements ConnectionFactoryIF {
   public void close() {
     // Nothing to do there since we do not keep anything hanging around.
   }
-  
+
+  @Override
+  public long getConnectionsOpened() {
+    return counter.get();
+  }
 }

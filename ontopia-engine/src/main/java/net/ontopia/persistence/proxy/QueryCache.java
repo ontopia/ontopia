@@ -33,7 +33,7 @@ import org.apache.commons.collections4.map.LRUMap;
  * databases using JDBC.
  */
 
-public class QueryCache<K, E> implements EvictableIF<K, E> {
+public class QueryCache<K, E> implements EvictableIF<K, E>, CacheMetricsIF {
 
   protected DetachedQueryIF query;
   protected CacheIF<K, E> cache;
@@ -109,5 +109,18 @@ public class QueryCache<K, E> implements EvictableIF<K, E> {
     cache.writeReport(out, dumpCache);
   }
 
-}
+  @Override
+  public long getCacheSize() {
+    return cache.size();
+  }
 
+  @Override
+  public long getLRUSize() {
+    return lru.size();
+  }
+
+  @Override
+  public long getMaxLRUSize() {
+    return lrusize;
+  }
+}

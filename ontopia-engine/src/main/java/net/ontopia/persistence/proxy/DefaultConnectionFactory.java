@@ -28,6 +28,7 @@ import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.jgroups.util.DefaultThreadFactory;
 import org.slf4j.Logger;
@@ -47,7 +48,9 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
 
   protected boolean readOnly;
   protected ScheduledExecutorService connectionTimeoutExecutor = null;
-  
+  protected AtomicLong openedCounter = new AtomicLong();
+  protected AtomicLong closedCounter = new AtomicLong();
+
   public DefaultConnectionFactory(Map properties, boolean readOnly) {
     super(properties);
 
@@ -90,6 +93,7 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     
     // disable auto-commit
     conn.setAutoCommit(false);    
+    openedCounter.incrementAndGet();
     return applyTimeout(conn);
   }
 
@@ -101,6 +105,7 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
           if (!connection.isClosed()) {
             log.warn("Connection {} was not returned to store within {} seconds, closing the connection.", connection, timeout, trace);
             connection.close();
+            closedCounter.incrementAndGet();
           }
         } catch (SQLException e) {
           throw new OntopiaRuntimeException(e);
@@ -115,5 +120,15 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     if (connectionTimeoutExecutor != null) {
       connectionTimeoutExecutor.shutdownNow();
     }
+  }
+
+  @Override
+  public long getConnectionsClosed() {
+    return closedCounter.get();
+  }
+
+  @Override
+  public long getConnectionsOpened() {
+    return openedCounter.get();
   }
 }

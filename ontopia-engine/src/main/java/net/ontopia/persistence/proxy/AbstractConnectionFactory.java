@@ -31,7 +31,7 @@ import net.ontopia.utils.PropertyUtils;
  * factory implementations.
  */
 
-public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
+public abstract class AbstractConnectionFactory implements ConnectionFactoryIF, ConnectionFactoryMetricsIF {
 
   protected Map<String, String> properties;
   

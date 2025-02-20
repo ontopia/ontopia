@@ -30,7 +30,7 @@ import org.apache.commons.collections4.map.LRUMap;
  * INTERNAL: 
  */
 
-public class TransactionalLRULookupIndex implements TransactionalLookupIndexIF, EvictableIF {
+public class TransactionalLRULookupIndex implements TransactionalLookupIndexIF, EvictableIF, CacheMetricsIF {
 
   protected CacheIF cache;
   protected Map lru;
@@ -110,4 +110,18 @@ public class TransactionalLRULookupIndex implements TransactionalLookupIndexIF, 
     cache.writeReport(out, dumpCache);
   }
 
+  @Override
+  public long getCacheSize() {
+    return cache.size();
+  }
+
+  @Override
+  public long getLRUSize() {
+    return lru.size();
+  }
+
+  @Override
+  public long getMaxLRUSize() {
+    return lrusize;
+  }
 }

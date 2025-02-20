@@ -107,4 +107,8 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
     }
   }
 
+  @Override
+  public long size() {
+    return cache == null ? -1 : cache.size();
+  }
 }

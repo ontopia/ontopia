@@ -39,6 +39,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
@@ -131,8 +132,8 @@ public class RDBMSStorage implements StorageIF {
   private StorageCacheIF scache;
   private StorageAccessIF saccess;
   
-  private ConnectionFactoryIF rw_connfactory;  
-  private ConnectionFactoryIF ro_connfactory;  
+  private ConnectionFactoryMetricsIF rw_connfactory;
+  private ConnectionFactoryMetricsIF ro_connfactory;
   private KeyGeneratorIF keygen;
   
   private String database;
@@ -713,7 +714,15 @@ public class RDBMSStorage implements StorageIF {
       ho.clear(true);
     }
   }
-  
+
+  // -----------------------------------------------------------------------------
+  // Instrumentation
+  // -----------------------------------------------------------------------------
+
+  public RDBMSMetricsIF getMetrics() {
+    return new Metrics();
+  }
+
   public void writeReport(java.io.Writer out, TopicMapReferenceIF reference, IdentityIF namespace, 
       boolean dumpCaches) throws java.io.IOException {
 
@@ -942,6 +951,59 @@ public class RDBMSStorage implements StorageIF {
     
     private boolean isClosed() throws SQLException {
       return connection.isClosed();
+    }
+  }
+
+  private class Metrics implements RDBMSMetricsIF {
+    // connection pool
+    @Override public long getROConnectionPoolActive()    { return ro_connfactory.getConnectionPoolActive(); }
+    @Override public long getROConnectionPoolIdle()      { return ro_connfactory.getConnectionPoolIdle(); }
+    @Override public long getROConnectionPoolMaxActive() { return ro_connfactory.getConnectionPoolMaxActive(); }
+    @Override public long getROConnectionPoolMaxIdle()   { return ro_connfactory.getConnectionPoolMaxIdle(); }
+    @Override public long getROConnectionPoolMinIdle()   { return ro_connfactory.getConnectionPoolMinIdle(); }
+    @Override public long getRWConnectionPoolActive()    { return rw_connfactory.getConnectionPoolActive(); }
+    @Override public long getRWConnectionPoolIdle()      { return rw_connfactory.getConnectionPoolIdle(); }
+    @Override public long getRWConnectionPoolMaxActive() { return rw_connfactory.getConnectionPoolMaxActive(); }
+    @Override public long getRWConnectionPoolMaxIdle()   { return rw_connfactory.getConnectionPoolMaxIdle(); }
+    @Override public long getRWConnectionPoolMinIdle()   { return rw_connfactory.getConnectionPoolMinIdle(); }
+
+    // connection factory
+    @Override public long getROConnectionsClosed()       { return ro_connfactory.getConnectionsClosed(); }
+    @Override public long getROConnectionsOpened()       { return ro_connfactory.getConnectionsOpened(); }
+    @Override public long getROConnectionsValidated()    { return ro_connfactory.getConnectionsValidated(); }
+    @Override public long getROConnectionsBorrowed()     { return ro_connfactory.getConnectionsBorrowed(); }
+    @Override public long getROConnectionsReturned()     { return ro_connfactory.getConnectionsReturned(); }
+    @Override public long getRWConnectionsClosed()       { return rw_connfactory.getConnectionsClosed(); }
+    @Override public long getRWConnectionsOpened()       { return rw_connfactory.getConnectionsOpened(); }
+    @Override public long getRWConnectionsValidated()    { return rw_connfactory.getConnectionsValidated(); }
+    @Override public long getRWConnectionsBorrowed()     { return rw_connfactory.getConnectionsBorrowed(); }
+    @Override public long getRWConnectionsReturned()     { return rw_connfactory.getConnectionsReturned(); }
+
+    // shared cache
+    @Override public long getSharedCacheSize()           { return scache == null ? -1 : ((SharedCache) scache).getSize(); }
+
+    // query caches
+    @Override public Map<Long, CacheMetricsIF> getTopicMapIFgetObjectByItemIdentifierQueryCacheMetrics()   { return getQueryCacheMetrics("TopicMapIF.getObjectByItemIdentifier"); }
+    @Override public Map<Long, CacheMetricsIF> getTopicMapIFgetTopicBySubjectIdentifierQueryCacheMetrics() { return getQueryCacheMetrics("TopicMapIF.getTopicBySubjectIdentifier"); }
+    @Override public Map<Long, CacheMetricsIF> getTopicMapIFgetTopicBySubjectQueryCacheMetrics()           { return getQueryCacheMetrics("TopicMapIF.getTopicBySubject"); }
+    @Override public Map<Long, CacheMetricsIF> getTopicIFgetRolesByTypeQueryCacheMetrics()                 { return getQueryCacheMetrics("TopicIF.getRolesByType"); }
+    @Override public Map<Long, CacheMetricsIF> getTopicIFgetRolesByType2QueryCacheMetrics()                { return getQueryCacheMetrics("TopicIF.getRolesByType2"); }
+
+    // clustering
+    @Override public String getClusterName()           { return cluster == null ? null : ((JGroupsCluster) cluster).clusterId; }
+    @Override public String getClusterState()          { return cluster == null ? null : ((JGroupsCluster) cluster).getState(); }
+    @Override public long getClusterReceivedBytes()    { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedBytes(); }
+    @Override public long getClusterReceivedMessages() { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedMessages(); }
+    @Override public long getClusterSentBytes()        { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentBytes(); }
+    @Override public long getClusterSentMessages()     { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentMessages(); }
+
+    // access
+    @Override public long getAccessCount() { return access_counter; }
+
+    private Map<Long, CacheMetricsIF> getQueryCacheMetrics(String identifier) {
+      return qcmap.entrySet().stream().collect(Collectors.toMap(
+          entry -> (Long) entry.getKey().getKey(0),
+          entry -> (CacheMetricsIF) entry.getValue().get(identifier)));
     }
   }
 }

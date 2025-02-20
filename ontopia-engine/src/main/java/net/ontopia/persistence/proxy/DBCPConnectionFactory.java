@@ -311,9 +311,54 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
       // no-op
     }
   }
+
+  @Override
+  public long getConnectionPoolMinIdle() {
+    return pool.getMinIdle();
+  }
+
+  @Override
+  public long getConnectionPoolMaxIdle() {
+    return pool.getMaxIdle();
+  }
+
+  @Override
+  public long getConnectionPoolMaxActive() {
+    return pool.getMaxActive();
+  }
+
+  @Override
+  public long getConnectionPoolIdle() {
+    return pool.getNumIdle();
+  }
+
+  @Override
+  public long getConnectionPoolActive() {
+    return pool.getNumActive();
+  }
+
+  @Override
+  public long getConnectionsClosed() {
+    return pcfactory.objectsDestroyed;
+  }
+
+  @Override
+  public long getConnectionsOpened() {
+    return pcfactory.objectsCreated;
+  }
+
+  @Override
+  public long getConnectionsValidated() {
+    return pcfactory.objectsValidated;
+  }
+
+  @Override
+  public long getConnectionsBorrowed() {
+    return pcfactory.objectsActivated;
+  }
+
+  @Override
+  public long getConnectionsReturned() {
+    return pcfactory.objectsPassivated;
+  }
 }
-
-
-
-
-

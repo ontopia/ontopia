@@ -1,8 +1,8 @@
-/*
+/*-
  * #!
  * Ontopia Engine
  * #-
- * Copyright (C) 2001 - 2013 The Ontopia Project
+ * Copyright (C) 2001 - 2025 The Ontopia Project
  * #-
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,25 +20,10 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.Collection;
+public interface CacheMetricsIF {
 
-/**
- * INTERNAL: Simple interface used by innermost caches.
- */
+  long getCacheSize();
+  long getLRUSize();
+  long getMaxLRUSize();
 
-public interface CacheIF<K, V> {
-
-  V get(K key);
-
-  V put(K key, V value);
-
-  V remove(K key, boolean notifyCluster);
-
-  void removeAll(Collection<K> keys, boolean notifyCluster);
-
-  void clear(boolean notifyCluster);
-
-  void writeReport(java.io.Writer out, boolean dumpCache) throws java.io.IOException;
-
-  long size();
 }

@@ -87,4 +87,8 @@ public final class DefaultCache<K, V> implements CacheIF<K, V> {
     }
   }
 
+  @Override
+  public long size() {
+    return cache == null ? -1 : cache.size();
+  }
 }

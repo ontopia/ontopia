@@ -272,4 +272,24 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
   public void viewAccepted(View view) {
     log.info("Cluster members changes: {}", view.getMembers());
   }
+
+  long getReceivedBytes() {
+    return dchannel.getReceivedBytes();
+  }
+
+  long getReceivedMessages() {
+    return dchannel.getReceivedMessages();
+  }
+
+  long getSentBytes() {
+    return dchannel.getSentBytes();
+  }
+
+  long getSentMessages() {
+    return dchannel.getSentMessages();
+  }
+
+  String getState() {
+    return dchannel.getState();
+  }
 }
