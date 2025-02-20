@@ -80,6 +80,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   public static final String EXHAUSTED_ACTION = ROOT + "WhenExhaustedAction";
   public static final String POOL_STATEMENTS = ROOT + "PoolStatements";
   public static final String VALIDATION_QUERY = ROOT + "ValidationQuery";
+  public static final String VALIDATION_QUERY_TIMEOUT = ROOT + "ValidationQueryTimeout"; // in seconds
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
@@ -197,6 +198,9 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
+
+      // set validation query timeout
+      pcfactory.setValidationQueryTimeout(PropertyUtils.getInt(VALIDATION_QUERY_TIMEOUT, -1));
 
       this.datasource = new PoolingDataSource(pool);
     } catch (Exception e) {
