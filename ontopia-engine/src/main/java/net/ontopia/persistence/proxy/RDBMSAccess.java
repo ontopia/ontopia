@@ -22,7 +22,6 @@ package net.ontopia.persistence.proxy;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -201,47 +200,15 @@ public class RDBMSAccess implements StorageAccessIF {
     Connection conn = getConnection();
     return !(closed || (conn == null ? false : !validateConnection(conn)));
   }
-  
+
   protected boolean validateConnection(Connection conn) {
-    // stop here if connection says that it's closed 
     try {
-      if (conn.isClosed()) {
-        return false;
-      }
+      return conn.isValid(1);
     } catch (SQLException e) {
-      return false;
+      throw new OntopiaRuntimeException(e);
     }
-    
-    // get validation query
-    String vquery = getProperty("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery");
-    if (vquery == null) {
-      vquery = "select seq_count from TM_ADMIN_SEQUENCE where 1 != 1";
-    }
-    
-    // run validation query
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    try {
-      stm = conn.prepareStatement(vquery);
-      rs = stm.executeQuery();
-      // do nothing with result set
-      rs.next();
-      rs.close();
-      
-    } catch (SQLException e) {
-      return false;
-    } finally {
-      try {
-        if (stm != null) {
-          stm.close();
-        }
-      } catch (SQLException e) {
-        return false;
-      }
-    }
-    return true;
   }
-  
+
   // -----------------------------------------------------------------------------
   // Transactions
   // -----------------------------------------------------------------------------
