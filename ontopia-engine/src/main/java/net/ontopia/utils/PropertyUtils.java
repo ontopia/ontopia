@@ -52,6 +52,15 @@ public class PropertyUtils {
    * INTERNAL: Helper method used to get better error messages with
    * less typing.
    */
+  public static String getProperty(Map<String, String> properties, String name, String fallback) {
+    String property = getProperty(properties, name, false);
+    return property == null ? fallback : property;
+  }
+
+  /**
+   * INTERNAL: Helper method used to get better error messages with
+   * less typing.
+   */
   public static String getProperty(Map<String, String> properties, String name, boolean required) {
     String value = properties.get(name);
     if ((value == null) && required) {
