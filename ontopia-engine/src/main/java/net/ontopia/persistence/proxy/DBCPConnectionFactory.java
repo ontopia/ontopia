@@ -82,6 +82,9 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
   public static final String VALIDATION_QUERY = ROOT + "ValidationQuery";
   public static final String VALIDATION_QUERY_TIMEOUT = ROOT + "ValidationQueryTimeout"; // in seconds
 
+  public static final String TEST_RETURN = ROOT + "TestOnReturn";
+  public static final String TEST_IDLE = ROOT + "TestWhileIdle";
+
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
@@ -138,12 +141,17 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     // Test on borrow
     pool.setTestOnBorrow(true);
+    pool.setTestOnReturn(PropertyUtils.isTrue(TEST_RETURN, false));
+    pool.setTestWhileIdle(PropertyUtils.isTrue(TEST_IDLE, false));
 
     log.debug("DBCP connection {}-pool configured:", readOnly ? "ro" : "rw");
     log.debug("  minIdle = {}", pool.getMinIdle());
     log.debug("  maxIdle = {}", pool.getMaxIdle());
     log.debug("  maxActive = {}", pool.getMaxActive());
     log.debug("  maxWait = {}", pool.getMaxWait());
+    log.debug("  testOnBorrow = {}", pool.getTestOnBorrow());
+    log.debug("  testOnReturn = {}", pool.getTestOnReturn());
+    log.debug("  testWhileIdle = {}", pool.getTestWhileIdle());
     log.debug("  evictionTime = {}", pool.getTimeBetweenEvictionRunsMillis());
     switch (pool.getWhenExhaustedAction()) {
       case GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK: log.debug("  exhaustedAction = BLOCK"); break;
