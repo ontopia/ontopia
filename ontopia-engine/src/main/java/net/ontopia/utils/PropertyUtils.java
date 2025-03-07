@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,11 +27,12 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-  
-/** 
+
+/**
  * INTERNAL: Utility class for handling properties and their values.
  */
 
@@ -39,7 +40,7 @@ public class PropertyUtils {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(PropertyUtils.class.getName());
-  
+
   /**
    * INTERNAL: Helper method used to get better error messages with
    * less typing.
@@ -68,11 +69,11 @@ public class PropertyUtils {
     }
     return value;
   }
-  
+
   public static boolean isTrue(String property_value, boolean default_value) {
     return BooleanUtils.toBooleanDefaultIfNull(BooleanUtils.toBooleanObject(property_value), default_value);
   }
-  
+
   /**
    * INTERNAL: Returns the property value as an int. If the value is
    * not set or any problems occur the default value is returned.
@@ -94,13 +95,13 @@ public class PropertyUtils {
   }
 
   /**
-   * INTERNAL; Reads properties from a file. 
+   * INTERNAL; Reads properties from a file.
    */
   public static Properties loadProperties(File propfile) throws IOException {
     if (!propfile.exists()) {
       throw new OntopiaRuntimeException("Property file '" + propfile.getPath() + "' does not exist.");
     }
-    
+
     // Load properties from file
     Properties properties = new Properties();
     properties.load(new FileInputStream(propfile));
@@ -131,5 +132,13 @@ public class PropertyUtils {
       result.put(key, properties.getProperty(key));
     }
     return result;
+  }
+
+  public static Map<String, String> subset(Map<String, String> properties, String prefix) {
+    return properties.entrySet().stream()
+            .filter(entry -> entry.getKey().startsWith(prefix))
+            .collect(Collectors.toMap(
+                    entry -> org.apache.commons.lang3.StringUtils.removeStart(entry.getKey(), prefix),
+                    Map.Entry::getValue));
   }
 }
