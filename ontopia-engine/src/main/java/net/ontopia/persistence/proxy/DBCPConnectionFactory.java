@@ -202,7 +202,7 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
       // Create data source
       this.pcfactory =
-        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readOnly, config);
+        new TraceablePoolableConnectionFactory(cfactory, pool, stmpool, vquery, readOnly, readOnly, config);
     
       // Set default transaction isolation level
       pcfactory.setDefaultTransactionIsolation(defaultTransactionIsolation);
@@ -259,8 +259,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     private int objectsActivated;
     private int objectsPassivated;
 
-    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, AbandonedConfig config) {
-      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, false, config); // Auto-commit disabled by default
+    TraceablePoolableConnectionFactory(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, String validationQuery, boolean defaultReadOnly, boolean defaultAutoCommit, AbandonedConfig config) {
+      super(connFactory, pool, stmtPoolFactory, validationQuery, defaultReadOnly, defaultAutoCommit, config);
     }
 
     // PoolableObjectFactory implementation
