@@ -29,9 +29,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /** 
@@ -125,7 +127,7 @@ public class CSVExport {
     props.load(new FileInputStream(dbprops));
     
     // Create database connection
-    DefaultConnectionFactory cfactory = new DefaultConnectionFactory(props, true);
+    DataSourceConnectionFactory cfactory = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(props)), false);
     Connection conn = cfactory.requestConnection();
 
     CSVExport ce = new CSVExport(conn);

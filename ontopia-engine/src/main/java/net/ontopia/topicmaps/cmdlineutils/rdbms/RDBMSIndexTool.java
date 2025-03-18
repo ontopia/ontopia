@@ -33,8 +33,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import net.ontopia.persistence.proxy.ConnectionFactoryIF;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.persistence.rdbms.DatabaseProjectReader;
 import net.ontopia.persistence.rdbms.Index;
 import net.ontopia.persistence.rdbms.Project;
@@ -83,7 +83,7 @@ public class RDBMSIndexTool {
 
     // open database connection
     String propfile = args[0];
-    ConnectionFactoryIF cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(new File(propfile)), true);
+    DataSourceConnectionFactory cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(PropertyUtils.loadProperties(new File(propfile)))), true);
 
     Connection conn = cf.requestConnection();
     try {

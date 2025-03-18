@@ -25,8 +25,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.Map;
-import net.ontopia.persistence.proxy.ConnectionFactoryIF;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.utils.BeanUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
@@ -66,7 +66,7 @@ public class RDBMSConnectionInfo {
 
     // open database connection
     String propfile = args[0];
-    ConnectionFactoryIF cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(new File(propfile)), true);
+    DataSourceConnectionFactory cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(PropertyUtils.loadProperties(new File(propfile)))), true);
 
     Connection conn = cf.requestConnection();
     try {

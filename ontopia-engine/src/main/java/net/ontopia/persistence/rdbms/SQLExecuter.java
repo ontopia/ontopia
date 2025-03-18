@@ -25,10 +25,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
 
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.PropertyUtils;
 
 /** 
  * INTERNAL: Command line tool for executing SQL statements in a
@@ -69,7 +71,7 @@ public class SQLExecuter {
 
     Properties props = new Properties();
     props.load(new FileInputStream(dbprops));
-    DefaultConnectionFactory cfactory = new DefaultConnectionFactory(props, true);
+    DataSourceConnectionFactory cfactory = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(props)), true);
     Connection conn = cfactory.requestConnection();
     
     // Execute statement
