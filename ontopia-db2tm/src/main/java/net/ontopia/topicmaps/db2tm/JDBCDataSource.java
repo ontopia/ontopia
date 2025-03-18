@@ -34,9 +34,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import net.ontopia.persistence.proxy.ConnectionFactoryIF;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -75,8 +76,7 @@ public class JDBCDataSource implements DataSourceIF {
   protected Connection getConnection() {
     if (conn == null) {
       try {
-        ConnectionFactoryIF cf = 
-          new DefaultConnectionFactory(loadProperties(), false);
+        DataSourceConnectionFactory cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(loadProperties())), false);
         conn = cf.requestConnection();
       } catch (Exception t) {
         throw new OntopiaRuntimeException(t);

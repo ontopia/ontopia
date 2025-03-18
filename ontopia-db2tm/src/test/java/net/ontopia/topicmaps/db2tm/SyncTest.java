@@ -25,10 +25,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
+import java.util.Properties;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -330,9 +332,9 @@ public class SyncTest {
   // --- Internal methods
 
   private Connection getConnection() throws SQLException, IOException {
-    Map<Object, Object> props = PropertyUtils.loadPropertiesFromClassPath("db2tm.h2.props");
+    Properties props = PropertyUtils.loadPropertiesFromClassPath("db2tm.h2.props");
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
-    DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
+    ConnectionFactoryIF cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(props)), false);
     return cf.requestConnection();
   }
 
