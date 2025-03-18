@@ -32,7 +32,7 @@ import net.ontopia.topicmaps.impl.utils.StorePoolableObjectFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.pool.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,16 +109,12 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
             "net.ontopia.topicmaps.impl.rdbms.StorePool.MaximumSize", false);
         int maxsize = (_maxsize == null ? 8 : Integer.parseInt(_maxsize));
         log.debug("Setting StorePool.MaximumSize '" + maxsize + "'");
-        pool.setMaxActive(maxsize); // 0 = no limit
+        pool.setMaxTotal(maxsize); // 0 = no limit
 
         // Set soft maximum - emergency objects (default: false)
         boolean softmax = MapUtils.getBoolean(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum", false);
         log.debug("Setting StorePool.SoftMaximum '" + softmax + "'");
-        if (softmax) {
-          pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
-        } else {
-          pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
-        }
+        pool.setBlockWhenExhausted(!softmax);
 
         // EXPERIMENTAL!
         String _etime = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.IdleTimeout", false);
@@ -129,23 +125,19 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
         // allow the user to fully overwrite exhausted options
         String _whenExhaustedAction = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.StorePool.WhenExhaustedAction", false);
         if (EXHAUSED_BLOCK.equals(_whenExhaustedAction)) {
-          pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
+          pool.setBlockWhenExhausted(true);
         }
         if (EXHAUSED_GROW.equals(_whenExhaustedAction)) {
-          pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
+          pool.setBlockWhenExhausted(false);
         }
         if (EXHAUSED_FAIL.equals(_whenExhaustedAction)) {
-          pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_FAIL);
+          pool.setBlockWhenExhausted(false);
         }
 
-        if (pool.getWhenExhaustedAction() == GenericObjectPool.WHEN_EXHAUSTED_BLOCK) {
+        if (pool.getBlockWhenExhausted()) {
           log.debug("Pool is set to block on exhaused");
-        }
-        if (pool.getWhenExhaustedAction() == GenericObjectPool.WHEN_EXHAUSTED_GROW) {
-          log.debug("Pool is set to grow on exhaused");
-        }
-        if (pool.getWhenExhaustedAction() == GenericObjectPool.WHEN_EXHAUSTED_FAIL) {
-          log.debug("Pool is set to fail on exhaused");
+        } else {
+          log.debug("Pool is set to not block on exhaused");
         }
       }
     }
@@ -377,7 +369,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     out.write(Integer.toString(pool == null ? 0 : pool.getNumIdle()));
     out.write("  </td><tr>\n");
     out.write("</table>\n");
-    
+
     Object[] stores = ofactory.stores.toArray();
     for (int i = 0; i < stores.length; i++) {
       RDBMSTopicMapStore store = (RDBMSTopicMapStore)stores[i];
