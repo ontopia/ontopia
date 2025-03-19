@@ -970,7 +970,9 @@ public class RDBMSStorage implements StorageIF {
     }
 
     private void close() throws SQLException {
-      connection.rollback();
+      if (!connection.getAutoCommit()) {
+        connection.rollback();
+      }
       connection.close();
     }
 
