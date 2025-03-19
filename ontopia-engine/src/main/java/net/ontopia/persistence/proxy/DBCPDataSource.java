@@ -101,7 +101,7 @@ public class DBCPDataSource extends PoolingDataSource<PoolableConnection> implem
     poolableConnectionFactory.setDefaultAutoCommit(false);
 
     // apply config
-    poolableConnectionFactory.setValidationQueryTimeout(Duration.ofSeconds(PropertyUtils.getInt(VALIDATION_QUERY_TIMEOUT, DEFAULT_VALIDATION_TIMEOUT)));
+    poolableConnectionFactory.setValidationQueryTimeout(Duration.ofSeconds(PropertyUtils.getInt(properties.get(VALIDATION_QUERY_TIMEOUT), DEFAULT_VALIDATION_TIMEOUT)));
     poolableConnectionFactory.setValidationQuery(PropertyUtils.getProperty(properties, VALIDATION_QUERY, DEFAULT_VALIDATION_QUERY));
 
     ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(
