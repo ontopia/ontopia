@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -80,54 +79,6 @@ public class RDBMSStorage implements StorageIF {
   private static final ThreadFactory tFactory = new DefaultThreadFactory("nonTransactionalReadConnectionTimer-", true, true);
 
   public static final String PROPERTIES_ROOT = "net.ontopia.topicmaps.impl.rdbms.";
-  public static final Set<String> known_properties;
-  static {
-    known_properties = new HashSet<String>();
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.BatchUpdates");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.identitymap.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.local.debug");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype2.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared.debug");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared.identitymap.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionString");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Database");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.DriverClass");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.GlobalEntry");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.HighLowKeyGenerator.SelectSuffix");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.KeyBlockSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.MappingFile");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Password");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Platforms");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.QueriesFile");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MaximumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MinimumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.UserName");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.NonTransactionalRead");
-    known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF");
-    known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValuePredicate.function");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValuePredicate.function.type");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function.type");
-    known_properties.add("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type");
-  }
 
   private Map<String, String> properties;
 
@@ -823,11 +774,7 @@ public class RDBMSStorage implements StorageIF {
       if ("net.ontopia.topicmaps.impl.rdbms.Password".equals(prop)) {
         out.write("<b>" + prop + "</b>=(<i>hidden for security reasons</i>)<br>\n");
       } else {
-        if (known_properties.contains(prop)) {
-          out.write("<b>" + prop + "</b>=" + properties.get(prop) + "<br>\n");
-        } else {
           out.write(prop + "=" + properties.get(prop) + "<br>\n");
-        }
       }
     }
   }
