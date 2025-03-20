@@ -935,6 +935,8 @@ public class RDBMSStorage implements StorageIF {
       ds = (InstrumentedDataSourceIF) datasource;
     }
 
+    @Override public long getActiveTransactionCount() { return RDBMSStorage.this.getActiveTransactionCount(); }
+
     // connection pool
     @Override public long getConnectionPoolActive()    { return -1; }
     @Override public long getConnectionPoolIdle()      { return -1; }

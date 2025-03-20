@@ -28,7 +28,9 @@ import java.util.Map;
  */
 public interface RDBMSMetricsIF {
 
-  // connection pool
+  long getActiveTransactionCount();
+
+// connection pool
 
   long getConnectionPoolActive();
   long getConnectionPoolIdle();
