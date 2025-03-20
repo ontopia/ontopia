@@ -55,6 +55,7 @@
 		<module>ontopia-jdbcspy7</module>
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
+		<module>ontopia-instrumentation</module>
 
 		<!-- Web Apps -->
 		<module>webapp-root</module>
