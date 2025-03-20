@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +39,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
@@ -70,77 +73,31 @@ import org.slf4j.LoggerFactory;
  */
 
 public class RDBMSStorage implements StorageIF {
-  
+
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
   private static final ThreadFactory tFactory = new DefaultThreadFactory("nonTransactionalReadConnectionTimer-", true, true);
 
-  public static final Set<String> known_properties;
-  static {
-    known_properties = new HashSet<String>();
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.BatchUpdates");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.identitymap.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.local.debug");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.rolesbytype2.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared.debug");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.shared.identitymap.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MaximumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.MinimumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.UserTimeout");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionPool.ValidationQuery");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.ConnectionString");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Database");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.DriverClass");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.GlobalEntry");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.HighLowKeyGenerator.SelectSuffix");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.KeyBlockSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.MappingFile");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Password");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.Platforms");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.QueriesFile");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MaximumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.MinimumSize");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.StorePool.SoftMaximum");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.UserName");
-    known_properties.add("net.ontopia.topicmaps.impl.rdbms.NonTransactionalRead");
-    known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF");
-    known_properties.add("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValuePredicate.function");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValuePredicate.function.type");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function");
-    known_properties.add("net.ontopia.topicmaps.query.impl.rdbms.ValueLikePredicate.function.type");
-    known_properties.add("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type");
-  }
-  
+  public static final String PROPERTIES_ROOT = "net.ontopia.topicmaps.impl.rdbms.";
+
   private Map<String, String> properties;
-  
+
   private RDBMSMapping mapping;
   private QueryDeclarations queries;
-  
+
   private StorageCacheIF scache;
   private StorageAccessIF saccess;
-  
-  private ConnectionFactoryMetricsIF rw_connfactory;
-  private ConnectionFactoryMetricsIF ro_connfactory;
+
+  private DataSource datasource;
+  private ConnectionFactoryIF rw_connfactory;
+  private ConnectionFactoryIF ro_connfactory;
   private KeyGeneratorIF keygen;
-  
+
   private String database;
   private String[] platforms;
-  
+
   private int access_counter;
-  
+
   private SQLBuilder sqlbuilder;
   private SQLGeneratorIF sqlgen;
 
@@ -166,7 +123,7 @@ public class RDBMSStorage implements StorageIF {
     @Override
     public Object clone() { throw new UnsupportedOperationException(); }
   };
-  
+
   protected Map<IdentityIF, Map<String, EvictableIF>> qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
 
   /**
@@ -176,15 +133,15 @@ public class RDBMSStorage implements StorageIF {
   public RDBMSStorage() throws IOException {
     this(System.getProperty("net.ontopia.topicmaps.impl.rdbms.PropertyFile"));
   }
-  
+
   /**
    * INTERNAL: Creates a storage definition that reads its settings
    * from the specified property file.
    */
-  public RDBMSStorage(String propfile) throws IOException {    
+  public RDBMSStorage(String propfile) throws IOException {
     // TODO: attempt to load props from CLASSPATH (file: oks.rdbms.props)
     Objects.requireNonNull(propfile, "Property file cannot be null. Please set the 'net.ontopia.topicmaps.impl.rdbms.PropertyFile' property.");
-    
+
     // Load properties from file
     InputStream istream = StreamUtils.getInputStream(propfile);
     if (istream == null) {
@@ -195,7 +152,7 @@ public class RDBMSStorage implements StorageIF {
     }
     init(PropertyUtils.toMap(PropertyUtils.loadProperties(istream)));
   }
-  
+
   /**
    * INTERNAL: Creates a storage definition that reads its settings
    * from the specified properties.
@@ -206,10 +163,10 @@ public class RDBMSStorage implements StorageIF {
     // Pass on user current directory
     init(properties);
   }
-  
+
   protected InputStream getInputStream(String property, String filename)
     throws IOException {
-    
+
     String _filename = properties.get(property);
     if (_filename == null) {
       _filename = "classpath:net/ontopia/topicmaps/impl/rdbms/config/" + filename;
@@ -218,51 +175,54 @@ public class RDBMSStorage implements StorageIF {
     }
     return StreamUtils.getInputStream(_filename);
   }
-  
+
   /**
    * INTERNAL: Method shared by constructors to properly initialize members.
    */
   protected void init(Map<String, String> properties) throws IOException {
     // Set storage properties
     this.properties = properties;
-    
-    // Get mapping.xml file 
-    InputStream mstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.MappingFile", 
-        "mapping.xml");    
+
+    // Get mapping.xml file
+    InputStream mstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.MappingFile",
+        "mapping.xml");
     if (mstream == null) {
       throw new OntopiaRuntimeException("Object-relational mapping file 'mapping.xml' cannot be found.");
     }
-    
+
     // Get queries.xml file
-    InputStream qstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.QueriesFile", 
+    InputStream qstream = getInputStream("net.ontopia.topicmaps.impl.rdbms.QueriesFile",
         "queries.xml");
     if (qstream == null) {
       throw new OntopiaRuntimeException("Built-in queries file 'queries.xml' cannot be found.");
     }
-    
+
     // Read configuration files
     this.mapping = new RDBMSMapping(new ObjectRelationalMapping(mstream));
     this.queries = new QueryDeclarations(qstream);
-    
+
     // Set up connection factory
     String cptype = properties.get("net.ontopia.topicmaps.impl.rdbms.ConnectionPool");
-    
+
     if (cptype == null || "true".equals(cptype) || "yes".equals(cptype) || "dbcp".equals(cptype)) {
       log.debug("Using DBCP connection pool.");
-      this.rw_connfactory = new DBCPConnectionFactory(properties, false); // default
-      this.ro_connfactory = new DBCPConnectionFactory(properties, true); // default
-      
+      datasource = DBCPDataSource.fromConfiguration(properties);
     } else if ("jndi".equals(cptype)) {
       log.debug("Using JNDI connection pool.");
-      this.rw_connfactory = new JNDIConnectionFactory(properties);
-      this.ro_connfactory = new JNDIConnectionFactory(properties);
-      
+
+      try {
+        Context initCtx = new InitialContext();  // TODO: Support other initial contexts?
+        datasource = (DataSource)initCtx.lookup(PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource"));
+      } catch (NamingException ne) {
+        throw new OntopiaRuntimeException("Failed to set up JNDI connection pool: " + ne.getMessage(), ne);
+      }
     }  else {
       log.debug("Using default connection factory (i.e. no pool).");
-      this.rw_connfactory = new DefaultConnectionFactory(properties, false);
-      this.ro_connfactory = new DefaultConnectionFactory(properties, true);
+      datasource = new DriverDataSource(properties);
     }
-    
+    this.rw_connfactory = new DataSourceConnectionFactory(datasource, false);
+    this.ro_connfactory = new DataSourceConnectionFactory(datasource, true);
+
     nonTransactionalReadAllowed = PropertyUtils.isTrue(properties.get("net.ontopia.topicmaps.impl.rdbms.NonTransactionalRead"), true);
     log.debug((nonTransactionalReadAllowed ? "Allowing" : "Not allowing") + " non-transactional reads");
     nonTransactionalReadConnectionTimeout = PropertyUtils.getInt(properties.get("net.ontopia.topicmaps.impl.rdbms.NonTransactionalReadTimeout"), 10); // 10s
@@ -272,7 +232,7 @@ public class RDBMSStorage implements StorageIF {
     if (this.database == null) {
       throw new OntopiaRuntimeException("The property 'net.ontopia.topicmaps.impl.rdbms.Database' is not set.");
     }
-    
+
     // Get platforms
     String _platforms = getProperty("net.ontopia.topicmaps.impl.rdbms.Platforms");
     if (_platforms == null) {
@@ -320,31 +280,31 @@ public class RDBMSStorage implements StorageIF {
         default:
           throw new OntopiaRuntimeException("The datatype type is unknown and the property 'net.ontopia.topicmaps.impl.rdbms.Platforms' is not set.");
       }
-    }    
+    }
     this.platforms = StringUtils.split(_platforms, ",");
-    
+
     // Initialize key generator
     String kbprop = getProperty("net.ontopia.topicmaps.impl.rdbms.KeyBlockSize", "200");
-    
+
     String global_entry = getProperty("net.ontopia.topicmaps.impl.rdbms.GlobalEntry", "<GLOBAL>");
-    
+
     // Initialize key generator
     // TODO: Remove dependency on hardcoded key generator schema names.
     this.keygen = new HighLowKeyGenerator(this.rw_connfactory,
         "TM_ADMIN_SEQUENCE", "seq_name", "seq_count",
         global_entry, Integer.parseInt(kbprop), database, properties);
-    
+
     // Create query builders
     this.sqlbuilder = new SQLBuilder(getMapping(), Boolean.parseBoolean(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
     this.sqlgen = GenericSQLGenerator.getSQLGenerator(getPlatforms(), properties);
-    
+
     // Register jdbcspy driver
     try {
       Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
     } catch (ClassNotFoundException e) {
       // ignore if not exists
     }
-    
+
     // initialize cluster
     String clusterId = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
     if (clusterId != null) {
@@ -359,21 +319,21 @@ public class RDBMSStorage implements StorageIF {
     if (this.caches == null) {
       this.caches = new DefaultCaches();
     }
-    
-    
+
+
     // initialize shared cache
     if (PropertyUtils.isTrue(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared"), true)) {
-      
+
       // default shared cache
       this.scache = new SharedCache(this, caches.<IdentityIF, CacheEntry>createDataCache());
-      ((SharedCache)this.scache).setCluster(cluster);              
-      
+      ((SharedCache)this.scache).setCluster(cluster);
+
       // instrument shared cache
       int dinterval = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.shared.debug"), -1);
       if (dinterval > 0) {
         log.info("Instrumenting shared cache.");
         this.scache = new StatisticsCache("scache", scache, dinterval);
-      }      
+      }
     } else if (this.cluster != null) {
       log.warn("");
       log.warn("");
@@ -394,30 +354,30 @@ public class RDBMSStorage implements StorageIF {
       this.cluster.join();
     }
   }
-  
+
   @Override
   public RDBMSMapping getMapping() {
     return mapping;
   }
-  
+
   public QueryDeclarations getQueryDeclarations() {
     return queries;
   }
-  
+
   public IdentityIF generateIdentity(Class<?> type) {
     return keygen.generateKey(type);
   }
-  
+
   @Override
   public Map<String, String> getProperties() {
     return properties;
   }
-  
+
   @Override
   public String getProperty(String property) {
     return properties.get(property);
   }
-  
+
   public String getProperty(String property, String default_value) {
     String propval = properties.get(property);
     if (propval == null) {
@@ -426,7 +386,7 @@ public class RDBMSStorage implements StorageIF {
       return propval;
     }
   }
-  
+
   public StorageAccessIF createAccess(boolean readonly) {
     // TODO: Always return same read-only storage access?
     String id = "SA" + (++access_counter);
@@ -448,31 +408,31 @@ public class RDBMSStorage implements StorageIF {
 
     return transaction;
   }
-  
+
   @Override
   public boolean isSharedCache() {
     return (scache != null);
   }
-  
+
   @Override
   public StorageCacheIF getStorageCache() {
     return scache;
   }
-  
+
   /**
    * INTERNAL: Returns the database type.
    */
   public String getDatabase() {
     return database;
   }
-  
+
   /**
    * INTERNAL: Returns the database platforms.
    */
   public String[] getPlatforms() {
     return platforms;
   }
-  
+
   @Override
   public synchronized void close() {
     nonTransactionalReadConnectionTimer.shutdownNow();
@@ -508,8 +468,15 @@ public class RDBMSStorage implements StorageIF {
     if (ro_connfactory != null) {
       ro_connfactory.close();
     }
+    if (datasource instanceof AutoCloseable) {
+      try {
+        ((AutoCloseable) datasource).close();
+      } catch (Exception e) {
+        log.warn("Failed to close datasource: " + e.getMessage() + ", ignoring");
+      }
+    }
   }
-  
+
   // -----------------------------------------------------------------------------
   // Cluster
   // -----------------------------------------------------------------------------
@@ -520,22 +487,22 @@ public class RDBMSStorage implements StorageIF {
       cluster.flush();
     }
   }
-  
+
   // -----------------------------------------------------------------------------
   // Query cache
   // -----------------------------------------------------------------------------
-  
+
   // NOTE: works only with queries with return type object. The return
   // values are not transactional object instances, but might instead
   // be the identity of such objects.
-  
+
   // NOTE: query caches are indexed by name spaces. There is typically
   // one query cache instance per topicmap id + query name.
-  
+
   @Override
   public synchronized EvictableIF getHelperObject(int identifier, IdentityIF namespace) {
     if (isSharedCache()) {
-      // get query cache map for namespace 
+      // get query cache map for namespace
       Map<String, EvictableIF> qcm = qcmap.get(namespace);
       if (qcm == null) {
         qcm = new HashMap<String, EvictableIF>();
@@ -569,7 +536,7 @@ public class RDBMSStorage implements StorageIF {
         final String name = "TopicMapIF.getTopicBySubject";
         EvictableIF qc = qcm.get(name);
         if (qc == null) {
-          int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);    
+          int lrusize_subloc = PropertyUtils.getInt(getProperty("net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru"), 100);
           CacheIF<LocatorIF, IdentityIF> cache = caches.<LocatorIF, IdentityIF>createCache(CachesIF.QUERY_CACHE_SUBLOC, namespace);
           qc = new QueryCache<LocatorIF, IdentityIF>(createDetachedQuery(name), cache, lrusize_subloc, NULL_OBJECT_IDENTITY);
           qcm.put(name, qc);
@@ -603,18 +570,18 @@ public class RDBMSStorage implements StorageIF {
         throw new OntopiaRuntimeException("No helper object with identifier " + identifier + " found.");
       }
     } else {
-      throw new OntopiaRuntimeException("Cannot create helper objects when shared cache is disabled.");      
+      throw new OntopiaRuntimeException("Cannot create helper objects when shared cache is disabled.");
     }
   }
-  
+
   private DetachedQueryIF createDetachedQuery(String name) {
     StorageCacheIF scache = getStorageCache();
-    
+
     // Generate query from query descriptor.
     QueryDescriptor qdesc = getQueryDescriptor(name);
     return qdesc.createSharedQuery(this, scache.getRegistrar(), platforms);
   }
-  
+
   // -----------------------------------------------------------------------------
   // Queries
   // -----------------------------------------------------------------------------
@@ -623,68 +590,68 @@ public class RDBMSStorage implements StorageIF {
     QueryDescriptor qdesc = getQueryDescriptor(name);
     return qdesc.getStatement(platforms);
   }
-  
+
   protected QueryDescriptor getQueryDescriptor(String name) {
     // Lookup query descriptor
     QueryDescriptor qdesc = queries.getQueryDescriptor(name);
     if (qdesc == null) {
       throw new OntopiaRuntimeException("No query with the name " + name + " found.");
     }
-    
+
     if (log.isDebugEnabled()) {
      log.debug("Generating query '" + name + "' from descriptor.");
     }
-    
+
     return qdesc;
   }
-  
-  public QueryIF createQuery(String name, RDBMSAccess access, 
+
+  public QueryIF createQuery(String name, RDBMSAccess access,
       ObjectAccessIF oaccess, AccessRegistrarIF registrar) {
-    
+
     // Generate query from query descriptor.
     QueryDescriptor qdesc = getQueryDescriptor(name);
     return qdesc.createQuery(access, oaccess, registrar, platforms);
   }
-  
-  public QueryIF createQuery(JDOQuery jdoquery, RDBMSAccess access, 
+
+  public QueryIF createQuery(JDOQuery jdoquery, RDBMSAccess access,
       ObjectAccessIF oaccess, AccessRegistrarIF registrar,
       boolean lookup_identities) {
     //! System.out.println("JDO: " + jdoquery);
     SQLQuery sqlquery = sqlbuilder.makeQuery(jdoquery, oaccess);
-    
+
     boolean debug = log.isDebugEnabled();
     if (debug) {
       log.debug("SQL1: " + sqlquery + " [width=" + sqlquery.getWidth() + "]");
     }
     //! System.out.println("SQL1: " + sqlquery + " [width=" + sqlquery.getWidth() + "]");
-    
+
     sqlquery = new RedundantTablesSQLOptimizer().optimize(sqlquery);
     sqlquery = new EqualsSQLOptimizer().optimize(sqlquery);
-    
+
     SQLStatementIF stm = sqlgen.createSQLStatement(sqlquery);
     if (debug) {
       log.debug("SQL2: " + stm + " [width=" + stm.getWidth() + "]");
     }
     //! System.out.println("SQL2: " + stm + " [width=" + stm.getWidth() + "]");
-    
+
     stm.setObjectAccess(oaccess);
     stm.setAccessRegistrar(registrar);
-    
+
     return new RDBMSQuery(access, new RDBMSMatrixQuery(stm, lookup_identities));
   }
-  
+
   public SQLGeneratorIF getSQLGenerator() {
     return sqlgen;
   }
-  
+
   public ConnectionFactoryIF getConnectionFactory(boolean readonly) {
     return (readonly ? ro_connfactory : rw_connfactory);
   }
-  
+
   // -----------------------------------------------------------------------------
   // Cache reset
   // -----------------------------------------------------------------------------
-  
+
   public synchronized void clearCache() {
     if (scache != null) {
       // clear shared cache
@@ -693,23 +660,23 @@ public class RDBMSStorage implements StorageIF {
       this.qcmap = new HashMap<IdentityIF, Map<String, EvictableIF>>();
     }
   }
-  
+
   public void clearCache(IdentityIF namespace) {
     if (isSharedCache()) {
       EvictableIF ho;
-      
+
       ho = getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, namespace);
       ho.clear(true);
-      
+
       ho = getHelperObject(CachesIF.QUERY_CACHE_SUBIND, namespace);
       ho.clear(true);
-      
+
       ho = getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, namespace);
       ho.clear(true);
-      
+
       ho = getHelperObject(CachesIF.QUERY_CACHE_RT1, namespace);
       ho.clear(true);
-      
+
       ho = getHelperObject(CachesIF.QUERY_CACHE_RT2, namespace);
       ho.clear(true);
     }
@@ -719,11 +686,16 @@ public class RDBMSStorage implements StorageIF {
   // Instrumentation
   // -----------------------------------------------------------------------------
 
+  /**
+   * PUBLIC: provides proxy access to a {@link RDBMSMetricsIF} object that provides access to the
+   * metrics regarding this storage.
+   * @return A {@link RDBMSMetricsIF} object
+   */
   public RDBMSMetricsIF getMetrics() {
-    return new Metrics();
+    return datasource instanceof DBCPDataSource ? new PooledMetrics() : new Metrics();
   }
 
-  public void writeReport(java.io.Writer out, TopicMapReferenceIF reference, IdentityIF namespace, 
+  public void writeReport(java.io.Writer out, TopicMapReferenceIF reference, IdentityIF namespace,
       boolean dumpCaches) throws java.io.IOException {
 
     out.write("<h1>OKS statistics</h1>\n");
@@ -741,38 +713,38 @@ public class RDBMSStorage implements StorageIF {
     //! out.write(", Free memory: ");
     //! out.write(Long.toString(runtime.freeMemory()));
     //! out.write("</p>");
-    
+
     // output shared cache statistics
     if (scache != null) {
       out.write("<h3>Shared cache</h3>\n");
       ((SharedCache)scache).writeReport(out, dumpCaches);
     }
-    
+
     // output query cache statistics
     if (isSharedCache()) {
       QueryCache qc;
-      
+
       out.write("<h3>TopicMapIF.getObjectByItemIdentifier</h3>\n");
       qc = (QueryCache)getHelperObject(CachesIF.QUERY_CACHE_SRCLOC, namespace);
       qc.writeReport(out, dumpCaches);
-      
+
       out.write("<h3>TopicMapIF.getTopicBySubjectIdentifier</h3>\n");
       qc = (QueryCache)getHelperObject(CachesIF.QUERY_CACHE_SUBIND, namespace);
       qc.writeReport(out, dumpCaches);
-      
+
       out.write("<h3>TopicMapIF.getTopicBySubject</h3>\n");
       qc = (QueryCache)getHelperObject(CachesIF.QUERY_CACHE_SUBLOC, namespace);
       qc.writeReport(out, dumpCaches);
-      
+
       out.write("<h3>TopicIF.getRolesByType</h3>\n");
       qc = (QueryCache)getHelperObject(CachesIF.QUERY_CACHE_RT1, namespace);
       qc.writeReport(out, dumpCaches);
-      
+
       out.write("<h3>TopicIF.getRolesByType2</h3>\n");
       TransactionalLRULookupIndex tl = (TransactionalLRULookupIndex)getHelperObject(CachesIF.QUERY_CACHE_RT2, namespace);
       tl.writeReport(out, dumpCaches);
     }
-    
+
     // output reference statistics
     if (reference != null && reference instanceof RDBMSTopicMapReference) {
       out.write("<h3>Transactions</h3>\n");
@@ -780,14 +752,18 @@ public class RDBMSStorage implements StorageIF {
     }
 
     // output dbcp statistics
-    if (rw_connfactory instanceof DBCPConnectionFactory) {
-      out.write("<h3>DBCP rw connection pool</h3>\n");
-      ((DBCPConnectionFactory)rw_connfactory).writeReport(out);
-    }    
-    if (ro_connfactory instanceof DBCPConnectionFactory) {
-      out.write("<h3>DBCP ro connection pool</h3>\n");
-      ((DBCPConnectionFactory)ro_connfactory).writeReport(out);
-    }    
+    final String BR = "<br>\n";
+    RDBMSMetricsIF metrics = getMetrics();
+    out.write("<h3>DBCP pool</h3>\n");
+    out.write("Active connections: " + metrics.getConnectionPoolActive() + "<br>\n");
+    out.write("Maximum connections: " + metrics.getConnectionPoolMaxTotal()+ "<br>\n");
+    out.write("Idle connections: " + metrics.getConnectionPoolIdle() + " (min: " + metrics.getConnectionPoolMinIdle() + " max: " + metrics.getConnectionPoolMaxIdle()  + ")<br>\n");
+    out.write("Connections created: " + metrics.getConnectionsOpened() + BR);
+    out.write("Connections destroyed: " + metrics.getConnectionsClosed() + BR);
+    out.write("Connections borrowed: " + metrics.getConnectionsBorrowed()+ BR);
+    out.write("Connections returned: " + metrics.getConnectionsReturned()+ BR);
+    out.write("Connections evicted: " + metrics.getConnectionsClosedByEviction()+ BR);
+    out.write("Connections failed validation: " + metrics.getConnectionsClosedByValidation()+ BR);
 
     // output storage properties
     out.write("<h3>Database properties</h3>\n");
@@ -798,11 +774,7 @@ public class RDBMSStorage implements StorageIF {
       if ("net.ontopia.topicmaps.impl.rdbms.Password".equals(prop)) {
         out.write("<b>" + prop + "</b>=(<i>hidden for security reasons</i>)<br>\n");
       } else {
-        if (known_properties.contains(prop)) { 
-          out.write("<b>" + prop + "</b>=" + properties.get(prop) + "<br>\n");
-        } else {
           out.write(prop + "=" + properties.get(prop) + "<br>\n");
-        }
       }
     }
   }
@@ -935,7 +907,7 @@ public class RDBMSStorage implements StorageIF {
     private void touch() {
       lastUsed = System.currentTimeMillis();
     }
-    
+
     private long getLastUsed() {
       return lastUsed;
     }
@@ -945,39 +917,37 @@ public class RDBMSStorage implements StorageIF {
     }
 
     private void close() throws SQLException {
-      connection.rollback();
+      if (!connection.getAutoCommit()) {
+        connection.rollback();
+      }
       connection.close();
     }
-    
+
     private boolean isClosed() throws SQLException {
       return connection.isClosed();
     }
   }
 
   private class Metrics implements RDBMSMetricsIF {
-    // connection pool
-    @Override public long getROConnectionPoolActive()    { return ro_connfactory.getConnectionPoolActive(); }
-    @Override public long getROConnectionPoolIdle()      { return ro_connfactory.getConnectionPoolIdle(); }
-    @Override public long getROConnectionPoolMaxActive() { return ro_connfactory.getConnectionPoolMaxActive(); }
-    @Override public long getROConnectionPoolMaxIdle()   { return ro_connfactory.getConnectionPoolMaxIdle(); }
-    @Override public long getROConnectionPoolMinIdle()   { return ro_connfactory.getConnectionPoolMinIdle(); }
-    @Override public long getRWConnectionPoolActive()    { return rw_connfactory.getConnectionPoolActive(); }
-    @Override public long getRWConnectionPoolIdle()      { return rw_connfactory.getConnectionPoolIdle(); }
-    @Override public long getRWConnectionPoolMaxActive() { return rw_connfactory.getConnectionPoolMaxActive(); }
-    @Override public long getRWConnectionPoolMaxIdle()   { return rw_connfactory.getConnectionPoolMaxIdle(); }
-    @Override public long getRWConnectionPoolMinIdle()   { return rw_connfactory.getConnectionPoolMinIdle(); }
+    private final InstrumentedDataSourceIF ds;
 
-    // connection factory
-    @Override public long getROConnectionsClosed()       { return ro_connfactory.getConnectionsClosed(); }
-    @Override public long getROConnectionsOpened()       { return ro_connfactory.getConnectionsOpened(); }
-    @Override public long getROConnectionsValidated()    { return ro_connfactory.getConnectionsValidated(); }
-    @Override public long getROConnectionsBorrowed()     { return ro_connfactory.getConnectionsBorrowed(); }
-    @Override public long getROConnectionsReturned()     { return ro_connfactory.getConnectionsReturned(); }
-    @Override public long getRWConnectionsClosed()       { return rw_connfactory.getConnectionsClosed(); }
-    @Override public long getRWConnectionsOpened()       { return rw_connfactory.getConnectionsOpened(); }
-    @Override public long getRWConnectionsValidated()    { return rw_connfactory.getConnectionsValidated(); }
-    @Override public long getRWConnectionsBorrowed()     { return rw_connfactory.getConnectionsBorrowed(); }
-    @Override public long getRWConnectionsReturned()     { return rw_connfactory.getConnectionsReturned(); }
+    public Metrics() {
+      ds = (InstrumentedDataSourceIF) datasource;
+    }
+
+    // connection pool
+    @Override public long getConnectionPoolActive()    { return -1; }
+    @Override public long getConnectionPoolIdle()      { return -1; }
+    @Override public long getConnectionPoolMaxTotal()  { return -1; }
+    @Override public long getConnectionPoolMaxIdle()   { return -1; }
+    @Override public long getConnectionPoolMinIdle()   { return -1; }
+
+    @Override public long getConnectionsClosed()       { return ds.getConnectionsClosed(); }
+    @Override public long getConnectionsOpened()       { return ds.getConnectionsOpened(); }
+    @Override public long getConnectionsBorrowed()     { return -1; }
+    @Override public long getConnectionsReturned()     { return -1; }
+    @Override public long getConnectionsClosedByValidation() { return -1; }
+    @Override public long getConnectionsClosedByEviction()   { return -1; }
 
     // shared cache
     @Override public long getSharedCacheSize()           { return scache == null ? -1 : ((SharedCache) scache).getSize(); }
@@ -1005,5 +975,27 @@ public class RDBMSStorage implements StorageIF {
           entry -> (Long) entry.getKey().getKey(0),
           entry -> (CacheMetricsIF) entry.getValue().get(identifier)));
     }
+  }
+
+  private class PooledMetrics extends Metrics {
+    private final DBCPDataSource ds;
+
+    public PooledMetrics() {
+      ds = (DBCPDataSource) datasource;
+    }
+
+    // connection pool
+    @Override public long getConnectionPoolActive()    { return ds.getNumActive(); }
+    @Override public long getConnectionPoolIdle()      { return ds.getNumIdle(); }
+    @Override public long getConnectionPoolMaxTotal()  { return ds.getMaxTotal(); }
+    @Override public long getConnectionPoolMaxIdle()   { return ds.getMaxIdle(); }
+    @Override public long getConnectionPoolMinIdle()   { return ds.getMinIdle(); }
+
+    @Override public long getConnectionsClosed()       { return ds.getConnectionsClosed(); }
+    @Override public long getConnectionsOpened()       { return ds.getConnectionsOpened(); }
+    @Override public long getConnectionsBorrowed()     { return ds.getConnectionsBorrowed(); }
+    @Override public long getConnectionsReturned()     { return ds.getConnectionsReturned(); }
+    @Override public long getConnectionsClosedByValidation() { return ds.getConnectionsClosedByValidation(); }
+    @Override public long getConnectionsClosedByEviction()   { return ds.getConnectionsClosedByEviction(); }
   }
 }

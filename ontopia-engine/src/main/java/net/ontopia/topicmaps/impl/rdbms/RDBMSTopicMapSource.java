@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.persistence.proxy.RDBMSMetricsIF;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
@@ -287,7 +288,16 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     }
   }
 
-  
+  /**
+   * PUBLIC: provides access to the {@link RDBMSStorage#getMetrics()}.
+   * Returns null if no storage was created yet.
+   * @return an {@link RDBMSMetricsIF} instance that provides storage metrics.
+   */
+  public RDBMSMetricsIF getMetrics() {
+    if (storage == null) { return null; }
+    return storage.getMetrics();
+  }
+
   protected String getReferenceId(String baseAdress, String title, long topicmap_id) {
     if (id == null) {
       return "RDBMS-" + topicmap_id;

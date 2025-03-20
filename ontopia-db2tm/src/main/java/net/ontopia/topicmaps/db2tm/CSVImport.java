@@ -34,10 +34,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -250,7 +252,7 @@ public class CSVImport {
     props.load(new FileInputStream(dbprops));
     
     // Create database connection
-    DefaultConnectionFactory cfactory = new DefaultConnectionFactory(props, false);
+    DataSourceConnectionFactory cfactory = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(props)), false);
     Connection conn = cfactory.requestConnection();
 
     CSVImport ci = new CSVImport(conn);

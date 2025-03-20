@@ -28,8 +28,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import java.util.Properties;
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
@@ -116,9 +118,9 @@ public class ChangelogTestCase {
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
     File propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties");
-    Map<Object, Object> props = PropertyUtils.loadProperties(propfile);
+    Properties props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
-    DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
+    ConnectionFactoryIF cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(props)), false);
     return cf.requestConnection();
   }
 

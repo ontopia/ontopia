@@ -27,7 +27,8 @@ import java.sql.Statement;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
-import net.ontopia.persistence.proxy.DefaultConnectionFactory;
+import net.ontopia.persistence.proxy.DataSourceConnectionFactory;
+import net.ontopia.persistence.proxy.DriverDataSource;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -162,8 +163,8 @@ public class JDBCDataSourceTest {
   
   @Test
   public void testSecondary() throws Exception {
-    
-    ConnectionFactoryIF cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(StreamUtils.getInputStream(propfile)), false);
+
+    ConnectionFactoryIF cf = new DataSourceConnectionFactory(new DriverDataSource(PropertyUtils.toMap(PropertyUtils.loadProperties(StreamUtils.getInputStream(propfile)))), false);
     Connection conn = cf.requestConnection();
     try {
       // create tables

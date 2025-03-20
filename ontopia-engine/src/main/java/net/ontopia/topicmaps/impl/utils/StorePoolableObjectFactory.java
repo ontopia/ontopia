@@ -22,10 +22,11 @@ package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Collection;
 import java.util.HashSet;
-
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-
+import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.PooledObjectFactory;
+import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,7 @@ import org.slf4j.LoggerFactory;
  * @since 2.1
  */
 
-public class StorePoolableObjectFactory 
-  implements org.apache.commons.pool.PoolableObjectFactory {
+public class StorePoolableObjectFactory implements PooledObjectFactory<AbstractTopicMapStore> {
 
   // define a logging category.
   private static final Logger log = LoggerFactory.getLogger(StorePoolableObjectFactory.class.getName());
@@ -54,47 +54,43 @@ public class StorePoolableObjectFactory
   }
 
   @Override
-  public Object makeObject()
-    throws Exception {
+  public PooledObject<AbstractTopicMapStore> makeObject() throws Exception {
     // tell store factory to create a new store instance
-    TopicMapStoreIF o = sfactory.createStore();
-    log.debug("makeObject " + o);
-    stores.add(o);
-    return o;
+    TopicMapStoreIF store = sfactory.createStore();
+    log.debug("makeObject " + store);
+    stores.add(store);
+    return new DefaultPooledObject<>((AbstractTopicMapStore) store);
   }
-  
+
   @Override
-  public void destroyObject(Object o)
-    throws Exception {
-    log.debug("destroyObject " + o);
-    AbstractTopicMapStore s = (AbstractTopicMapStore)o;
-    stores.remove(s);
+  public void destroyObject(PooledObject<AbstractTopicMapStore> o) throws Exception {
+    AbstractTopicMapStore store = o.getObject();
+    log.debug("destroyObject " + store);
+    stores.remove(store);
     // close topic map store
-    if (s.isOpen()) {
-      s.close(false);
+    if (store.isOpen()) {
+      store.close(false);
     }    
   }
 
   @Override
-  public boolean validateObject(Object o) {
+  public boolean validateObject(PooledObject<AbstractTopicMapStore> o) {
+    AbstractTopicMapStore store = o.getObject();
     log.debug("validateObject " + o);
     // ask store to validate itself
-    AbstractTopicMapStore store = (AbstractTopicMapStore)o;
     boolean valid = store.validate();
     log.debug("validate: " + valid);
     return valid;
   }
 
   @Override
-  public void activateObject(Object o)
-    throws Exception {
-    log.debug("activateObject " + o);
+  public void activateObject(PooledObject<AbstractTopicMapStore> o) throws Exception {
+    log.debug("activateObject " + o.getObject());
   }
 
   @Override
-  public void passivateObject(Object o)
-    throws Exception {
-    log.debug("passivateObject " + o);
+  public void passivateObject(PooledObject<AbstractTopicMapStore> o) throws Exception {
+    log.debug("passivateObject " + o.getObject());
   }
 
 }

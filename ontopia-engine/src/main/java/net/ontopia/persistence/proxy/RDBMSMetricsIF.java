@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,35 +22,28 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Map;
 
+/**
+ * PUBLIC: Provides metrics regarding RDBMS proxy connections.
+ * @since %NEXT%
+ */
 public interface RDBMSMetricsIF {
 
   // connection pool
 
-  long getROConnectionPoolActive();
-  long getROConnectionPoolIdle();
-  long getROConnectionPoolMaxActive();
-  long getROConnectionPoolMaxIdle();
-  long getROConnectionPoolMinIdle();
-
-  long getRWConnectionPoolActive();
-  long getRWConnectionPoolIdle();
-  long getRWConnectionPoolMaxActive();
-  long getRWConnectionPoolMaxIdle();
-  long getRWConnectionPoolMinIdle();
+  long getConnectionPoolActive();
+  long getConnectionPoolIdle();
+  long getConnectionPoolMaxTotal();
+  long getConnectionPoolMaxIdle();
+  long getConnectionPoolMinIdle();
 
   // connection factory
 
-  long getROConnectionsClosed();
-  long getROConnectionsOpened();
-  long getROConnectionsValidated();
-  long getROConnectionsBorrowed();
-  long getROConnectionsReturned();
-
-  long getRWConnectionsClosed();
-  long getRWConnectionsOpened();
-  long getRWConnectionsValidated();
-  long getRWConnectionsBorrowed();
-  long getRWConnectionsReturned();
+  long getConnectionsClosed();
+  long getConnectionsOpened();
+  long getConnectionsBorrowed();
+  long getConnectionsReturned();
+  long getConnectionsClosedByValidation();
+  long getConnectionsClosedByEviction();
 
   // shared cache
 
