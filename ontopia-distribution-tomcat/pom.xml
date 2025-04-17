@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>ontopia-distribution-tomcat</artifactId>
 	<packaging>pom</packaging>
-	<name>Ontopia Distribution Tomcat 6</name>
+	<name>Ontopia Distribution Tomcat</name>
 	<dependencies>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
