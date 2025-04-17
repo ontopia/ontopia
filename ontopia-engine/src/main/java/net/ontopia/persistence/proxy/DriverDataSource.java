@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A datasource creating connections from a {@link DriverManagerConnectionFactory}.
- * @since %NEXT%
+ * @since 5.5.0
  * @see AbandonedConfig
  * @see GenericObjectPoolConfig
  */

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: A datasource wrapping the DBCP2 connection pooling. Uses bean-utils to populate the settings,
  * see the specific config documentation for all possible options.
 
- * @since %NEXT%
+ * @since 5.5.0
  * @see AbandonedConfig
  * @see GenericObjectPoolConfig
  */

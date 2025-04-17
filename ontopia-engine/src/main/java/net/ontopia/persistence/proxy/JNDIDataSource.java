@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 
 /**
  * INTERNAL: A JNDI datasource wrapper to allow metrics.
- * @since %NEXT%
+ * @since 5.5.0
  */
 public class JNDIDataSource implements DataSource, InstrumentedDataSourceIF {
 

@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * PUBLIC: Provides metrics regarding RDBMS proxy connections.
- * @since %NEXT%
+ * @since 5.5.0
  */
 public interface RDBMSMetricsIF {
 

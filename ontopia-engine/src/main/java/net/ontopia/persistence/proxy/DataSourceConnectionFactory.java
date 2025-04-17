@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A {@link ConnectionFactoryIF} backed by a {@link DataSource}.
- * @since %NEXT%
+ * @since 5.5.0
  */
 public class DataSourceConnectionFactory implements ConnectionFactoryIF {
   private static final Logger log = LoggerFactory.getLogger(DataSourceConnectionFactory.class.getName());
