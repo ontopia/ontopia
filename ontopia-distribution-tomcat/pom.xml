@@ -144,7 +144,7 @@
 	</dependencies>
 	
 	<properties>
-		<tomcat.version>9.0.68</tomcat.version>
+		<tomcat.version>9.0.104</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${basedir}/target/${project.artifactId}-${project.version}/rdbms/setup/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>

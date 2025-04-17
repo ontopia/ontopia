@@ -9,7 +9,7 @@
  
  #
  # List of comma-separated paths defining the contents of the "server"
-@@ -189,7 +189,8 @@
+@@ -196,7 +196,8 @@
  xml-apis.jar,\
  xmlParserAPIs-*.jar,\
  xmlParserAPIs.jar,\
@@ -19,7 +19,7 @@
  
  # Default list of JAR files that should be scanned that overrides the default
  # jarsToSkip list above. This is typically used to include a specific JAR that
-@@ -200,7 +201,10 @@
+@@ -207,7 +208,10 @@
  log4j-taglib*.jar,\
  log4j-web*.jar,\
  log4javascript*.jar,\
