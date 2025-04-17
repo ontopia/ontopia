@@ -9,7 +9,7 @@ This module contains all the core functionalities of Ontopia. Reading, writing a
 Topicmaps in files, memory or RDBMS is all supported in the core module.
 </p>
 
-<span class="version">5.2 2011-03-25</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Module API ###
 

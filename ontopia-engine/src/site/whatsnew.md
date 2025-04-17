@@ -9,7 +9,36 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.4.0 2022-10-20</p>
+<span class="version">5.5.0 2025-04-17</p>
+
+### Ontopia 5.5.0 release notes ###
+
+The following changes have been made:
+
+*  **Ontopia now requires Java 11**
+*  Removed ontopia-schema
+*  Removed ontopia-webed (breaks webapp-accessctl)
+*  Improved on synchronisation regarding NonTransactionalRead connections in `RDBMSStorage`
+*  Refactored NonTransactionalReadConnection to avoid using Connection subclasses that introduce unwanted side effects
+*  Disabled store pooling by default as it malfunctions in mulithreaded environments. Introduced option to enable it
+*  Removed JTidy use, due to CVE-2023-34623
+*  Removed `ontopia-deprecated-utils`
+*  Several JGroups improvements
+*  Made `RDBMSTopicMapTransaction.getTopicMap` available to non-transactional reads
+*  Added testcase for non-transactional reads for most used API's
+*  Added ontopia-instrumentation module exposing prometheus metrics
+
+#### The following dependencies have been upgraded:
+
+*  Upgraded to Restlet 2.4.3
+*  Upgraded to DBCP 2.13.0 (up from 1.x)
+*  Upgrade to Tomcat 9.0.104
+*  [Issue 563: Upgraded to jena 4.8.0](https://github.com/ontopia/ontopia/issues/563)
+*  [Issue 574: Bump commons-fileupload from 1.3.3 to 1.5](https://github.com/ontopia/ontopia/issues/574)
+*  [Issue 575: Bump h2 from 2.1.210 to 2.2.220](https://github.com/ontopia/ontopia/issues/575)
+*  [Issue 576: Bump commons-io:commons-io from 2.7 to 2.14.0](https://github.com/ontopia/ontopia/issues/576)
+*  [Issue 577: Bump org.apache.poi:poi-ooxml from 5.2.3 to 5.4.0](https://github.com/ontopia/ontopia/issues/577)
+
 
 ### Ontopia 5.4.0 release notes ###
 

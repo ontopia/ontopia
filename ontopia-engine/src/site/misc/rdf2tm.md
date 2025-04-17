@@ -15,7 +15,7 @@ specification may be taken up by some standards body at some point, but no initi
 direction have been taken as yet.
 </p>
 
-<span class="version">Ontopia Version 0.2 ($Revision: 1.3 $) $Date: 2004/12/08 16:52:27 $</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Introduction ###
 

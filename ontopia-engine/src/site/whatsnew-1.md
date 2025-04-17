@@ -9,7 +9,7 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.3.0 2013-08-01</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Changes from 1.4.1 to 1.4.2 ###
 

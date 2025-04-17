@@ -10,7 +10,7 @@ Connector. It assumes that the reader is familiar with relational databases and 
 of how to configure them.
 </p>
 
-<span class="version">5.1 2011-04-10</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Quickstart ###
 

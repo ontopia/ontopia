@@ -9,7 +9,7 @@ This document is a tutorial introduction to the tolog topic map query language. 
 use all the features of the language, as defined in version 1.2.
 </p>
 
-<span class="version">Ontopia 5.1 2010-10-18</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Introduction ###
 

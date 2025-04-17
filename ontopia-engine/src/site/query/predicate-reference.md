@@ -4,7 +4,7 @@ The Built-in tolog Predicates
 Reference Documentation
 -----------------------
 
-<span class="version">Ontopia 5.1 2010-06-09</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Introduction ###
 

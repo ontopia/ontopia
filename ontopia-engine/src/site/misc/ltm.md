@@ -17,7 +17,7 @@ currently finishing standardization of an alternative standardized syntax called
 information, see <a href="http://www.isotopicmaps.org/ctm/">the CTM home page</a>.
 </p>
 
-<span class="version">Ontopia A/S Version 1.3 ($Revision: 1.23 $) $Date: 2006/06/17 17:52:01 $</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Linear topic map notation? What's that? ###
 

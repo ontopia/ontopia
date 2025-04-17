@@ -10,7 +10,7 @@ assumes that the reader is already familiar with the Topic Maps Engine, and wish
 relational database backend.
 </p>
 
-<span class="version">5.1 2010-06-09</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Introduction ###
 

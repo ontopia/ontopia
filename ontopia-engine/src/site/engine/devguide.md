@@ -23,7 +23,7 @@ developers understand what utilities are available and how to use them.
 Familiarity with Topic Maps concepts, and the Java platform, is assumed in this guide.
 </p>
 
-<span class="version">5.1 2010-06-09</p>
+<span class="version">5.5.0 2025-04-17</p>
 
 ### Introduction ###
 
