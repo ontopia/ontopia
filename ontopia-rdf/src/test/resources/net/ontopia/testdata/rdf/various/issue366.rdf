@@ -1,0 +1,18 @@
+<rdf:RDF
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:infoterms="http://www.infocom.co.jp/dsp/terms/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:reg="http://purl.org/metainfo/terms/registry#"
+    xmlns:smpbooks="http://sample.com/book/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:dsp="http://purl.org/metainfo/terms/dsp#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:xl="http://www.w3.org/2008/05/skos-xl#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" > 
+  <rdf:Description rdf:about="http://www.infocom.co.jp/dsp/sample#MAIN-タイトル読み">
+    <rdfs:comment>タイトル読みです。</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>

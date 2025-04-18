@@ -9,6 +9,6 @@
 [something = "Some Thing"]
 
 [sometopic = "Some Topic"]
-{sometopic, website, "http://www.google.com?this=th at"}
+{sometopic, website, "http://www.google.com?this=th%20at"}
 {sometopic, something, [[This string uses <B>unsafe</B> characters & lætters]]}
 

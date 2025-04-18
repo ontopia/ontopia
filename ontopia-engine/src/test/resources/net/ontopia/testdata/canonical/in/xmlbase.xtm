@@ -10,7 +10,7 @@
     <occurrence>
       <resourceRef xlink:href=""/>
     </occurrence>
-    <occurrence xml:base="http://www.garshol.priv.no">
+    <occurrence xml:base="http://www.garshol.priv.no/">
       <resourceRef xlink:href=""/>
     </occurrence>
   </topic>

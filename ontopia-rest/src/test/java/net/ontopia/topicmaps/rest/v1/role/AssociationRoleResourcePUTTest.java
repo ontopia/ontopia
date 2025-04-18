@@ -63,7 +63,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithPlayerByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		role.setPlayer(topic);
 		AssociationRole added = put(role, AssociationRole.class);
 
@@ -77,7 +77,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTypeByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		role.setType(topic);
 		AssociationRole added = put(role, AssociationRole.class);
 
@@ -90,13 +90,13 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithItemIdentifier() {
 		AssociationRole role = createAssociationRole();
-		role.getItemIdentifiers().add(URILocator.create("foo:bar30"));
+		role.getItemIdentifiers().add(URILocator.create("foo:barbar30"));
 
 		AssociationRole added = put(role, AssociationRole.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
-		Assert.assertEquals("foo:bar30", added.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar30", added.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class AssociationRoleResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithReificationByItemIdentifier() {
 		AssociationRole role = createAssociationRole();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		role.setReifier(topic);
 
 		AssociationRole added = put(role, AssociationRole.class);

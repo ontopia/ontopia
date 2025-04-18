@@ -53,73 +53,73 @@ public class TopicResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithItemIdentifier() {
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_ii"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_ii"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertEquals(1, added.getItemIdentifiers().size());
-		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:topic_ii")));
+		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:bartopic_ii")));
 	}
 	
 	@Test
 	public void testWithItemIdentifiers() {
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_ii2"));
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_ii3"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_ii2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_ii3"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertEquals(2, added.getItemIdentifiers().size());
-		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:topic_ii2")));
-		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:topic_ii3")));
+		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:bartopic_ii2")));
+		Assert.assertTrue(added.getItemIdentifiers().contains(URILocator.create("foo:bartopic_ii3")));
 	}
 	
 	@Test
 	public void testWithSubjectIdentifier() {
 		Topic topic = new Topic();
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_si"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_si"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getSubjectIdentifiers());
 		Assert.assertEquals(1, added.getSubjectIdentifiers().size());
-		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:topic_si")));
+		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_si")));
 	}
 	
 	@Test
 	public void testWithSubjectIdentifiers() {
 		Topic topic = new Topic();
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_si2"));
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_si3"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_si2"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_si3"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getSubjectIdentifiers());
 		Assert.assertEquals(2, added.getSubjectIdentifiers().size());
-		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:topic_si2")));
-		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:topic_si3")));
+		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_si2")));
+		Assert.assertTrue(added.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_si3")));
 	}
 	
 	@Test
 	public void testWithSubjectLocator() {
 		Topic topic = new Topic();
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_sl"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_sl"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getSubjectLocators());
 		Assert.assertEquals(1, added.getSubjectLocators().size());
-		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:topic_sl")));
+		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:bartopic_sl")));
 	}
 	
 	@Test
 	public void testWithSubjectLocators() {
 		Topic topic = new Topic();
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_sl2"));
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_sl3"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_sl2"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_sl3"));
 		
 		Topic added = put(topic, Topic.class);
 		Assert.assertNotNull(added.getSubjectLocators());
 		Assert.assertEquals(2, added.getSubjectLocators().size());
-		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:topic_sl2")));
-		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:topic_sl3")));
+		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:bartopic_sl2")));
+		Assert.assertTrue(added.getSubjectLocators().contains(URILocator.create("foo:bartopic_sl3")));
 	}
 	
 	@Test
@@ -149,7 +149,7 @@ public class TopicResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTypeByIdentifier() {
 		Topic topic = new Topic();
 		Topic type = new Topic();
-		type.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		type.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		topic.getTypes().add(type);
 		
 		Topic added = put(topic, Topic.class);

@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
@@ -87,7 +86,7 @@ public class ImportExportUtils {
    * 
    * @since 2.0
    */
-  public static TopicMapReaderIF getReader (File file) throws IOException {
+  public static TopicMapReaderIF getReader (File file) {
     return getReader(URIUtils.toURL(file));
   }
 
@@ -114,31 +113,27 @@ public class ImportExportUtils {
    */
   public static TopicMapReaderIF getReader (URL url) {
     String address = url.toString();
-    try {
-      if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX)) {
-        return new RDBMSTopicMapReader (getTopicMapId (address));
-      } else if (address.endsWith (XTM_EXTENSION)) {
-        return new XTMTopicMapReader (url);
-      } else if (address.endsWith (LTM_EXTENSION)) {
-        return new LTMTopicMapReader (url);
-      } else if (address.endsWith (TMX_EXTENSION)) {
-        return new TMXMLReader (url);
-      } else if (address.endsWith (".xml")) {
-        return new TMXMLReader(url);
-      } else if (address.endsWith (CTM_EXTENSION)) {
-        return new CTMTopicMapReader(url);
-      } else {
-        for (ImportExportServiceIF service : services) {
-          if (service.canRead(url)) {
-            return service.getReader(url);
-          }
+    if (address.startsWith (ONTOPIA_RDBMS_URI_PREFIX))
+      return new RDBMSTopicMapReader (getTopicMapId (address));
+    else if (address.endsWith (XTM_EXTENSION))
+      return new XTMTopicMapReader (url);
+    else if (address.endsWith (LTM_EXTENSION))
+      return new LTMTopicMapReader (url);
+    else if (address.endsWith (TMX_EXTENSION))
+      return new TMXMLReader (url);
+    else if (address.endsWith (".xml"))
+      return new TMXMLReader(url); 
+    else if (address.endsWith (CTM_EXTENSION))
+      return new CTMTopicMapReader(url);
+    else {
+      for (ImportExportServiceIF service : services) {
+        if (service.canRead(url)) {
+          return service.getReader(url);
         }
-        // fallback
-        return new XTMTopicMapReader (url);
       }
-    } catch (MalformedURLException mufe) {
-      throw new OntopiaRuntimeException(mufe);
     }
+    // fallback
+    return new XTMTopicMapReader (url);
   }
 
   /**

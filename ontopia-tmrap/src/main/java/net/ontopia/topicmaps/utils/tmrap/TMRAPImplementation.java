@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -470,6 +470,8 @@ public class TMRAPImplementation {
       }
 
       return topicmap;
+    } catch (URISyntaxException u) {
+      throw new IOException(u);
     } finally {
       index.close();
     }
@@ -500,7 +502,7 @@ public class TMRAPImplementation {
   // --- Internal helpers
 
   private static TopicIF makeTopic(TopicMapIF tm, String id)
-    throws MalformedURLException {
+    throws URISyntaxException {
     TopicMapBuilderIF builder = tm.getBuilder();
     TopicIF topic = builder.makeTopic();
     topic.addSubjectIdentifier(new URILocator(RAPServlet.RAP_NAMESPACE + id));

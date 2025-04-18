@@ -107,7 +107,7 @@ public class UpdateTest extends AbstractQueryTest {
     assertUpdate("update resource(jills-contract, \"http://example.com\")");
 
     Assert.assertTrue("occurrence not changed after update: " + occ.getLocator(),
-               occ.getLocator().getAddress().equals("http://example.com/"));
+               occ.getLocator().getAddress().equals("http://example.com"));
     Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_URI));
   }
@@ -122,7 +122,7 @@ public class UpdateTest extends AbstractQueryTest {
            "from type($C, contract)");
 
     Assert.assertTrue("occurrence not changed after update: " + occ.getLocator(),
-               occ.getLocator().getAddress().equals("http://example.com/"));
+               occ.getLocator().getAddress().equals("http://example.com"));
     Assert.assertTrue("incorrect datatype after update",
                occ.getDataType().equals(DataTypes.TYPE_URI));
   }
