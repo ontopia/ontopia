@@ -87,7 +87,7 @@
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
-		<jena.version>4.8.0</jena.version>
+		<jena.version>4.10.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 		<poi.version>5.4.0</poi.version>
 		
