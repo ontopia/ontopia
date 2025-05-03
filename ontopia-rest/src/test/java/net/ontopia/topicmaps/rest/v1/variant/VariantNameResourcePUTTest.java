@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
@@ -68,7 +68,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 //	public void testWithTopicNameByItemIdentifier() {
 //		VariantName variant = createVariantName();
 //		TopicName name = new TopicName();
-//		name.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+//		name.getItemIdentifiers().add(URILocator.create("foo:bar#network-location"));
 //		variant.setTopicName(name);
 //		VariantName added = put(variant, VariantName.class);
 //
@@ -79,7 +79,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 //	}
 
 	@Test
-	public void testAlternativeDatatype() throws MalformedURLException {
+	public void testAlternativeDatatype() throws URISyntaxException {
 		VariantName variant = createVariantName();
 		variant.setValue("1");
 		variant.setDatatype(DataTypes.TYPE_INTEGER);
@@ -107,13 +107,13 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithItemIdentifier() {
 		VariantName variant = createVariantName();
-		variant.getItemIdentifiers().add(URILocator.create("foo:variant:bar"));
+		variant.getItemIdentifiers().add(URILocator.create("foo:barvariant:bar"));
 
 		VariantName added = put(variant, VariantName.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
-		Assert.assertEquals("foo:variant:bar", added.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barvariant:bar", added.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopeByItemIdentifier() {
 		VariantName variant = createVariantName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic3"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic3"));
 		variant.getScope().add(topic);
 
 		VariantName added = put(variant, VariantName.class);
@@ -210,7 +210,7 @@ public class VariantNameResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithReificationByItemIdentifier() {
 		VariantName variant = createVariantName();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		variant.setReifier(topic);
 
 		VariantName added = put(variant, VariantName.class);

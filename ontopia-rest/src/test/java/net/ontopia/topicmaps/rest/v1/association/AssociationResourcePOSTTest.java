@@ -104,7 +104,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTypeByItemIdentifier() {
 		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		association.setType(topic);
 
 		Association changed = post("2", association, Association.class);
@@ -138,7 +138,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic3"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic3"));
 		association.setReifier(topic);
 
 		Association changed = post("2", association, Association.class);
@@ -221,7 +221,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeScopeByItemIdentifier() {
 		Association association = get("2", Association.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		association.getScope().add(topic);
 
 		Association changed = post("2", association, Association.class);
@@ -234,20 +234,20 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		Association association = get("2", Association.class);
-		association.getItemIdentifiers().add(URILocator.create("foo:bar8"));
+		association.getItemIdentifiers().add(URILocator.create("foo:barbar8"));
 
 		Association changed = post("2", association, Association.class);
 
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar8", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar8", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testAddItemIdentifiers() {
 		Association association = get("2", Association.class);
-		association.getItemIdentifiers().add(URILocator.create("foo:bar21"));
-		association.getItemIdentifiers().add(URILocator.create("foo:bar22"));
+		association.getItemIdentifiers().add(URILocator.create("foo:barbar21"));
+		association.getItemIdentifiers().add(URILocator.create("foo:barbar22"));
 
 		Association changed = post("2", association, Association.class);
 
@@ -257,7 +257,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testRemoveItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
@@ -274,7 +274,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearItemIdentifiers() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
@@ -291,7 +291,7 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testChangeItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);
@@ -301,16 +301,16 @@ public class AssociationResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
 
 		association.getItemIdentifiers().remove(locator);
-		association.getItemIdentifiers().add(URILocator.create("foo:to-keep-association"));
+		association.getItemIdentifiers().add(URILocator.create("foo:barto-keep-association"));
 		association = post("2", association, Association.class);
 		Assert.assertNotNull(association.getItemIdentifiers());
 		Assert.assertEquals(1, association.getItemIdentifiers().size());
-		Assert.assertEquals("foo:to-keep-association", association.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barto-keep-association", association.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-association-2");
+		final URILocator locator = URILocator.create("foo:barto-keep-association-2");
 
 		Association association = get("2", Association.class);
 		association.getItemIdentifiers().add(locator);

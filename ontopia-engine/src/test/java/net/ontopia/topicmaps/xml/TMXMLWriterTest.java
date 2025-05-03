@@ -63,9 +63,9 @@ public class TMXMLWriterTest {
 
     // iso and xtm are already taken, so it can't be used...
     TopicIF type1 = builder.makeTopic();
-    type1.addSubjectIdentifier(new URILocator("http://iso/foo"));
+    type1.addSubjectIdentifier(URILocator.create("http://iso/foo"));
     TopicIF type2 = builder.makeTopic();
-    type2.addSubjectIdentifier(new URILocator("http://xtm/bar"));
+    type2.addSubjectIdentifier(URILocator.create("http://xtm/bar"));
 
     TopicIF topic1 = builder.makeTopic(type1);
     TopicIF topic2 = builder.makeTopic(type2);

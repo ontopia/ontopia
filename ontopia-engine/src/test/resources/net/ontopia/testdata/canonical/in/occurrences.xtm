@@ -8,14 +8,14 @@
     </baseName>    
     <occurrence>
       <instanceOf><topicRef xlink:href="#homepage"/></instanceOf>
-      <resourceRef xlink:href="http://www.norge.no"/>
+      <resourceRef xlink:href="http://www.norge.no/"/>
     </occurrence>
     <occurrence>
-      <resourceRef xlink:href="http://www.norway.com"/>
+      <resourceRef xlink:href="http://www.norway.com/"/>
     </occurrence>
     <occurrence>
       <scope><topicRef xlink:href="#tourism"/></scope>
-      <resourceRef xlink:href="http://www.visitnorway.com"/>
+      <resourceRef xlink:href="http://www.visitnorway.com/"/>
     </occurrence>
     <occurrence>
       <resourceData>Norway is a nice country.</resourceData>

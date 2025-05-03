@@ -5,7 +5,7 @@
   <topic id="special-chars">
     <baseName><baseNameString>&lt;Donald Duck &amp; Co.&gt;</baseNameString></baseName>    
     <occurrence>
-      <resourceRef xlink:href="http://www.ontopia.net/script.cgi?param=a&quot;b"/>
+      <resourceRef xlink:href="http://www.ontopia.net/script.cgi?param=a&#38;b"/>
     </occurrence>
   </topic>
 

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -140,7 +140,7 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
           resColl.addAll(nameIndex.getVariants(variantValue));
         }
       }
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new NavigatorCompileException("Invalid URI specified in LookupTag.", e);
     }
 
@@ -221,7 +221,7 @@ public class LookupTag extends BaseValueProducingAndAcceptingTag {
    * check if String is specifying a relative URI.
    */
   private LocatorIF getLocator(TopicMapIF topicmap, String locString)
-    throws MalformedURLException {
+    throws URISyntaxException {
 
     LocatorIF base = topicmap.getStore().getBaseAddress();
     if (base != null) {

@@ -211,7 +211,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtm#desc"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/operatm.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/operatm.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtm#desc"/></instanceOf>
@@ -243,7 +243,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/verdi.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/verdi.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -287,7 +287,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/puccini.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/puccini.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -297,7 +297,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#gallery"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/puccini-gallery.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/puccini-gallery.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#website"/></instanceOf>
@@ -322,7 +322,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtm#desc"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#naxos"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/hnh-puccini.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/hnh-puccini.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#born"/></instanceOf>
@@ -358,7 +358,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/mascagni.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/mascagni.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -401,7 +401,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/ponchielli.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/ponchielli.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -466,7 +466,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/giordano.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/giordano.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -505,7 +505,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/leoncavallo.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/leoncavallo.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -549,7 +549,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/boito.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/boito.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -586,7 +586,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/cilea.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/cilea.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -1567,7 +1567,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#gallery"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/background-manon_lescaut.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/background-manon_lescaut.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#gallery"/></instanceOf>
@@ -1622,7 +1622,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/lb_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/lb_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -1642,7 +1642,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/la-boheme.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/la-boheme.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -1688,7 +1688,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/tosca.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/tosca.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -1703,7 +1703,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/tosca_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/tosca_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -1713,7 +1713,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#on-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#operanews"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/tosca-synopsis.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/tosca-synopsis.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#on-synopsis"/></instanceOf>
@@ -1723,7 +1723,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#libretto"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/tosca-libretto.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/tosca-libretto.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#libretto"/></instanceOf>
@@ -1733,7 +1733,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#poster"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/tosca_poster.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/tosca_poster.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#poster"/></instanceOf>
@@ -1743,7 +1743,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/vissi-darte.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -1779,7 +1779,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/madama-butterfly.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/madama-butterfly.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -1794,7 +1794,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/mb_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/mb_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -1865,7 +1865,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/ggw_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/ggw_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -1976,7 +1976,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#snl"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/snl/turandot.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/snl/turandot.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#article"/></instanceOf>
@@ -1991,7 +1991,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/turandot-synopsis.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/turandot-synopsis.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#synopsis"/></instanceOf>
@@ -2006,7 +2006,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/t_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/t_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -2016,7 +2016,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -2952,7 +2952,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/it_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/it_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3007,7 +3007,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/lt_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/lt_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3037,7 +3037,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/la-traviata.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/la-traviata.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -3148,7 +3148,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/ubm_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/ubm_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3230,7 +3230,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/dc_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/dc_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3272,7 +3272,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/a_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/a_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3322,7 +3322,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/o_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/o_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3352,7 +3352,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/otello.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/otello.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -3428,7 +3428,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/lg_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/lg_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -3443,7 +3443,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/la-gioconda.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/la-gioconda.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -3539,7 +3539,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#az-opera"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/ac_syn.php3.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/ac_syn.php3.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#az-synopsis"/></instanceOf>
@@ -5846,7 +5846,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/vissi-darte.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -5937,7 +5937,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -5983,7 +5983,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/la-mamma-morta.wav"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/la-mamma-morta.wav"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="opera-template.xtm#snippet"/></instanceOf>
@@ -6246,7 +6246,7 @@ SOURCES:
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtm#desc"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtm#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/verismo.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/verismo.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtm#desc"/></instanceOf>

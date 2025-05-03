@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -308,7 +308,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   public void setBaseAddress(String base_address) {
     try {
       this.base_address = new URILocator(base_address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

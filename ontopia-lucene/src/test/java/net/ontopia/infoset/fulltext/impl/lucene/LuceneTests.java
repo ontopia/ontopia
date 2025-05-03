@@ -22,7 +22,7 @@ package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
@@ -297,7 +297,7 @@ public class LuceneTests {
     try {
       return new URILocator(uri);
     }
-    catch (MalformedURLException e) {
+    catch (URISyntaxException e) {
       Assert.fail(e.toString());
       return null;
     }

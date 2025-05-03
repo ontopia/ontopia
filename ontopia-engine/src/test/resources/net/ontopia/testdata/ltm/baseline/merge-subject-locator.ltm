@@ -6,7 +6,7 @@
 </topic>
 <topic id="id2">
 <subjectIdentity>
-<resourceRef href="http://www.ontopia.net/"></resourceRef>
+<resourceRef href="http://www.ontopia.net"></resourceRef>
 </subjectIdentity>
 <baseName>
 <instanceOf href="#id1"></instanceOf>

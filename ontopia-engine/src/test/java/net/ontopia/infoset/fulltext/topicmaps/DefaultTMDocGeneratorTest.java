@@ -126,7 +126,7 @@ public class DefaultTMDocGeneratorTest {
 
     verifyObjectId(occ, doc.getField("object_id"));
     verifyClass(doc.getField("class"), "O");
-    verifyLocator(doc, "http://www.ontopia.net/");
+    verifyLocator(doc, "http://www.ontopia.net");
   }
   
   @Test
@@ -183,7 +183,7 @@ public class DefaultTMDocGeneratorTest {
 
     verifyObjectId(vn, doc.getField("object_id"));
     verifyClass(doc.getField("class"), "N");
-    verifyLocator(doc, "http://www.ontopia.no/");
+    verifyLocator(doc, "http://www.ontopia.no");
   }
   
   // --- helper methods
@@ -214,4 +214,5 @@ public class DefaultTMDocGeneratorTest {
     Assert.assertTrue("address was " + field.getValue(),
 	   field.getValue() != null && field.getValue().equals(locator));
   }
+
 }

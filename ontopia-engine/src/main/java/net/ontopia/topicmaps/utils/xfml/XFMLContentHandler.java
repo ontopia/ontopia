@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.utils.xfml;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashSet;
 import net.ontopia.infoset.core.LocatorIF;
@@ -159,7 +159,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
           
           // Add this document to the list of processed documents.
           processed_documents_accumulated.add(getBaseAddress());
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
           log.warn("Invalid xfml base URL: " + mapurl);
         }
       }
@@ -379,7 +379,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   protected LocatorIF createURILocator(String address) {
     try {
       return new URILocator(address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -401,12 +401,12 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
       TopicIF page = makeTopic(xfml + "page");
       TopicIF subject = makeTopic(xfml + "subject");
       occursBuilder = new AssociationBuilder(occurs_on, subject, page);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
 
-  private TopicIF makeTopic(String psi) throws MalformedURLException {
+  private TopicIF makeTopic(String psi) throws URISyntaxException {
     TopicIF topic = builder.makeTopic();
     topic.addSubjectIdentifier(new URILocator(psi));
     return topic;

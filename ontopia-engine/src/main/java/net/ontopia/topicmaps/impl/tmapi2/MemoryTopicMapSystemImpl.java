@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.impl.tmapi2;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,7 +62,7 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
   private LocatorIF createLocatorIF(String reference) {
     try {
       return new URILocator(reference);
-    } catch (MalformedURLException ex) {
+    } catch (URISyntaxException ex) {
       throw new MalformedIRIException(ex.getMessage());
     }
   }

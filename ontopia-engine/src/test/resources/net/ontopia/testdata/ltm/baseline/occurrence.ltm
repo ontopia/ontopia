@@ -12,7 +12,7 @@
 </baseName>
 <occurrence>
 <instanceOf href="#id1"></instanceOf>
-<resourceRef href="http://www.garshol.priv.no/"></resourceRef>
+<resourceRef href="http://www.garshol.priv.no"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id3">

@@ -7,7 +7,7 @@
     <baseNameString>Foo</baseNameString>
     <variant>
       <parameters><topicRef xlink:href="#foo"/></parameters>
-      <variantName><resourceRef xlink:href="http://foo.no"/></variantName>
+      <variantName><resourceRef xlink:href="http://foo.no/"/></variantName>
     </variant>
   </baseName>
 </topic>

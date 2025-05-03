@@ -91,11 +91,11 @@ List all people, their creations and the occurrences of those creations:
       Visited occurrence number 3
      - In use : 1444 - 
       Visited occurrence number 4
-     - Site using : http://www.daum.net/
+     - Site using : http://www.daum.net
       Visited occurrence number 5
      - Site using : http://www.microsoft.com/korea/
       Visited occurrence number 6
-     - Site using : http://www.naver.com/
+     - Site using : http://www.naver.com
       Visited occurrence number 7, which was the last occurrence
     
     Visited first creation, which was the last creation

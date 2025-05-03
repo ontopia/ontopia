@@ -23,7 +23,6 @@ package net.ontopia.xml;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -47,7 +46,7 @@ public abstract class AbstractXMLFormatReader {
     this.base_address = base_address;
   }
 
-  public AbstractXMLFormatReader(URL url) throws MalformedURLException {
+  public AbstractXMLFormatReader(URL url) {
     this(new InputSource(url.toString()), new URILocator(url));
   }
   
@@ -63,7 +62,7 @@ public abstract class AbstractXMLFormatReader {
     this(new InputSource(stream), base_address);
   }
   
-  public AbstractXMLFormatReader(File file) throws MalformedURLException {
+  public AbstractXMLFormatReader(File file) {
     this(URIUtils.toURL(file));
   }
   

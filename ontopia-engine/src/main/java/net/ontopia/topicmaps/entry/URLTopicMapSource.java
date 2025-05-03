@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.entry;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -164,7 +165,7 @@ public class URLTopicMapSource implements TopicMapSourceIF {
   public void setBaseAddress(String base_address) {
     try {
       this.base_address = new URILocator(base_address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
