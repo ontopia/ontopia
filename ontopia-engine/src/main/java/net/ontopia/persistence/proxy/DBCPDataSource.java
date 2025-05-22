@@ -104,6 +104,9 @@ public class DBCPDataSource extends PoolingDataSource<PoolableConnection> implem
     poolableConnectionFactory.setValidationQueryTimeout(Duration.ofSeconds(PropertyUtils.getInt(properties.get(VALIDATION_QUERY_TIMEOUT), DEFAULT_VALIDATION_TIMEOUT)));
     poolableConnectionFactory.setValidationQuery(PropertyUtils.getProperty(properties, VALIDATION_QUERY, DEFAULT_VALIDATION_QUERY));
 
+    properties.remove(VALIDATION_QUERY_TIMEOUT);
+    properties.remove(VALIDATION_QUERY);
+
     ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(
             poolableConnectionFactory,
             getGenericObjectPoolConfig(properties),
