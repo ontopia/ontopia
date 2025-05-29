@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,7 +64,7 @@ public class TMRAP {
    * PUBLIC: Sends a query, returning a model of the result.
    */
   public Collection query(TopicIF topic)
-    throws IOException, InvalidQueryException {
+    throws IOException, InvalidQueryException, URISyntaxException {
     Collection psis = new ArrayList();
     Iterator it = topic.getSubjectIdentifiers().iterator();
     while (it.hasNext()) {
@@ -79,7 +80,7 @@ public class TMRAP {
    * @return a list of Server objects
    */
   public Collection query(Collection psis)
-    throws IOException, InvalidQueryException {
+    throws IOException, InvalidQueryException, URISyntaxException {
     if (psis.isEmpty()) {
       return Collections.EMPTY_SET;
     }

@@ -1,8 +1,8 @@
 <topicMap>
 <topic number="1">
 <subjectIdentifiers>
-<locator>http://foo.bar.no/</locator>
-<locator>http://ping.bang.no/</locator>
+<locator>http://foo.bar.no</locator>
+<locator>http://ping.bang.no</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#topic1</locator>

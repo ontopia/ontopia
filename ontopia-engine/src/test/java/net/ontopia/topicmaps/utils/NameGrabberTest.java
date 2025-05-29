@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,12 +44,12 @@ public class NameGrabberTest {
   private TopicNameIF basename5B;
   
   @Before
-  public void setUp() throws MalformedURLException {
+  public void setUp() {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     TopicMapBuilderIF builder = store.getTopicMap().getBuilder();
     
     topicSort = builder.makeTopic();
-    LocatorIF sortRef = new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#sort");
+    LocatorIF sortRef = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm#sort");
     topicSort.addSubjectIdentifier(sortRef);
     topicPlay = builder.makeTopic();
     TopicIF topicWriter = builder.makeTopic();

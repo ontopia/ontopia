@@ -22,12 +22,12 @@
 <type topicref="1"></type>
 </occurrence>
 <occurrence number="2">
-<value>http://www.ontopia.net/</value>
+<value>http://www.ontopia.net</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="1"></type>
 </occurrence>
 <occurrence number="3">
-<value>http://www.ontopia.net/</value>
+<value>http://www.ontopia.net</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <type topicref="1"></type>
 <scope>

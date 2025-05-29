@@ -11,7 +11,7 @@
 [operatm = "Italian Opera topic map"
          = "The famous Italian Opera topic map" / fullname
          = "Italian Opera" / shortname]
-   {operatm, desc, "file:/C|/ontopia/topicmaps/opera/occurs/operatm.htm"}
+   {operatm, desc, "file:/C:/ontopia/topicmaps/opera/occurs/operatm.htm"}
    {operatm, desc, "http://www.ontopia.net/topicmaps/examples/opera/occurs/operatm.htm"}
 
 /* ----------------- ONTOLOGY ------------------ */
@@ -30,7 +30,7 @@
     @"http://psi.ontopia.net/opera/#novella"]
 [opera : artform = "opera"
     @"http://psi.ontopia.net/opera/#opera"]
-   {opera, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/opera.htm"}
+   {opera, guidelines, "file:/C:/ontopia/topicmaps/opera/occurs/opera.htm"}
    {opera, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/opera.htm"}
    {opera, homepage, "http://home.prcn.org/~pauld/opera/"} ~ pauld-website
 [play : artform = "play"
@@ -97,7 +97,7 @@
     @"http://psi.ontopia.net/opera/#publisher"]
 [region = "region"; "region"
     @"http://psi.ontopia.net/geography/#region"]
-   {region, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/region.htm"}
+   {region, guidelines, "file:/C:/ontopia/topicmaps/opera/occurs/region.htm"}
    {region, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/region.htm"}
 [style = "style"
     @"http://psi.ontopia.net/opera/#style"]
@@ -308,7 +308,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [io-son-lumile-ancella : aria = "Io son l'umile ancella"]
 [la-dolcissima-effigie : aria = "La dolcissima effigie"]
 [la-mamma-morta : aria = "La mamma morta"; "mamma morta"]
-   {la-mamma-morta, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-mamma-morta.wav"}
+   {la-mamma-morta, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/la-mamma-morta.wav"}
    {la-mamma-morta, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-mamma-morta.wav"}
 [laggiu-nel-soledad : aria = "Laggiù nel Soledad"]
 [laltra-notte : aria = "L'altra notte in fondo al mare"; "Altra notte in fondo al mare"]
@@ -318,7 +318,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [mi-chiamono-mimi : aria = "Mi chiamono Mimi"]
 [nel-verde-maggio : aria = "Nel verde maggio"]
 [nessun-dorma : aria = "Nessun dorma"]
-   {nessun-dorma, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
+   {nessun-dorma, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
    {nessun-dorma, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nessun-dorma.mp3"}
 [non-piangere-liu : aria = "Non piangere, Liù"]
 [o-dolci-mani : aria = "O dolci mani"]
@@ -343,7 +343,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [va-tosca : aria = "Va, Tosca!"]
 [vesti-la-giubba : aria = "Vesti la giubba"]
 [vissi-darte : aria = "Vissi d'arte"]
-   {vissi-darte, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
+   {vissi-darte, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
    {vissi-darte, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/vissi-darte.wav"}
 [voce-di-donna : aria = "Voce di donna"]
 
@@ -845,7 +845,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
                              = "Arrigo Boïto" / normal
                              = "Tobia Gorrio" / normal
                              = "Boïto" / shortname]
-   {boito, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/boito.htm"}
+   {boito, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/boito.htm"}
    {boito, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/boito.htm"}
    {boito, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/boito.html"}
    {boito, born, [[1842 (24 Feb)]]}
@@ -863,7 +863,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [cilea : composer = "Cilea, Francesco"
                   = "Francesco Cilea" / normal
                   = "Cilea" / shortname]
-   {cilea, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/cilea.htm"}
+   {cilea, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/cilea.htm"}
    {cilea, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/cilea.htm"}
    {cilea, born, [[1866 (23 Jul)]]}
    {cilea, died, [[1950 (20 Nov)]]}
@@ -872,7 +872,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [giordano : composer = "Giordano, Umberto"
                      = "Umberto Giordano" / normal
                      = "Giordano" / shortname]
-   {giordano, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/giordano.htm"}
+   {giordano, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/giordano.htm"}
    {giordano, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/giordano.htm"}
    {giordano, born, [[1867 (28 Aug)]]}
    {giordano, died, [[1948 (12 Nov)]]}
@@ -881,7 +881,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [leoncavallo : composer librettist = "Leoncavallo, Ruggero"
                                    = "Ruggero Leoncavallo" / normal
                                    = "Leoncavallo" / shortname]
-   {leoncavallo, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/leoncavallo.htm"}
+   {leoncavallo, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/leoncavallo.htm"}
    {leoncavallo, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/leoncavallo.htm"}
    {leoncavallo, born, [[1857 (8 Mar)]]}
    {leoncavallo, died, [[1919 (9 Aug)]]}
@@ -890,7 +890,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [mascagni : composer = "Mascagni, Pietro"
                      = "Pietro Mascagni" / normal
                      = "Mascagni" / shortname]
-   {mascagni, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/mascagni.htm"}
+   {mascagni, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/mascagni.htm"}
    {mascagni, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/mascagni.htm"}
    {mascagni, born, [[1863 (7 Dec)]]}
    {mascagni, died, [[1945 (2 Aug)]]}
@@ -902,7 +902,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [ponchielli : composer = "Ponchielli, Amilcar"
                        = "Amilcar Ponchielli" / normal
                        = "Ponchielli" / shortname]
-   {ponchielli, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/ponchielli.htm"}
+   {ponchielli, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/ponchielli.htm"}
    {ponchielli, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/ponchielli.htm"}
    {ponchielli, born, [[1834 (31 Aug)]]}
    {ponchielli, died, [[1886 (17 Jan)]]}
@@ -913,12 +913,12 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [puccini : composer = "Puccini, Giacomo"
                     = "Giacomo Puccini" / normal
                     = "Puccini" / shortname]
-   {puccini, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/puccini.htm"}
+   {puccini, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/puccini.htm"}
    {puccini, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/puccini.htm"}
    {puccini, born, [[1858 (22 Dec)]]}
    {puccini, died, [[1924 (29 Nov)]]}
-   {puccini, gallery, "file:/C|/ontopia/topicmaps/opera/occurs/puccini-gallery.htm"}
-   {puccini, homepage, "file:/C|/ontopia/topicmaps/opera/occurs/hnh-puccini.htm"}
+   {puccini, gallery, "file:/C:/ontopia/topicmaps/opera/occurs/puccini-gallery.htm"}
+   {puccini, homepage, "file:/C:/ontopia/topicmaps/opera/occurs/hnh-puccini.htm"}
    {puccini, homepage, "http://www.hnh.com/composer/puccini.htm"}
    {puccini, homepage, "http://www.r-ds.com/opera/pucciniana/gallery.htm"}
    {puccini, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/puccini.gif"}
@@ -929,7 +929,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [verdi : composer = "Verdi, Giuseppe"
                   = "Giuseppe Verdi" / normal
                   = "Verdi" / shortname]
-   {verdi, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/verdi.htm"}
+   {verdi, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/verdi.htm"}
    {verdi, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/verdi.htm"}
    {verdi, born, [[1813 (10 Oct)]]}
    {verdi, died, [[1901 (27 Jan)]]}
@@ -946,84 +946,84 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 /* -- TT: country -- */
 [argentina : country = "Argentina"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ar"]
-   {argentina, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ar.html"}
+   {argentina, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/ar.html"}
    {argentina, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ar.html"}
 [austria : country = "Austria"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.at"]
-   {austria, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/au.html"}
+   {austria, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/au.html"}
    {austria, factbook, "http://www.cia.gov/cia/publications/factbook/geos/au.html"}
 [belgium : country = "Belgium"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.be"]
-   {belgium, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/be.html"}
+   {belgium, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/be.html"}
    {belgium, factbook, "http://www.cia.gov/cia/publications/factbook/geos/be.html"}
 [china : country = "China"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.cn"]
-   {china, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ch.html"}
+   {china, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/ch.html"}
    {china, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ch.html"}
 [cyprus : country = "Cyprus"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.cy"]
-   {cyprus, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/cy.html"}
+   {cyprus, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/cy.html"}
    {cyprus, factbook, "http://www.cia.gov/cia/publications/factbook/geos/cy.html"}
 [egypt : country = "Egypt"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.eg"]
-   {egypt, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/eg.html"}
+   {egypt, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/eg.html"}
    {egypt, factbook, "http://www.cia.gov/cia/publications/factbook/geos/eg.html"}
 [england : country region = "England"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.england"]
 [france : country = "France"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.fr"]
-   {france, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/fr.html"}
+   {france, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/fr.html"}
    {france, factbook, "http://www.cia.gov/cia/publications/factbook/geos/fr.html"}
 [germany : country = "Germany"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.de"]
-   {germany, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/gm.html"}
+   {germany, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/gm.html"}
    {germany, factbook, "http://www.cia.gov/cia/publications/factbook/geos/gm.html"}
 [greece : country = "Greece"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gr"]
-   {greece, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/gr.html"}
+   {greece, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/gr.html"}
    {greece, factbook, "http://www.cia.gov/cia/publications/factbook/geos/gr.html"}
 [israel : country = "Israel"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.il"]
-   {israel, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/is.html"}
+   {israel, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/is.html"}
    {israel, factbook, "http://www.cia.gov/cia/publications/factbook/geos/is.html"}
 [italy : country = "Italy"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it"]
-   {italy, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/it.html"}
+   {italy, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/it.html"}
    {italy, factbook, "http://www.cia.gov/cia/publications/factbook/geos/it.html"}
 [japan : country = "Japan"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.jp"]
-   {japan, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ja.html"}
+   {japan, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/ja.html"}
    {japan, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ja.html"}
 [netherlands : country = "Netherlands"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.nl"]
-   {netherlands, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/nl.html"}
+   {netherlands, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/nl.html"}
    {netherlands, factbook, "http://www.cia.gov/cia/publications/factbook/geos/nl.html"}
 [russia : country = "Russia"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ru"]
-   {russia, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/rs.html"}
+   {russia, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/rs.html"}
    {russia, factbook, "http://www.cia.gov/cia/publications/factbook/geos/rs.html"}
 [scotland : country region = "Scotland"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.scotland"]
 [spain : country = "Spain"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.es"]
-   {spain, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/sp.html"}
+   {spain, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/sp.html"}
    {spain, factbook, "http://www.cia.gov/cia/publications/factbook/geos/sp.html"}
 [switzerland : country = "Switzerland"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ch"]
-   {switzerland, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/sz.html"}
+   {switzerland, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/sz.html"}
    {switzerland, factbook, "http://www.cia.gov/cia/publications/factbook/geos/sz.html"}
 [turkey : country = "Turkey"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.tu"]
-   {turkey, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/tu.html"}
+   {turkey, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/tu.html"}
    {turkey, factbook, "http://www.cia.gov/cia/publications/factbook/geos/tu.html"}
 [united-kingdom : country = "United Kingdom"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb"]
-   {united-kingdom, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/uk.html"}
+   {united-kingdom, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/uk.html"}
    {united-kingdom, factbook, "http://www.cia.gov/cia/publications/factbook/geos/uk.html"}
 [usa : country = "United States"
                = "USA"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.us"]
-   {usa, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/us.html"}
+   {usa, factbook, "file:/C:/ontopia/topicmaps/ontologies/country/cia/html/us.html"}
    {usa, factbook, "http://www.cia.gov/cia/publications/factbook/geos/us.html"}
 [wales : country region = "Wales"
     @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.wales"]
@@ -1242,7 +1242,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
     @"http://psi.ontopia.net/opera/#nom-de-guerre"]
 [nom-de-plume : nametype = "nom de plume"
     @"http://psi.ontopia.net/opera/#nom-de-plume"]
-   {nom-de-plume, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/nom-de-plume.htm"}
+   {nom-de-plume, guidelines, "file:/C:/ontopia/topicmaps/opera/occurs/nom-de-plume.htm"}
    {nom-de-plume, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nom-de-plume.htm"}
 [original-name : nametype = "original name"
     @"http://psi.ontopia.net/opera/#original-name"]
@@ -1270,7 +1270,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [adriana-lecouvreur : opera = "Adriana Lecouvreur"]
    {adriana-lecouvreur, premiere-date, [[1902 (6 Nov)]]}
 [aida : opera = "Aida"]
-   {aida, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/a_syn.php3.htm"}
+   {aida, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/a_syn.php3.htm"}
    {aida, az-synopsis, "http://www.azopera.com/98season/a_syn.php3"}
    {aida, homepage, "http://opera.stanford.edu/opera/Verdi/Aida/main.html"}
    {aida, libretto, "http://php.indiana.edu/~lneff/libretti/aida.html"}
@@ -1283,7 +1283,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [amica : opera = "Amica"]
    {amica, libretto, "http://www.mascagni.org/works/amica/libretto.html"}
 [andrea-chenier : opera = "Andrea Chénier"]
-   {andrea-chenier, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ac_syn.php3.htm"}
+   {andrea-chenier, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/ac_syn.php3.htm"}
    {andrea-chenier, az-synopsis, "http://www.azopera.com/98season/ac_syn.php3"}
    {andrea-chenier, homepage, "http://opera.stanford.edu/opera/Giordano/AndreaChenier/main.html"}
    {andrea-chenier, premiere-date, [[1896 (28 Mar)]]}
@@ -1311,7 +1311,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {der-roland-von-berlin, premiere-date, [[1904]]}
 [don-carlo : opera = "Don Carlo"
                    = "Don Carlos" / english]
-   {don-carlo, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/dc_syn.php3.htm"}
+   {don-carlo, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/dc_syn.php3.htm"}
    {don-carlo, az-synopsis, "http://www.azopera.com/00season/dc_syn.php3"}
    {don-carlo, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Don_Carlo.htm"}
    {don-carlo, premiere-date, [[1867 (11 Mar)]]}
@@ -1428,7 +1428,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {il-trittico, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/il-trittico-score1.gif"}
 [il-trovatore : opera = "Il trovatore"; "Trovatore"
                       = "The Troubadour"; "Troubadour" / english]
-   {il-trovatore, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/it_syn.php3.htm"}
+   {il-trovatore, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/it_syn.php3.htm"}
    {il-trovatore, az-synopsis, "http://www.azopera.com/95season/it_syn.php3"}
    {il-trovatore, homepage, "http://opera.stanford.edu/opera/Verdi/Trovatore/main.html"}
    {il-trovatore, libretto, "http://opera.stanford.edu/opera/Verdi/Trovatore/libretto.html"}
@@ -1453,7 +1453,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {la-battaglia-di-legnano, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Battaglia_di_Legnano.htm"}
    {la-battaglia-di-legnano, premiere-date, [[1849 (27 Jan)]]}
 [la-boheme : opera = "La Bohème (Puccini)"; "Boheme, Puccini"]
-   {la-boheme, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lb_syn.php3.htm"}
+   {la-boheme, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/lb_syn.php3.htm"}
    {la-boheme, az-synopsis, "http://www.azopera.com/98season/lb_syn.php3"}
    {la-boheme, homepage, "http://opera.stanford.edu/opera/Puccini/LaBoheme/main.html"}
    {la-boheme, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/la-boheme-poster1.jpg"}
@@ -1461,7 +1461,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {la-boheme, poster, "http://www.r-ds.com/opera/pucciniana/pictures/boheme-score.htm"}
    {la-boheme, poster, "http://www.r-ds.com/opera/pucciniana/pictures/boheme_poster.htm"}
    {la-boheme, premiere-date, [[1896 (1 Feb)]]}
-   {la-boheme, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-boheme.wav"}
+   {la-boheme, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/la-boheme.wav"}
    {la-boheme, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-boheme.wav"}
    {la-boheme, synopsis, "http://www.metopera.org/synopses/boheme.html"}
 [la-boheme2 : opera = "La Bohème (Leoncavallo)"; "Boheme, Leoncavallo"
@@ -1475,7 +1475,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {la-falce, premiere-date, [[1875]]}
 [la-fanciulla-del-west : opera = "La fanciulla del West"; "Fanciulla del West"
                                = "The Girl of the Golden West"; "Girl of the Golden West" / english]
-   {la-fanciulla-del-west, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ggw_syn.php3.htm"}
+   {la-fanciulla-del-west, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/ggw_syn.php3.htm"}
    {la-fanciulla-del-west, az-synopsis, "http://www.azopera.com/00season/ggw_syn.php3"}
    {la-fanciulla-del-west, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/la-fanciulla-del-west-poster1.jpg"}
    {la-fanciulla-del-west, poster, "http://www.r-ds.com/opera/pucciniana/pictures/fanciulla_poster.htm"}
@@ -1489,11 +1489,11 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {la-forza-del-destino, premiere-date, [[1862 (10 Nov)]]}
    {la-forza-del-destino, synopsis, "http://www.metopera.org/synopses/forza.html"}
 [la-gioconda : opera = "La Gioconda"; "Gioconda, La"]
-   {la-gioconda, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lg_syn.php3.htm"}
+   {la-gioconda, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/lg_syn.php3.htm"}
    {la-gioconda, az-synopsis, "http://www.azopera.com/97season/lg_syn.php3"}
    {la-gioconda, libretto, "http://www.karadar.it/Librettos/ponchielli_GIOCONDA.html"}
    {la-gioconda, premiere-date, [[1876 (8 Apr)]]}
-   {la-gioconda, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-gioconda.wav"}
+   {la-gioconda, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/la-gioconda.wav"}
    {la-gioconda, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-gioconda.wav"}
 [la-rondine : opera = "La rondine"; "Rondine"
                     = "The Swallow"; "Swallow" / english]
@@ -1507,13 +1507,13 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [la-tilda : opera = "La Tilda"; "Tilda"]
    {la-tilda, premiere-date, [[1892 (7 Apr)]]}
 [la-traviata : opera = "La traviata"; "Traviata"]
-   {la-traviata, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lt_syn.php3.htm"}
+   {la-traviata, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/lt_syn.php3.htm"}
    {la-traviata, az-synopsis, "http://www.azopera.com/96season/lt_syn.php3"}
    {la-traviata, homepage, "http://opera.stanford.edu/opera/Verdi/Traviata/main.html"}
    {la-traviata, libretto, "http://php.indiana.edu/~lneff/libretti/traviata.html"}
    {la-traviata, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Traviata.htm"}
    {la-traviata, premiere-date, [[1853 (6 Mar)]]}
-   {la-traviata, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-traviata.wav"}
+   {la-traviata, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/la-traviata.wav"}
    {la-traviata, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-traviata.wav"}
    {la-traviata, synopsis, "http://www.metopera.org/synopses/traviata.html"}
    {la-traviata, synopsis, "http://www.opera.it/Operaweb/it/traviata/trama.html"}
@@ -1562,9 +1562,9 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {macbeth1, synopsis, "http://www.metopera.org/synopses/macbeth.html"}
    {macbeth1, synopsis, "http://www.orc.soton.ac.uk/ngb/macbeth.html"}
 [madama-butterfly : opera = "Madame Butterfly"]
-   {madama-butterfly, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/madama-butterfly.htm"}
+   {madama-butterfly, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/madama-butterfly.htm"}
    {madama-butterfly, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/madama-butterfly.htm"}
-   {madama-butterfly, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/mb_syn.php3.htm"}
+   {madama-butterfly, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/mb_syn.php3.htm"}
    {madama-butterfly, az-synopsis, "http://www.azopera.com/95season/mb_syn.php3"}
    {madama-butterfly, homepage, "http://opera.stanford.edu/opera/Puccini/Butterfly/main.html"}
    {madama-butterfly, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/madama-butterfly-poster1.jpg"}
@@ -1578,7 +1578,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [maia : opera = "Maià"; "Maia"]
    {maia, premiere-date, [[1910]]}
 [manon-lescaut : opera = "Manon Lescaut"]
-   {manon-lescaut, gallery, "file:/C|/ontopia/topicmaps/opera/occurs/background-manon_lescaut.htm"}
+   {manon-lescaut, gallery, "file:/C:/ontopia/topicmaps/opera/occurs/background-manon_lescaut.htm"}
    {manon-lescaut, gallery, "http://www.ontopia.net/topicmaps/examples/opera/occurs/background-manon_lescaut.htm"}
    {manon-lescaut, homepage, "http://www.r-ds.com/opera/pucciniana/manon_lescaut.htm"}
    {manon-lescaut, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/manon-lescaut-score1.jpg"}
@@ -1624,13 +1624,13 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 [oedipus-rex : opera = "Oedipus Rex"]
 [otello : opera = "Otello"
                 = "Othello" / english]
-   {otello, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/o_syn.php3.htm"}
+   {otello, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/o_syn.php3.htm"}
    {otello, az-synopsis, "http://www.azopera.com/97season/o_syn.php3"}
    {otello, homepage, "http://opera.stanford.edu/opera/Verdi/Otello/main.html"}
    {otello, libretto, "http://php.indiana.edu/~lneff/libretti/verotel0.html"}
    {otello, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Otello.htm"}
    {otello, premiere-date, [[1887 (5 Feb)]]}
-   {otello, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/otello.wav"}
+   {otello, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/otello.wav"}
    {otello, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/otello.wav"}
    {otello, synopsis, "http://www.metopera.org/synopses/otello.html"}
    {otello, synopsis, "http://www.opera.it/Operaweb/it/otello/trama.html"}
@@ -1677,39 +1677,39 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
    {suor-angelica, libretto, "http://php.indiana.edu/~lneff/libretti/suorange.html"}
    {suor-angelica, premiere-date, [[1918 (14 Dec)]]}
 [tosca : opera = "Tosca"]
-   {tosca, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/tosca.htm"}
+   {tosca, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/tosca.htm"}
    {tosca, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/tosca.htm"}
-   {tosca, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/tosca_syn.php3.htm"}
+   {tosca, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/tosca_syn.php3.htm"}
    {tosca, az-synopsis, "http://www.azopera.com/97season/t_syn.php3"}
    {tosca, homepage, "http://opera.stanford.edu/opera/Puccini/Tosca/main.html"}
    {tosca, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/tosca-poster1.jpg"}
-   {tosca, libretto, "file:/C|/ontopia/topicmaps/opera/occurs/tosca-libretto.htm"}
+   {tosca, libretto, "file:/C:/ontopia/topicmaps/opera/occurs/tosca-libretto.htm"}
    {tosca, libretto, "http://opera.stanford.edu/opera/Puccini/Tosca/libretto.html"}
-   {tosca, on-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/tosca-synopsis.htm"}
+   {tosca, on-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/tosca-synopsis.htm"}
    {tosca, on-synopsis, "http://www.metopera.org/synopses/tosca.html"}
-   {tosca, poster, "file:/C|/ontopia/topicmaps/opera/occurs/tosca_poster.htm"}
+   {tosca, poster, "file:/C:/ontopia/topicmaps/opera/occurs/tosca_poster.htm"}
    {tosca, poster, "http://www.r-ds.com/opera/pucciniana/pictures/tosca_poster.htm"}
    {tosca, premiere-date, [[1900 (14 Jan)]]}
-   {tosca, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
+   {tosca, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
    {tosca, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/vissi-darte.wav"}
 [turandot : opera = "Turandot"]
-   {turandot, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/turandot.htm"}
+   {turandot, article, "file:/C:/ontopia/topicmaps/opera/occurs/snl/turandot.htm"}
    {turandot, article, "http://detnews.com/1998/accent/9809/05/09050080.htm"}
    {turandot, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/turandot.htm"}
-   {turandot, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/t_syn.php3.htm"}
+   {turandot, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/t_syn.php3.htm"}
    {turandot, az-synopsis, "http://www.azopera.com/99season/t_syn.php3"}
    {turandot, homepage, "http://opera.stanford.edu/opera/Puccini/Turandot/main.html"}
    {turandot, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/turandot-poster1.jpg"}
    {turandot, poster, "http://www.r-ds.com/opera/pucciniana/pictures/turandot_poster.htm"}
    {turandot, premiere-date, [[1926 (25 Apr)]]}
-   {turandot, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
+   {turandot, snippet, "file:/C:/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
    {turandot, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nessun-dorma.mp3"}
-   {turandot, synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/turandot-synopsis.htm"}
+   {turandot, synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/turandot-synopsis.htm"}
    {turandot, synopsis, "http://www.metopera.org/synopses/turandot.html"}
    {turandot, synopsis, "http://www.orc.soton.ac.uk/ngb/turandot.html"}
 [un-ballo-in-maschera : opera = "Un ballo in maschera"; "Ballo in maschera"
                               = "A Masked Ball"; "Masked Ball" / english]
-   {un-ballo-in-maschera, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ubm_syn.php3.htm"}
+   {un-ballo-in-maschera, az-synopsis, "file:/C:/ontopia/topicmaps/opera/occurs/ubm_syn.php3.htm"}
    {un-ballo-in-maschera, az-synopsis, "http://www.azopera.com/99season/ubm_syn.php3"}
    {un-ballo-in-maschera, homepage, "http://opera.stanford.edu/opera/Verdi/Ballo/main.html"}
    {un-ballo-in-maschera, libretto, "http://php.indiana.edu/~lneff/libretti/Ball0.html"}
@@ -1852,7 +1852,7 @@ superclass-subclass( writer : superclass, playwright : subclass ) / ontology
 /* -- TT: style -- */
 [verismo : style = "verismo"]
    {verismo, article, "http://www.operaworld.com/special/verismo.shtml"}
-   {verismo, desc, "file:/C|/ontopia/topicmaps/opera/occurs/verismo.htm"}
+   {verismo, desc, "file:/C:/ontopia/topicmaps/opera/occurs/verismo.htm"}
    {verismo, desc, "http://www.ontopia.net/topicmaps/examples/opera/occurs/verismo.htm"}
 
 /* -- TT: theatre -- */

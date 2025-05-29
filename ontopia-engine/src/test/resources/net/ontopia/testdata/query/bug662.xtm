@@ -572,7 +572,7 @@ Abstract information? e.g., a schema or script, description or history, reason o
   </topic>
   <topic id="tid567">
     <subjectIdentity>
-      <subjectIndicatorRef xlink:href="file:/C:/Program Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/reachbackdata.xtmm#reachback-demo-0301"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="file:/C:/Program%20Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/reachbackdata.xtmm#reachback-demo-0301"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName id="id396">
       <baseNameString>Reachback Demo 01/03 Topic Map</baseNameString>
@@ -2274,7 +2274,7 @@ of events and resulting states.</resourceData>
   </topic>
   <topic id="tid34">
     <subjectIdentity>
-      <subjectIndicatorRef xlink:href="file:/C:/Program Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/sowatoponto.ltmm#sowaont"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="file:/C:/Program%20Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/sowatoponto.ltmm#sowaont"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName id="id422">
       <baseNameString>Sowa Top-Level Topic Map</baseNameString>

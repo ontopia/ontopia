@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
@@ -60,7 +60,7 @@ public class Occurrence extends Scoped {
 		this.dataType = datatype;
 	}
 
-	public void setDatatype(LocatorIF datatype) throws MalformedURLException {
+	public void setDatatype(LocatorIF datatype) throws URISyntaxException {
 		this.dataType = new URILocator(datatype.getAddress());
 	}
 

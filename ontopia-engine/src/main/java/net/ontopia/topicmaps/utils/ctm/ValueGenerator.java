@@ -20,13 +20,14 @@
 
 package net.ontopia.topicmaps.utils.ctm;
 
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * Simple generator storing values to be generated.
@@ -88,7 +89,7 @@ public class ValueGenerator implements ValueGeneratorIF {
       // to handle this.
       try {
         return new URILocator(literal);
-      } catch (java.net.MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("Malformed URL: <" + literal + ">");
       }
     }

@@ -84,7 +84,7 @@ public class DynamicOccurrencePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "TOPIC", getTopicById("horse"));
     
-    assertQueryMatches(matches, "nettressurs($TOPIC, \"http://www.hest.no/\")?");
+    assertQueryMatches(matches, "nettressurs($TOPIC, \"http://www.hest.no\")?");
   }
 
   @Test

@@ -20,12 +20,10 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
-import java.io.IOException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: An LTM file topic map reference.
@@ -44,14 +42,10 @@ public class LTMTopicMapReference extends AbstractOntopolyURLReference {
 
   @Override
   public TopicMapReaderIF getImporter() {
-    try {
-      if (base_address == null) {
-        return new LTMTopicMapReader(url);
-      } else {
-        return new LTMTopicMapReader(url, base_address);
-      }      
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException("Bad URL: " + url, e);
+    if (base_address == null) {
+      return new LTMTopicMapReader(url);
+    } else {
+      return new LTMTopicMapReader(url, base_address);
     }
   }
 }

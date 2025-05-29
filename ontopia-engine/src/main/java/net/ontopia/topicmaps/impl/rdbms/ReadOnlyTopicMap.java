@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Objects;
 import net.ontopia.infoset.core.LocatorIF;
@@ -29,15 +29,15 @@ import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
-import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -59,7 +59,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     }
     try {
       return new URILocator(base_address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

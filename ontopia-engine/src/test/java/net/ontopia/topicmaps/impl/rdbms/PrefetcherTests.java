@@ -62,11 +62,7 @@ public class PrefetcherTests {
   }
 
   protected TopicIF getTopic(TopicMapIF tm, String psi) {
-    try {
-      return tm.getTopicBySubjectIdentifier(new URILocator(psi));
-    } catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    return tm.getTopicBySubjectIdentifier(URILocator.create(psi));
   }
 
   protected long importTopicMap(URL filename) throws IOException {
