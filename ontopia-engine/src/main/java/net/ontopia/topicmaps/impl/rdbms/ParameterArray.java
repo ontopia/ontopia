@@ -63,6 +63,7 @@ public class ParameterArray implements Externalizable {
 
   @Override
   public boolean equals(Object other) {
+    if (other == null) { return false; }
     ParameterArray o = (ParameterArray)other;
     for (int i=0; i < params.length; i++) {
       if (params[i] == null) {
