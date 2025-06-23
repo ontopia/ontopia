@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -91,7 +91,7 @@ public class GlobalParseContext implements ParseContextIF {
 
     try {
       return new URILocator(boundto.getAddress() + local);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

@@ -4,6 +4,7 @@ header { package net.ontopia.topicmaps.utils.ltm; }
 {
   import java.io.Reader;
   import java.io.IOException;
+  import java.io.FileNotFoundException;
   import java.net.MalformedURLException;
   import java.net.URI;
   import java.net.URISyntaxException;
@@ -56,6 +57,7 @@ options {
 {
   private LocatorIF document;
   private LocatorIF base;
+  private URL url;
   private Map indicatorPrefixes;
   private Map locatorPrefixes;
   private TopicMapIF topicmap;
@@ -81,6 +83,10 @@ options {
   public void setBase(LocatorIF base) {
     this.document = base;
     this.base = base;
+  }
+
+  public void setURL(URL url) {
+    this.url = url;
   }
 
   public void init() {
@@ -359,7 +365,7 @@ options {
 
     Reader reader = null;
     try {
-      reader = AbstractTopicMapReader.makeReader(extloc, new LTMEncodingSniffer());
+      reader = AbstractTopicMapReader.makeReader(url, extloc, new LTMEncodingSniffer());
       LTMParser parser = new LTMParser(new LTMLexer(reader));
       parser.setBase(extloc);
       parser.setTopicMap(topicmap);
@@ -369,6 +375,8 @@ options {
       parser.setIncludedFrom(includedFrom);   // ditto
       parser.topicmap();
       createdRoles.addAll(parser.getCreatedRoles());
+    } catch (FileNotFoundException e) {
+      throw new AntlrWrapException(new IOException("Could not find included file '" + extloc.getAddress() + "', referenced from " + (url != null ? url : base)));
     } catch (IOException e) {
       throw new AntlrWrapException(e);
     } catch (RecognitionException ex) {
@@ -393,7 +401,7 @@ options {
     try {
       TopicMapReaderIF reader = null;
       if (syntax.equalsIgnoreCase("xtm"))
-        reader = new XTMTopicMapReader(new URL(extloc.getAddress()));
+        reader = new XTMTopicMapReader(new URL(url, extloc.getAddress()));
 
       MergeUtils.mergeInto(topicmap, reader.read());
     } catch (MalformedURLException e) {

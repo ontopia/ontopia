@@ -5,22 +5,22 @@
   <topic id="topicA">
     <occurrence>
       <instanceOf><topicRef xlink:href="#typeA"/></instanceOf>
-      <resourceRef xlink:href="http://resourceB"/>
+      <resourceRef xlink:href="http://resourceb/"/>
     </occurrence>
     <occurrence>
       <instanceOf><topicRef xlink:href="#typeB"/></instanceOf>
-      <resourceRef xlink:href="http://resourceA"/>
+      <resourceRef xlink:href="http://resourcea/"/>
     </occurrence>
   </topic>
   
   <topic id="topicB">
     <occurrence>
       <instanceOf><topicRef xlink:href="#typeA"/></instanceOf>
-      <resourceRef xlink:href="http://resourceA"/>
+      <resourceRef xlink:href="http://resourcea/"/>
     </occurrence>
     <occurrence>
       <instanceOf><topicRef xlink:href="#typeB"/></instanceOf>
-      <resourceRef xlink:href="http://resourceA"/>
+      <resourceRef xlink:href="http://resourcea/"/>
     </occurrence>
   </topic>
 </topicMap>

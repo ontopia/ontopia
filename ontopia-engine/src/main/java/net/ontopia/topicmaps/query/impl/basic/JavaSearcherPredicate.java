@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.query.impl.basic;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -237,7 +237,7 @@ public class JavaSearcherPredicate implements BasicPredicateIF {
       default:
         throw new OntopiaRuntimeException("Unknown searche value type: " + valtype);
       }
-    } catch (MalformedURLException m) {
+    } catch (URISyntaxException m) {
       throw new OntopiaRuntimeException(m);
     }
   } 

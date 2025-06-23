@@ -54,9 +54,9 @@ List all people, their creations and the occurrences of those creations:
      - Article : http://www.ancientscripts.com/korean.html
      - Article : http://www.usu.edu/~anthro/origins_of_writing/invented_alphabets/#korean
      - In use : 1444 - 
-     - Site using : http://www.daum.net/
+     - Site using : http://www.daum.net
      - Site using : http://www.microsoft.com/korea/
-     - Site using : http://www.naver.com/
+     - Site using : http://www.naver.com
     
   
 

@@ -38,7 +38,7 @@ public class RDFTopicMapReference extends AbstractOntopolyURLReference {
   private boolean lenient;
   
   public RDFTopicMapReference(URL url, String id, String title) {
-    super(url, id, title, URILocator.create(url.toString()));
+    super(url, id, title, new URILocator(url));
   }
   
   public RDFTopicMapReference(URL url, String id, String title, LocatorIF base_address, String syntax) {

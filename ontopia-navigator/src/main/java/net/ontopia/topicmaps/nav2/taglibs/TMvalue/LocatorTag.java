@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import javax.servlet.jsp.JspTagException;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -85,7 +85,7 @@ public class LocatorTag extends BaseValueProducingAndAcceptingTag {
           try {
             // Attempt to parse string as URI
             locators.add(getLocator(topicmap, (String)value));
-          } catch (MalformedURLException e) {
+          } catch (URISyntaxException e) {
             // ignore string, since it is not a valid URI
           }
         }
@@ -103,7 +103,7 @@ public class LocatorTag extends BaseValueProducingAndAcceptingTag {
    * check if String is specifying a relative URI.
    */
   private LocatorIF getLocator(TopicMapIF topicmap, String locString)
-    throws MalformedURLException {
+    throws URISyntaxException {
 
     LocatorIF base = topicmap.getStore().getBaseAddress();
     if (base != null) {

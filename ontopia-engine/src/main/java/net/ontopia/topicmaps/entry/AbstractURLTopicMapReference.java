@@ -23,8 +23,6 @@ package net.ontopia.topicmaps.entry;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.net.MalformedURLException;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.StoreDeletedException;
@@ -60,11 +58,7 @@ public abstract class AbstractURLTopicMapReference
     this.url = url;
     this.base_address = base_address;
     if (base_address == null) {
-      try {
-        base_address = new URILocator(url);
-      } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e); // impossible error
-      }
+      this.base_address = new URILocator(url);
     }
   }
 

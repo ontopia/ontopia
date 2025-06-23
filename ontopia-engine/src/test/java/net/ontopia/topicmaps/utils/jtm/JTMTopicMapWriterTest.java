@@ -60,12 +60,12 @@ public class JTMTopicMapWriterTest {
 
     Reader r = new StringReader(json);
 
-    LocatorIF base = new URILocator("http://www.test.org");
+    LocatorIF base = URILocator.create("http://www.test.org");
     JTMTopicMapReader reader = new JTMTopicMapReader(r, base);
     TopicMapIF tm = reader.read();
 
-    TopicIF wendy = tm.getTopicBySubjectIdentifier(new URILocator("http://psi.topincs.com/movies/dear-wendy"));
-    TopicIF movie = tm.getTopicBySubjectIdentifier(new URILocator("http://psi.topincs.com/movie"));
+    TopicIF wendy = tm.getTopicBySubjectIdentifier(URILocator.create("http://psi.topincs.com/movies/dear-wendy"));
+    TopicIF movie = tm.getTopicBySubjectIdentifier(URILocator.create("http://psi.topincs.com/movie"));
     
     Collection<TopicIF> types = wendy.getTypes();
     Assert.assertEquals(1, types.size());

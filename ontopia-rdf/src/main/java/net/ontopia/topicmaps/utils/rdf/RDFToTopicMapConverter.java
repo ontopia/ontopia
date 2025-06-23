@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,7 +111,7 @@ public class RDFToTopicMapConverter {
   public static void convert(URL infileurl, String syntax,
                              String mappingurl, String mappingsyntax,
                              TopicMapIF topicmap, boolean lenient)
-    throws JenaException, IOException {
+    throws JenaException, IOException, URISyntaxException {
 
     RDFToTopicMapConverter converter =
       new RDFToTopicMapConverter(mappingurl, mappingsyntax, topicmap);
@@ -138,7 +138,7 @@ public class RDFToTopicMapConverter {
   public static void convert(InputStream input, String syntax,
                              String mappingurl, String mappingsyntax,
                              TopicMapIF topicmap, boolean lenient)
-    throws JenaException, IOException {
+    throws JenaException, IOException, URISyntaxException {
 
     RDFToTopicMapConverter converter =
       new RDFToTopicMapConverter(mappingurl, mappingsyntax, topicmap);
@@ -152,7 +152,7 @@ public class RDFToTopicMapConverter {
    * mapping found within the RDF model.
    */
   public static void convert(Model model, TopicMapIF topicmap)
-    throws JenaException, IOException {
+    throws JenaException, IOException, URISyntaxException {
 
     RDFToTopicMapConverter converter = new RDFToTopicMapConverter(model, topicmap);
     converter.doConversion(model);
@@ -190,7 +190,7 @@ public class RDFToTopicMapConverter {
     try {
       generatedNameTopic.addSubjectIdentifier(new URILocator(RTM_GENERATED_NAME));
       builder.makeTopicName(generatedNameTopic, "Generated Name");
-    } catch (java.net.MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e); // impossible error
     }
 
@@ -222,7 +222,7 @@ public class RDFToTopicMapConverter {
   // --- Internal
 
   private RDFToTopicMapConverter(String mappingurl, String syntax, TopicMapIF topicmap)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
 
     this.topicmap = topicmap;
     this.builder = topicmap.getBuilder();
@@ -235,7 +235,7 @@ public class RDFToTopicMapConverter {
   }
 
   private RDFToTopicMapConverter(Model model, TopicMapIF topicmap)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
 
     this.topicmap = topicmap;
     this.builder = topicmap.getBuilder();
@@ -248,7 +248,7 @@ public class RDFToTopicMapConverter {
   }
 
   private void doConversion(URL url, String syntax)
-    throws JenaException, IOException {
+    throws JenaException, IOException, URISyntaxException {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
       RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
@@ -264,7 +264,7 @@ public class RDFToTopicMapConverter {
   }
 
   private void doConversion(InputStream input, String syntax)
-    throws JenaException, IOException {
+    throws JenaException, IOException, URISyntaxException {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
       RDFUtils.parseRDFXML(input, new ToTMStatementHandler());
@@ -309,7 +309,7 @@ public class RDFToTopicMapConverter {
     }
   }
 
-  private void buildMappings(Model model) throws MalformedURLException {
+  private void buildMappings(Model model) throws URISyntaxException {
     mappings = new HashMap();
     Property mapsTo = model.createProperty(RTM_MAPSTO);
     StmtIterator it = model.listStatements(null, mapsTo, (RDFNode) null);
@@ -326,7 +326,7 @@ public class RDFToTopicMapConverter {
   // --- Internal
 
   private StatementHandler getMapper(Resource subject, RDFNode node, Model model)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
     String uri = node.toString();
     if (RTM_BASENAME.equals(uri)) {
       return new TopicNameMapper(getScope(subject, model));
@@ -366,7 +366,7 @@ public class RDFToTopicMapConverter {
    * collection containing the RDF URIs of the values as URILocators.
    */
   private Collection getScope(RDFNode rdfprop, Model model)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
 
     Resource subject = (Resource) rdfprop;
     Property prop = model.getProperty(RTM_IN_SCOPE);
@@ -389,7 +389,7 @@ public class RDFToTopicMapConverter {
   }
 
   private TopicIF getType(RDFNode rdfprop, Model model)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
 
     Resource subject = (Resource) rdfprop;
     Property prop = model.getProperty(RTM_TYPE);
@@ -418,7 +418,7 @@ public class RDFToTopicMapConverter {
 
   private LocatorIF getTopicIndicator(Resource subject, String property,
                                       Model model)
-    throws JenaException, MalformedURLException {
+    throws JenaException, URISyntaxException {
     Property prop = model.getProperty(property);
     NodeIterator it = model.listObjectsOfProperty(subject, prop);
     while (it.hasNext()) {
@@ -468,6 +468,9 @@ public class RDFToTopicMapConverter {
             id = sub.toString();
           }
           
+          // cleanup the id: x-anon:<-24324d21:15bda0c7eee:-7fff> is not a legal uri
+          id = id.replaceAll("<", "").replaceAll(">", "");
+          
           // we don't want the pseudo-URIs of anonymous nodes as
           // subject identifiers
           LocatorIF loc = new URILocator("x-anon:" + id);
@@ -485,7 +488,7 @@ public class RDFToTopicMapConverter {
           }
         }
         return topic;
-      } catch (java.net.MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException(e);
       }
     }
@@ -613,7 +616,7 @@ public class RDFToTopicMapConverter {
       LocatorIF loc = null;
       try {
         loc = new URILocator(obj.getURI());
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("INTERNAL ERROR", e);
       }
 
@@ -647,7 +650,7 @@ public class RDFToTopicMapConverter {
       LocatorIF loc = null;
       try {
         loc = new URILocator(obj.getURI());
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("INTERNAL ERROR", e);
       }
 
@@ -682,7 +685,7 @@ public class RDFToTopicMapConverter {
       LocatorIF loc = null;
       try {
         loc = new URILocator(obj.getURI());
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("INTERNAL ERROR", e);
       }
 
@@ -742,7 +745,7 @@ public class RDFToTopicMapConverter {
         }
         OccurrenceIF occ = builder.makeOccurrence(topic, ourtype, new URILocator(uri));
         addScope(occ);
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException(e);
       }
     }

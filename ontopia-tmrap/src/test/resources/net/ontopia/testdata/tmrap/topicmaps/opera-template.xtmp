@@ -70,7 +70,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/nom-de-plume.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/nom-de-plume.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
@@ -648,7 +648,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/opera.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/opera.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>

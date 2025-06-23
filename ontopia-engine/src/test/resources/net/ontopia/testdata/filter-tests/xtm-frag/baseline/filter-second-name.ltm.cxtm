@@ -9,7 +9,7 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#t1</locator>
+<locator>http://xtmFragmentExporter/tests#t1</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id1</locator>
@@ -21,7 +21,7 @@
 </topic>
 <topic number="3">
 <subjectIdentifiers>
-<locator>http://xtmfragmentexporter/tests#t2</locator>
+<locator>http://xtmFragmentExporter/tests#t2</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id4</locator>
