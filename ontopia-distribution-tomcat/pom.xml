@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.ontopia</groupId>
 		<artifactId>ontopia-parent</artifactId>
-		<version>5.5.1-test</version>
+		<version>5.5.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>ontopia-distribution-tomcat</artifactId>
 	<packaging>pom</packaging>
