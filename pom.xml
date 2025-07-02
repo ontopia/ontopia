@@ -11,7 +11,7 @@
 	<groupId>net.ontopia</groupId>
 	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>5.5.2-test-SNAPSHOT</version>
+	<version>5.5.1-test</version>
 	<name>Ontopia</name>
 	<description>Ontopia: Complete Topic Maps solution</description>
 	<url>https://github.com/ontopia/ontopia</url>
@@ -23,7 +23,7 @@
 		<url>https://github.com/ontopia/ontopia</url>
 		<connection>scm:git:https://github.com/ontopia/ontopia.git</connection>
 		<developerConnection>scm:git:https://github.com/ontopia/ontopia.git</developerConnection>
-	  <tag>HEAD</tag>
+	  <tag>release-5.5.1-test</tag>
   </scm>
 
 	<inceptionYear>2001</inceptionYear>
