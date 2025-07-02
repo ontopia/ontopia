@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.5.1-test</version>
+		<version>5.5.2-test-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ontopia-instrumentation</artifactId>
