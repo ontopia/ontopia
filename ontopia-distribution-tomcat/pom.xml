@@ -259,7 +259,7 @@
 						<configuration>
 							<optimizations>false</optimizations>
 							<patchDirectory>src/main/patches</patchDirectory>
-							<patches>001.catalina.properties.patch,002.server.xml.patch</patches>
+							<patches>001.catalina.properties.patch</patches>
 							<targetDirectory>target/${project.build.finalName}/apache-tomcat/</targetDirectory>
 						</configuration>
 					</plugin>
