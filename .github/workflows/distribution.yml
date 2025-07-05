@@ -1,0 +1,41 @@
+name: Distribution
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: Version to make distribution for
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: "release-${{ github.event.inputs.version }}"
+    
+    - name: Set up Maven
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version-file: '.java-version'
+        cache: maven
+
+    - name: Build Tomcat distribution
+      run: |
+        cd ontopia-distribution-tomcat
+        mvn -B -Dstyle.color=always clean package -Pontopia-distribution-tomcat -DskipTests=true
+        cd target/ontopia-distribution-tomcat-${{ github.event.inputs.version }}
+        zip -r ../ontopia-${{ github.event.inputs.version }}.zip .
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ontopia-${{ github.event.inputs.version }}
+        path: ontopia-distribution-tomcat/target/ontopia-${{ github.event.inputs.version }}.zip
