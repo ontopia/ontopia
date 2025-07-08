@@ -13,10 +13,8 @@ This module contains all the automated classification functionalities of Ontopia
 ### Module API ###
 
 You can find the Javadoc specific to classes contained in the Classify Module in the [Ontopia
-Classify API](api/index.html)
+Classify API](apidocs/index.html)
 
 ### Automated classification ###
 
 *  [Automatic Classification, Developer's Guide](classify/dev-guide.html)
-
-

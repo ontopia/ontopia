@@ -13,10 +13,8 @@ Omnigator is the omnivorous topic map navigator built using Ontopia.
 ### Omnigator API ###
 
 You can find the Javadoc specific to classes contained in the Omnigator Webapplication in the
-[Ontopia Omnigator API](api/index.html)
+[Ontopia Omnigator API](apidocs/index.html)
 
 ### Omnigator Documentation ###
 
 * [The Ontopia Omnigator, User's Guide](omnigator/userguide.html)
-
-

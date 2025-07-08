@@ -220,7 +220,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.1.0</version>
+					<version>3.7.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -230,13 +230,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version> <!-- version 3 breaks assembly! -->
+					<version>3.11.2</version>
 					<configuration>
-						<outputDirectory>${project.build.directory}/site/api</outputDirectory>
+						<outputDirectory>${project.build.directory}/site/</outputDirectory>
 						<author>true</author>
 						<version>true</version>
 						<use>true</use>
-						<public>true</public>
 						<bottom><![CDATA[<div style="text-align:center;">Copyright &copy; ${current.year} <a href="http://www.ontopia.net">Ontopia</a>.</div>]]></bottom>
 						<doctitle>Ontopia API documentation</doctitle>
 						<windowtitle>Ontopia</windowtitle>
@@ -790,8 +789,7 @@
 						</executions>
 						<configuration>
 							<!-- aggregate takes different configuration, see #485 -->
-							<reportOutputDirectory>${project.build.directory}/site/api</reportOutputDirectory>
-							<destDir>api</destDir>
+							<outputDirectory>${project.build.directory}/site/</outputDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -818,7 +816,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.4.1</version>
+						<version>3.11.2</version>
 						<configuration>
 							<failOnError>false</failOnError>
 						</configuration>

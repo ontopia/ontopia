@@ -14,7 +14,7 @@ Topicmaps in files, memory or RDBMS is all supported in the core module.
 ### Module API ###
 
 You can find the Javadoc specific to classes contained in the Core Module in the [Ontopia Core
-API](api/index.html)
+API](apidocs/index.html)
 
 ### General documents ###
 
@@ -41,5 +41,3 @@ API](api/index.html)
 
 *  [The Linear Topic Map Notation, Definition and introduction, version 1.3](misc/ltm.html)
 *  [The RTM RDF to topic maps mapping, Definition and introduction](misc/rdf2tm.html)
-
-

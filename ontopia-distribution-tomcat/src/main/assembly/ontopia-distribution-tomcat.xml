@@ -60,8 +60,8 @@
 		
 		<!-- aggragated javadoc -->
 		<fileSet>
-			<directory>${project.parent.reporting.outputDirectory}/api</directory>
-			<outputDirectory>doc/api</outputDirectory>
+			<directory>${project.parent.reporting.outputDirectory}/apidocs</directory>
+			<outputDirectory>doc/apidocs</outputDirectory>
 		</fileSet>
 	</fileSets>
 	

@@ -13,10 +13,8 @@ This module contains all the TMRAP functionalities of Ontopia.
 ### Module API ###
 
 You can find the Javadoc specific to classes contained in the TMRAP Module in the [Ontopia TMRAP
-API](api/index.html)
+API](apidocs/index.html)
 
 ### TMRAP ###
 
 *  [TMRAP, Developer's Guide](tmrap/dev-guide.html)
-
-

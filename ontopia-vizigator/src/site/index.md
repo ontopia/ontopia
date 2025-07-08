@@ -13,10 +13,8 @@ This module contains all the Vizigator functionalities of Ontopia.
 ### Module API ###
 
 You can find the Javadoc specific to classes contained in the Vizigator Module in the [Ontopia
-Vizigator API](api/index.html)
+Vizigator API](apidocs/index.html)
 
 ### Vizigator Documentation ###
 
 *  [The Ontopia Vizigator, User's Guide](vizigator/userguide.html)
-
-

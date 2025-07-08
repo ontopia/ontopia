@@ -13,7 +13,7 @@ This module contains all the Navigator functionalities of Ontopia.
 ### Module API ###
 
 You can find the Javadoc specific to classes contained in the Navigator Module in the [Ontopia
-Navigator API](api/index.html)
+Navigator API](apidocs/index.html)
 
 ### Navigator-specific documents ###
 
@@ -21,5 +21,3 @@ Navigator API](api/index.html)
 *  [The Ontopia Navigator, Developer's Guide](navigator/navguide.html)
 *  [The Ontopia Navigator, Tag Library Reference](navigator/tolog-taglib.html)
 *  [The Ontopia Navigator, User Management Guide](navigator/userman.html)
-
-
