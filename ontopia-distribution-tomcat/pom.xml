@@ -70,7 +70,7 @@
 			<artifactId>ontopia-lucene</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
+
 		<!-- Webapps -->
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
@@ -120,7 +120,7 @@
 			<version>${project.parent.version}</version>
 			<type>war</type>
 		</dependency>
-		
+
 		<!-- Webapp dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -142,15 +142,15 @@
 			<classifier>vizlet</classifier>
 		</dependency>
 	</dependencies>
-	
+
 	<properties>
 		<tomcat.version>9.0.107</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
-		<rdbms-setup>${basedir}/target/${project.artifactId}-${project.version}/rdbms/setup/</rdbms-setup>
+		<rdbms-setup>${project.build.directory}/rdbms/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
 		<rdbms-drop-postfix>.drop.sql</rdbms-drop-postfix>
 	</properties>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -174,7 +174,7 @@
               <resourceIncludes>
                 <resourceInclude>**/src/site/resources/**</resourceInclude>
               </resourceIncludes>
-              <outDirectory>${project.build.directory}/${project.build.finalName}/doc</outDirectory>
+              <outDirectory>${project.build.directory}/doc</outDirectory>
             </configuration>
           </execution>
         </executions>
@@ -186,14 +186,14 @@
           <execution>
             <id>site-default</id>
             <configuration>
-              <outputFolder>${project.build.directory}/${project.build.finalName}/doc</outputFolder>
+              <outputFolder>${project.build.directory}/doc</outputFolder>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-	
+
 	<profiles>
 		<profile>
 			<id>ontopia-distribution-tomcat</id>
@@ -222,7 +222,47 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-patch-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>patch-tomcat-config</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>apply</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<optimizations>false</optimizations>
+							<patchDirectory>src/main/patches</patchDirectory>
+							<patches>001.catalina.properties.patch</patches>
+							<targetDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}-windows-x64/apache-tomcat-${tomcat.version}</targetDirectory>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>generate-rdbms-schemas</id>
+								<goals><goal>java</goal></goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<mainClass>net.ontopia.persistence.rdbms.DistributionDDLWriter</mainClass>
+									<commandlineArgs>${rdbms-setup}</commandlineArgs>
+									<executableDependency>
+										<groupId>${project.parent.groupId}</groupId>
+										<artifactId>ontopia-engine</artifactId>
+									</executableDependency>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
 					<!-- run assembly on package, after tomcat getter -->
 					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
@@ -235,50 +275,10 @@
 								</goals>
 								<configuration>
 									<appendAssemblyId>false</appendAssemblyId>
-									<attach>false</attach>
+									<attach>true</attach>
 									<descriptors>
 										<descriptor>src/main/assembly/ontopia-distribution-tomcat.xml</descriptor>
 									</descriptors>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-patch-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>patch-tomcat-config</id>
-								<phase>package</phase>
-								<goals>
-									<goal>apply</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<optimizations>false</optimizations>
-							<patchDirectory>src/main/patches</patchDirectory>
-							<patches>001.catalina.properties.patch</patches>
-							<targetDirectory>target/${project.build.finalName}/apache-tomcat/</targetDirectory>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>generate-rdbms-schemas</id>
-								<goals><goal>java</goal></goals>
-								<phase>package</phase>
-								<configuration>
-									<mainClass>net.ontopia.persistence.rdbms.DistributionDDLWriter</mainClass>
-									<commandlineArgs>${rdbms-setup}</commandlineArgs>
-									<executableDependency>
-										<groupId>${project.parent.groupId}</groupId>
-										<artifactId>ontopia-engine</artifactId>
-									</executableDependency>
 								</configuration>
 							</execution>
 						</executions>

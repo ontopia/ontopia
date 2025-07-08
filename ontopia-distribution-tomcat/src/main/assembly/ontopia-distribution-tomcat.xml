@@ -3,7 +3,7 @@
 	<id>ontopia-dist</id>
 	
 	<formats>
-		<format>dir</format>
+		<format>zip</format>
 	</formats>
 
 	<includeBaseDirectory>false</includeBaseDirectory>
@@ -62,6 +62,18 @@
 		<fileSet>
 			<directory>${project.parent.reporting.outputDirectory}/apidocs</directory>
 			<outputDirectory>doc/apidocs</outputDirectory>
+		</fileSet>
+
+		<!-- aggragated docs -->
+		<fileSet>
+			<directory>target/doc</directory>
+			<outputDirectory>doc/</outputDirectory>
+		</fileSet>
+
+		<!-- rdbms setup -->
+		<fileSet>
+			<directory>target/rdbms</directory>
+			<outputDirectory>rdbms/setup</outputDirectory>
 		</fileSet>
 	</fileSets>
 	

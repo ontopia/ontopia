@@ -20,6 +20,7 @@
 
 package net.ontopia.persistence.rdbms;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,7 +43,8 @@ public class DistributionDDLWriter {
   }
   
   public static void main(String[] args) throws Exception {
-    
+    new File(args[0]).mkdirs();
+
     for (Entry<String, String> entry : PRODUCTS.entrySet()) {
       DDLWriter.main(new String[] {SCHEMA, entry.getKey(), entry.getValue(), args[0] + entry.getKey() + CREATE_PREFIX, args[0] + entry.getKey() + DROP_PREFIX});
     }
