@@ -2,19 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>net.ontopia</groupId>
-		<artifactId>super-pom</artifactId>
-		<version>6</version>
-	</parent>
-
 	<groupId>net.ontopia</groupId>
 	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>5.5.3-SNAPSHOT</version>
+
 	<name>Ontopia</name>
 	<description>Ontopia: Complete Topic Maps solution</description>
 	<url>https://github.com/ontopia/ontopia</url>
+	<inceptionYear>2001</inceptionYear>
+
+	<organization>
+		<name>The Ontopia Project</name>
+		<url>https://github.com/ontopia/ontopia</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>ontopia-team</id>
+			<url>https://github.com/ontopia/ontopia/graphs/contributors</url>
+			<name>The Ontopia team</name>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<issueManagement>
 		<system>Github</system>
 		<url>https://github.com/ontopia/ontopia/issues</url>
@@ -23,21 +40,15 @@
 		<url>https://github.com/ontopia/ontopia</url>
 		<connection>scm:git:https://github.com/ontopia/ontopia.git</connection>
 		<developerConnection>scm:git:https://github.com/ontopia/ontopia.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
-
-	<inceptionYear>2001</inceptionYear>
-	<organization>
-		<name>The Ontopia Project</name>
-		<url>https://github.com/ontopia/ontopia</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>	
+		<tag>HEAD</tag>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>ossrh</id>
+			<name>Sonatype OSS release staging</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
 
 	<modules>
 		<module>ontopia-engine</module>
@@ -67,10 +78,10 @@
 		<module>webapp-ontopoly</module>
 		<module>webapp-ontopoly-standalone</module>
 		<module>webapp-tmrap</module>
-		
+
 		<!-- Distribution -->
 		<module>ontopia-distribution-tomcat</module>
-		
+
 	</modules>
 
 	<properties>
@@ -90,7 +101,7 @@
 		<jena.version>4.10.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 		<poi.version>5.4.0</poi.version>
-		
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
@@ -100,10 +111,6 @@
 		<maven.build.timestamp.format>yyyy-MM-dd-HH-mm</maven.build.timestamp.format>
 	</properties>
 
-	<prerequisites>
-		<maven>2.2.1</maven>
-	</prerequisites>
-	
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -345,7 +352,7 @@
 						<inputFolder>${basedir}/../src/sass/</inputFolder>
 						<outputFolder>${basedir}/target/site/</outputFolder>
 					</configuration>
-				</plugin>	
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
@@ -356,6 +363,30 @@
 							<arg>--pinentry-mode</arg>
 							<arg>loopback</arg>
 						</gpgArguments>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>3.1.1</version>
+					<configuration>
+						<releaseProfiles>release</releaseProfiles>
+						<tagNameFormat>release-@{project.version}</tagNameFormat>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>3.1.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.central</groupId>
+					<artifactId>central-publishing-maven-plugin</artifactId>
+					<version>0.8.0</version>
+					<extensions>true</extensions>
+					<configuration>
+						<publishingServerId>ossrh</publishingServerId>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -393,7 +424,7 @@
 						<phase>skip</phase>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
@@ -422,13 +453,8 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>3.1.1</version>
-				<configuration>
-					<tagNameFormat>release-@{project.version}</tagNameFormat>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-				</configuration>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
@@ -647,7 +673,7 @@
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
-				<version>3.0.1</version>				
+				<version>3.0.1</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -696,7 +722,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<profiles>
 		<profile>
 			<!-- Profile used for generating a test coverage report -->
@@ -766,6 +792,64 @@
 							<!-- aggregate takes different configuration, see #485 -->
 							<reportOutputDirectory>${project.build.directory}/site/api</reportOutputDirectory>
 							<destDir>api</destDir>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!-- profile used during release -->
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.4.1</version>
+						<configuration>
+							<failOnError>false</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>3.2.7</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<!-- Prevent gpg from using pinentry programs -->
+							<gpgArguments>
+								<arg>--pinentry-mode</arg>
+								<arg>loopback</arg>
+							</gpgArguments>
 						</configuration>
 					</plugin>
 				</plugins>
