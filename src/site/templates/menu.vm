@@ -103,6 +103,6 @@
 	#end
 
 	#if ($id != "webapp-ontopoly" && $id != "webapp-omnigator")
-	<li><a href="${root}api/index.html"><i class="fa fa-fw fa-terminal"></i>API</a></li>
+	<li><a href="${root}apidocs/index.html"><i class="fa fa-fw fa-terminal"></i>API</a></li>
 	#end
 <ul>
