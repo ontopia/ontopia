@@ -22,3 +22,6 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B -Dstyle.color=always package -Pontopia-distribution-tomcat
+
+    - name: Build with Docker
+      run: docker build .
