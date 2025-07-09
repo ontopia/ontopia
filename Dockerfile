@@ -4,7 +4,12 @@
 
 # Note: requires ontopia-distribution-tomcat to have been build!
 
-FROM tomcat:9.0-jdk8
+# unzip distribution
+FROM busybox AS unzip
+COPY ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip /tmp/dist.zip
+RUN unzip /tmp/dist.zip -d /tmp/ontopia-dist
+
+FROM tomcat:9.0-jdk11
 
 ENV ONTOPIA_HOME=/usr/local/ontopia
 ENV ONTOPIA_DIST=/usr/local/ontopia.dist
@@ -24,14 +29,13 @@ ADD $ASSEMBLY/topicmaps $ONTOPIA_DIST/topicmaps
 
 # --- copy files from ontopia-distribution-tomcat build
 # todo: can this be replaced with a RUN mvn assembly?, like tomcat, but just the jars and wars
-ENV DIST=ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-?.?.?
+ENV DIST=/tmp/ontopia-dist
 ENV TOMCAT=$DIST/apache-tomcat
 
 # jars
-COPY $DIST/lib/* $CATALINA_HOME/lib
+COPY --from=unzip $DIST/lib/* $CATALINA_HOME/lib
 # webapps
-ADD $TOMCAT/webapps $CATALINA_HOME/webapps
-
+COPY --from=unzip $TOMCAT/webapps $CATALINA_HOME/webapps
 
 # --- copy docker specific files
 ENV SRC=src/docker
