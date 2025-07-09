@@ -21,4 +21,4 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B -Dstyle.color=always package
+      run: mvn -B -Dstyle.color=always package -Pontopia-distribution-tomcat
