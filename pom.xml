@@ -102,8 +102,8 @@
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 		<poi.version>5.4.0</poi.version>
 
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
