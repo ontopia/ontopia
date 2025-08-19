@@ -9,7 +9,7 @@ FROM busybox AS unzip
 COPY ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip /tmp/dist.zip
 RUN unzip /tmp/dist.zip -d /tmp/ontopia-dist
 
-FROM tomcat:9.0-jdk11
+FROM tomcat:9.0-jdk17
 
 ENV ONTOPIA_HOME=/usr/local/ontopia
 ENV ONTOPIA_DIST=/usr/local/ontopia.dist
