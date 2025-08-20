@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.entry;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -169,7 +169,7 @@ public abstract class AbstractPathTopicMapSource
   public void setBaseAddress(String base_address) {
     try {
       this.base_address = new URILocator(base_address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

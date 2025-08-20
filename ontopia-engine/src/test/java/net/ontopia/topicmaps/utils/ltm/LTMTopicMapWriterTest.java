@@ -52,7 +52,7 @@ public class LTMTopicMapWriterTest {
 
   @Test
   public void testBadId() throws IOException {
-    LocatorIF base = new URILocator("http://example.com");
+    LocatorIF base = URILocator.create("http://example.com");
     TopicIF topic = builder.makeTopic();
     topic.addItemIdentifier(base.resolveAbsolute("#22"));
     

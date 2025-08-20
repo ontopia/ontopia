@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -57,7 +57,7 @@ public class IndexResource extends AbstractTransactionalResource {
 			} else {
 				return index.getVariants(value);
 			}
-		} catch (MalformedURLException mufe) {
+		} catch (URISyntaxException mufe) {
 			throw OntopiaRestErrors.MANDATORY_ATTRIBUTE_IS_WRONG_TYPE.build(mufe, "datatype", "LocatorIF", datatype);
 		}
 	}

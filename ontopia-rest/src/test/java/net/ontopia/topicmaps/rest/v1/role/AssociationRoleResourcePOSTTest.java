@@ -104,7 +104,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testPlayerByItemIdentifier() {
 		AssociationRole role = get("3", AssociationRole.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		role.setPlayer(topic);
 
 		AssociationRole changed = post("3", role, AssociationRole.class);
@@ -139,7 +139,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTypeByItemIdentifier() {
 		AssociationRole role = get("3", AssociationRole.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		role.setType(topic);
 
 		AssociationRole changed = post("3", role, AssociationRole.class);
@@ -173,7 +173,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		AssociationRole role = get("3", AssociationRole.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		role.setReifier(topic);
 
 		AssociationRole changed = post("3", role, AssociationRole.class);
@@ -185,20 +185,20 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		AssociationRole role = get("3", AssociationRole.class);
-		role.getItemIdentifiers().add(URILocator.create("foo:bar40"));
+		role.getItemIdentifiers().add(URILocator.create("foo:barbar40"));
 
 		AssociationRole changed = post("3", role, AssociationRole.class);
 
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar40", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar40", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testAddItemIdentifiers() {
 		AssociationRole role = get("3", AssociationRole.class);
-		role.getItemIdentifiers().add(URILocator.create("foo:bar41"));
-		role.getItemIdentifiers().add(URILocator.create("foo:bar42"));
+		role.getItemIdentifiers().add(URILocator.create("foo:barbar41"));
+		role.getItemIdentifiers().add(URILocator.create("foo:barbar42"));
 
 		AssociationRole changed = post("3", role, AssociationRole.class);
 
@@ -208,7 +208,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testRemoveItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		AssociationRole role = get("3", AssociationRole.class);
 		role.getItemIdentifiers().add(locator);
@@ -225,7 +225,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearItemIdentifiers() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		AssociationRole role = get("3", AssociationRole.class);
 		role.getItemIdentifiers().add(locator);
@@ -242,7 +242,7 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testChangeItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		AssociationRole role = get("3", AssociationRole.class);
 		role.getItemIdentifiers().add(locator);
@@ -252,16 +252,16 @@ public class AssociationRoleResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(1, role.getItemIdentifiers().size());
 
 		role.getItemIdentifiers().remove(locator);
-		role.getItemIdentifiers().add(URILocator.create("foo:to-keep-role"));
+		role.getItemIdentifiers().add(URILocator.create("foo:barto-keep-role"));
 		role = post("3", role, AssociationRole.class);
 		Assert.assertNotNull(role.getItemIdentifiers());
 		Assert.assertEquals(1, role.getItemIdentifiers().size());
-		Assert.assertEquals("foo:to-keep-role", role.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barto-keep-role", role.getItemIdentifiers().iterator().next().getAddress());
 	}
 
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-role-2");
+		final URILocator locator = URILocator.create("foo:barto-keep-role-2");
 
 		AssociationRole role = get("3", AssociationRole.class);
 		role.getItemIdentifiers().add(locator);

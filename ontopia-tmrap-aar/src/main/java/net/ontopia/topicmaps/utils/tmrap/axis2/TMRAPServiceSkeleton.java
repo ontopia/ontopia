@@ -19,7 +19,7 @@
  */
 package net.ontopia.topicmaps.utils.tmrap.axis2;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -166,7 +166,7 @@ public class TMRAPServiceSkeleton implements TMRAPServiceSkeletonInterface {
     return null;
   }
 
-  private Collection makeLocatorCollection(String[] uris) throws MalformedURLException {
+  private Collection makeLocatorCollection(String[] uris) throws URISyntaxException {
     if (uris == null) {
       return Collections.EMPTY_SET;
     }

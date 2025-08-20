@@ -135,7 +135,7 @@ public class IndexResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(occurrences);
 		Assert.assertEquals(3, occurrences.size());
 		Assert.assertTrue(occurrences.contains("foo"));
-		Assert.assertTrue(occurrences.contains("foo:bar")); // don't know why this is in there: locator
+		Assert.assertTrue(occurrences.contains("foo:barbar")); // don't know why this is in there: locator
 		Assert.assertTrue(occurrences.contains("作曲家"));
 	}
 

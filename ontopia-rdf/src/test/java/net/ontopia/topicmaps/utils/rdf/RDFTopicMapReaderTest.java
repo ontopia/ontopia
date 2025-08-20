@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.rdf;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.utils.TestFileUtils;
@@ -121,5 +122,16 @@ public class RDFTopicMapReaderTest {
     // compare results
     Assert.assertTrue("Wrong canonicalization using external mapping file",
                TestFileUtils.compareFileToResource(out, base));    
+  }
+
+  @Test  
+  public void testIssue366() throws IOException {
+    String in = TestFileUtils.getTestInputFile(testdataDirectory, "various", "issue366.rdf");
+    URL map = TestFileUtils.getTestInputURL(testdataDirectory, "various", "issue366-map.rdf");
+    RDFTopicMapReader reader = new RDFTopicMapReader(TestFileUtils.getTestInputURL(in));
+    reader.setMappingURL(map);
+    TopicMapIF tm = reader.read();
+    Assert.assertNotNull(tm.getTopicBySubjectIdentifier(
+            URILocator.create("http://www.infocom.co.jp/dsp/sample#MAIN-\u30BF\u30A4\u30C8\u30EB\u8AAD\u307F")));
   }
 }

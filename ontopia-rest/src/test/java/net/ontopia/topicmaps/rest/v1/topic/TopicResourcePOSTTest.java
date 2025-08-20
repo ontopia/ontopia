@@ -36,37 +36,37 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		Topic topic = get("1", Topic.class);
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_add_ii"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_add_ii"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(2, changed.getItemIdentifiers().size());
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:#topic1")));
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:topic_add_ii")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bar#topic1")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bartopic_add_ii")));
 	}
 
 	@Test
 	public void testAddItemIdentifiers() {
 		Topic topic = get("1", Topic.class);
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_add_ii_2"));
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_add_ii_3"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_add_ii_2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_add_ii_3"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(3, changed.getItemIdentifiers().size());
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:#topic1")));
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:topic_add_ii_2")));
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:topic_add_ii_3")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bar#topic1")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bartopic_add_ii_2")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bartopic_add_ii_3")));
 	}
 
 	@Test
 	public void testRemoveItemIdentifier() {
 		Topic topic = get("1", Topic.class);
-		topic.getItemIdentifiers().remove(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().remove(URILocator.create("foo:bar#topic1"));
 
 		Assert.assertTrue(topic.getItemIdentifiers().isEmpty());
 
@@ -92,15 +92,15 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testChangeItemIdentifiers() {
 		Topic topic = get("1", Topic.class);
-		topic.getItemIdentifiers().remove(URILocator.create("foo:#topic1"));
-		topic.getItemIdentifiers().add(URILocator.create("foo:topic_add_ii_4"));
+		topic.getItemIdentifiers().remove(URILocator.create("foo:bar#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bartopic_add_ii_4"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:topic_add_ii_4")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bartopic_add_ii_4")));
 	}
 
 	@Test
@@ -113,35 +113,35 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:#topic1")));
+		Assert.assertTrue(changed.getItemIdentifiers().contains(URILocator.create("foo:bar#topic1")));
 	}
 
 	@Test
 	public void testAddSubjectIdentifier() {
 		Topic topic = get("8", Topic.class);
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_add_si"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_add_si"));
 
 		Topic changed = post("8", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectIdentifiers());
 		Assert.assertEquals(1, changed.getSubjectIdentifiers().size());
-		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:topic_add_si")));
+		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_add_si")));
 	}
 
 	@Test
 	public void testAddSubjectIdentifiers() {
 		Topic topic = get("8", Topic.class);
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_add_si_2"));
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_add_si_3"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_add_si_2"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_add_si_3"));
 
 		Topic changed = post("8", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectIdentifiers());
 		Assert.assertEquals(2, changed.getSubjectIdentifiers().size());
-		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:topic_add_si_2")));
-		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:topic_add_si_3")));
+		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_add_si_2")));
+		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_add_si_3")));
 	}
 
 	@Test
@@ -174,14 +174,14 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeSubjectIdentifiers() {
 		Topic topic = get("1", Topic.class);
 		topic.getSubjectIdentifiers().remove(URILocator.create("foo:bar"));
-		topic.getSubjectIdentifiers().add(URILocator.create("foo:topic_add_si_4"));
+		topic.getSubjectIdentifiers().add(URILocator.create("foo:bartopic_add_si_4"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectIdentifiers());
 		Assert.assertEquals(1, changed.getSubjectIdentifiers().size());
-		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:topic_add_si_4")));
+		Assert.assertTrue(changed.getSubjectIdentifiers().contains(URILocator.create("foo:bartopic_add_si_4")));
 	}
 
 	@Test
@@ -200,29 +200,29 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddSubjectLocator() {
 		Topic topic = get("1", Topic.class);
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_add_sl"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_add_sl"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectLocators());
 		Assert.assertEquals(1, changed.getSubjectLocators().size());
-		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:topic_add_sl")));
+		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:bartopic_add_sl")));
 	}
 
 	@Test
 	public void testAddSubjectLocators() {
 		Topic topic = get("1", Topic.class);
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_add_sl_2"));
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_add_sl_3"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_add_sl_2"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_add_sl_3"));
 
 		Topic changed = post("1", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectLocators());
 		Assert.assertEquals(2, changed.getSubjectLocators().size());
-		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:topic_add_sl_2")));
-		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:topic_add_sl_3")));
+		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:bartopic_add_sl_2")));
+		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:bartopic_add_sl_3")));
 	}
 
 	@Test
@@ -255,14 +255,14 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeSubjectLocators() {
 		Topic topic = get("5", Topic.class);
 		topic.getSubjectLocators().remove(URILocator.create("http://bar.foo/"));
-		topic.getSubjectLocators().add(URILocator.create("foo:topic_add_sl_5"));
+		topic.getSubjectLocators().add(URILocator.create("foo:bartopic_add_sl_5"));
 
 		Topic changed = post("5", topic, Topic.class);
 
 		Assert.assertNotNull(changed);
 		Assert.assertNotNull(changed.getSubjectLocators());
 		Assert.assertEquals(1, changed.getSubjectLocators().size());
-		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:topic_add_sl_5")));
+		Assert.assertTrue(changed.getSubjectLocators().contains(URILocator.create("foo:bartopic_add_sl_5")));
 	}
 
 	@Test
@@ -329,7 +329,7 @@ public class TopicResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testAddTypeByItemIdentifier() {
 		Topic topic = get("1", Topic.class);
 		Topic type = new Topic();
-		type.getItemIdentifiers().add(URILocator.create("foo:#topic4"));
+		type.getItemIdentifiers().add(URILocator.create("foo:bar#topic4"));
 		topic.getTypes().add(type);
 
 		Topic changed = post("1", topic, Topic.class);

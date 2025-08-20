@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +60,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * Creates an XFML reader.
    * @param url The URL of the XFML document.
    */  
-  public XFMLTopicMapReader(URL url) throws MalformedURLException {
+  public XFMLTopicMapReader(URL url) {
     super(url);
   }
 
@@ -92,7 +91,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
    * argument.   
    * @param file The file object from which to read the topic map.
    */
-  public XFMLTopicMapReader(File file) throws MalformedURLException {
+  public XFMLTopicMapReader(File file) {
     super(file);
   }
   

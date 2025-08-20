@@ -2,8 +2,8 @@
 <topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
   <topic id="topic1新">
     <subjectIdentity>
-      <resourceRef xlink:href="http://foo.bar#1"></resourceRef>
-      <subjectIndicatorRef xlink:href="http://foo.bar#1"></subjectIndicatorRef>
+      <resourceRef xlink:href="http://foo.bar/#1"></resourceRef>
+      <subjectIndicatorRef xlink:href="http://foo.bar/#1"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
       <baseNameString>Topic1</baseNameString>
@@ -11,8 +11,8 @@
   </topic>
   <topic id="topic2">
     <subjectIdentity>
-      <resourceRef xlink:href="http://foo.bar#2"></resourceRef>
-      <subjectIndicatorRef xlink:href="http://foo.bar#2"></subjectIndicatorRef>
+      <resourceRef xlink:href="http://foo.bar/#2"></resourceRef>
+      <subjectIndicatorRef xlink:href="http://foo.bar/#2"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
       <baseNameString>Topic2</baseNameString>
@@ -20,8 +20,8 @@
   </topic>
   <topic id="topic3">
     <subjectIdentity>
-      <resourceRef xlink:href="http://foo.bar#3"></resourceRef>
-      <subjectIndicatorRef xlink:href="http://foo.bar#3"></subjectIndicatorRef>
+      <resourceRef xlink:href="http://foo.bar/#3"></resourceRef>
+      <subjectIndicatorRef xlink:href="http://foo.bar/#3"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
       <baseNameString>Topic3</baseNameString>

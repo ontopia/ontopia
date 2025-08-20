@@ -9,7 +9,7 @@
   </topic>
 
   <mergeMap xlink:href="mergemap.stm">
-    <resourceRef xlink:href="http://www.ikke.no"/>
+    <resourceRef xlink:href="http://www.ikke.no/"/>
   </mergeMap>
 
 </topicMap>

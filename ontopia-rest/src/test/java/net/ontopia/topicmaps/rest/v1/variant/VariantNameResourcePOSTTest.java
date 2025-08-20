@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.variant;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
@@ -57,7 +57,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testDatatype() throws MalformedURLException {
+	public void testDatatype() throws URISyntaxException {
 		VariantName variant = get("4", VariantName.class);
 		variant.setDatatype(DataTypes.TYPE_INTEGER);
 		VariantName changed = post("4", variant, VariantName.class);
@@ -129,7 +129,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 //	public void testTopicNameByItemIdentifier() {
 //		VariantName variant = get("2", VariantName.class);
 //		TopicName name = new TopicName();
-//		name.getItemIdentifiers().add(URILocator.create("foo:#network-location"));
+//		name.getItemIdentifiers().add(URILocator.create("foo:bar#network-location"));
 //		variant.setTopicName(name);
 //
 //		VariantName changed = post("2", variant, VariantName.class);
@@ -169,7 +169,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		VariantName variant = get("4", VariantName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		variant.setReifier(topic);
 
 		VariantName changed = post("4", variant, VariantName.class);
@@ -259,7 +259,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeScopeByItemIdentifier() {
 		VariantName variant = get("13", VariantName.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		variant.getScope().add(topic);
 		
 		VariantName changed = post("13", variant, VariantName.class);
@@ -272,20 +272,20 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		VariantName variant = get("4", VariantName.class);
-		variant.getItemIdentifiers().add(URILocator.create("foo:bar10"));
+		variant.getItemIdentifiers().add(URILocator.create("foo:barbar10"));
 		
 		VariantName changed = post("4", variant, VariantName.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar10", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar10", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testAddItemIdentifiers() {
 		VariantName variant = get("4", VariantName.class);
-		variant.getItemIdentifiers().add(URILocator.create("foo:bar11"));
-		variant.getItemIdentifiers().add(URILocator.create("foo:bar12"));
+		variant.getItemIdentifiers().add(URILocator.create("foo:barbar11"));
+		variant.getItemIdentifiers().add(URILocator.create("foo:barbar12"));
 		
 		VariantName changed = post("4", variant, VariantName.class);
 		
@@ -295,7 +295,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testRemoveItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		VariantName name = get("4", VariantName.class);
 		name.getItemIdentifiers().add(locator);
@@ -312,7 +312,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearItemIdentifiers() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		VariantName name = get("4", VariantName.class);
 		name.getItemIdentifiers().add(locator);
@@ -329,7 +329,7 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		VariantName name = get("4", VariantName.class);
 		name.getItemIdentifiers().add(locator);
@@ -339,16 +339,16 @@ public class VariantNameResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
 		
 		name.getItemIdentifiers().remove(locator);
-		name.getItemIdentifiers().add(URILocator.create("foo:to-keep-var"));
+		name.getItemIdentifiers().add(URILocator.create("foo:barto-keep-var"));
 		name = post("4", name, VariantName.class);
 		Assert.assertNotNull(name.getItemIdentifiers());
 		Assert.assertEquals(1, name.getItemIdentifiers().size());
-		Assert.assertEquals("foo:to-keep-var", name.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barto-keep-var", name.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-var-2");
+		final URILocator locator = URILocator.create("foo:barto-keep-var-2");
 
 		VariantName name = get("4", VariantName.class);
 		name.getItemIdentifiers().add(locator);

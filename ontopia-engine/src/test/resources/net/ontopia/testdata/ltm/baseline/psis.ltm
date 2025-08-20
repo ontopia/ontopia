@@ -1,8 +1,8 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.heihu.com/"></subjectIndicatorRef>
-<subjectIndicatorRef href="http://www.huhei.com/"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.heihu.com"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.huhei.com"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 </topicMap>

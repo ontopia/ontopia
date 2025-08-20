@@ -58,7 +58,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     prepareTopicMap();
     TopicIF topic = builder.makeTopic();
     TopicIF occtype = builder.makeTopic();
-    LocatorIF loc = new URILocator("http://example.org/foo+bar");
+    LocatorIF loc = URILocator.create("http://example.org/foo+bar");
     builder.makeOccurrence(topic, occtype, loc);
 
     // export to file
@@ -77,7 +77,7 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     prepareTopicMap();
     TopicIF topic = builder.makeTopic();
     TopicNameIF name = builder.makeTopicName(topic, "Topic");
-    LocatorIF loc = new URILocator("http://example.org/foo+bar");
+    LocatorIF loc = URILocator.create("http://example.org/foo+bar");
     builder.makeVariantName(name, loc, Collections.emptySet());
 
     // export to file

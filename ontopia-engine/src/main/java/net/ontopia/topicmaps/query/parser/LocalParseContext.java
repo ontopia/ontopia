@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.URL;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +39,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.BadObjectReferenceException;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.parser.TologOptions;
 
 /**
  * INTERNAL: Represents the local context in which a tolog query or
@@ -76,7 +75,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     }
     try {
       return new URILocator(binding.getUri(qname.getLocalName()));
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

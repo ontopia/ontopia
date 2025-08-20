@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,6 +53,7 @@ import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -285,7 +286,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     } else if (locator != null && locator.getSystemId() != null) {
       try {
         bases.push(new URILocator(locator.getSystemId()));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         // Ignore; throw exception later instead [see getBaseAddress()].
       } 
     }
@@ -744,7 +745,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         }
         
         // Put merge map on info map
-        ExternalDocument merge_map = new ExternalDocument(createLocator(href));
+        ExternalDocument merge_map = new ExternalDocument(URIUtils.resolveMergeResource(getBaseAddress(), href));
         info.put(EL_MERGEMAP, merge_map);
         
         // Push element on parent stack
@@ -1245,7 +1246,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   protected LocatorIF createURILocator(String address) {
     try {
       return new URILocator(address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }

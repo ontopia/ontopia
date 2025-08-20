@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
@@ -59,7 +59,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testDatatype() throws MalformedURLException {
+	public void testDatatype() throws URISyntaxException {
 		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.setDatatype(DataTypes.TYPE_BOOLEAN);
 		
@@ -126,7 +126,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTopicByItemIdentifier() {
 		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		occurrence.setTopic(topic);
 
 		Occurrence changed = post("2", occurrence, Occurrence.class);
@@ -161,7 +161,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testTypeByItemIdentifier() {
 		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		occurrence.setType(topic);
 
 		Occurrence changed = post("2", occurrence, Occurrence.class);
@@ -195,7 +195,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testReifierByItemIdentifier() {
 		Occurrence occurrence = get("2", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		occurrence.setReifier(topic);
 
 		Occurrence changed = post("2", occurrence, Occurrence.class);
@@ -279,7 +279,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	public void testChangeScopeByItemIdentifier() {
 		Occurrence occurrence = get("4", Occurrence.class);
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		occurrence.getScope().add(topic);
 		
 		Occurrence changed = post("4", occurrence, Occurrence.class);
@@ -292,20 +292,20 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testAddItemIdentifier() {
 		Occurrence occurrence = get("2", Occurrence.class);
-		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar2"));
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:barbar2"));
 		
 		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
 		Assert.assertNotNull(changed.getItemIdentifiers());
 		Assert.assertEquals(1, changed.getItemIdentifiers().size());
-		Assert.assertEquals("foo:bar2", changed.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar2", changed.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testAddItemIdentifiers() {
 		Occurrence occurrence = get("2", Occurrence.class);
-		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar3"));
-		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar4"));
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:barbar3"));
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:barbar4"));
 		
 		Occurrence changed = post("2", occurrence, Occurrence.class);
 		
@@ -315,7 +315,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testRemoveItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
@@ -332,7 +332,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 
 	@Test
 	public void testClearItemIdentifiers() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
@@ -349,7 +349,7 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 	
 	@Test
 	public void testChangeItemIdentifier() {
-		final URILocator locator = URILocator.create("foo:to-remove");
+		final URILocator locator = URILocator.create("foo:barto-remove");
 
 		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);
@@ -359,16 +359,16 @@ public class OccurrenceResourcePOSTTest extends AbstractV1ResourceTest {
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
 		
 		occurrence.getItemIdentifiers().remove(locator);
-		occurrence.getItemIdentifiers().add(URILocator.create("foo:to-keep-occ"));
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:barto-keep-occ"));
 		occurrence = post("2", occurrence, Occurrence.class);
 		Assert.assertNotNull(occurrence.getItemIdentifiers());
 		Assert.assertEquals(1, occurrence.getItemIdentifiers().size());
-		Assert.assertEquals("foo:to-keep-occ", occurrence.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barto-keep-occ", occurrence.getItemIdentifiers().iterator().next().getAddress());
 	}
 	
 	@Test
 	public void testChangeItemIdentifierVoid() {
-		final URILocator locator = URILocator.create("foo:to-keep-occ-2");
+		final URILocator locator = URILocator.create("foo:barto-keep-occ-2");
 
 		Occurrence occurrence = get("2", Occurrence.class);
 		occurrence.getItemIdentifiers().add(locator);

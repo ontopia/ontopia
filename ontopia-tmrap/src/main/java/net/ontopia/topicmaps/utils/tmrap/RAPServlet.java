@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -561,9 +561,9 @@ public class RAPServlet extends HttpServlet {
     for (int i = 0; i < value.length; i++) {
       try {
         uriLocators.add(new URILocator(value[i]));
-      } catch (MalformedURLException e) {          
+      } catch (URISyntaxException e) {          
         log.warn("MalformedURL: " + value[i]);
-        throw new RAPServletException("Malformed URL: " + value[i]);  
+        throw new RAPServletException("Malformed URI: " + value[i]);  
       }  
     }       
     return uriLocators;     

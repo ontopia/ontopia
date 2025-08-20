@@ -1,10 +1,10 @@
 <topicMap>
 <topic number="1">
 <subjectIdentifiers>
-<locator>http://psi.example.org/company/Lars Marius</locator>
+<locator>http://psi.example.org/company/Lars_Marius</locator>
 </subjectIdentifiers>
 <name number="1">
-<value>Lars Marius</value>
+<value>Lars_Marius</value>
 <type topicref="9"></type>
 </name>
 <rolePlayed ref="association.1.role.1"></rolePlayed>
@@ -12,10 +12,10 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://psi.example.org/company/Une M. Ployed</locator>
+<locator>http://psi.example.org/company/Une_M._Ployed</locator>
 </subjectIdentifiers>
 <name number="1">
-<value>Une M. Ployed</value>
+<value>Une_M._Ployed</value>
 <type topicref="9"></type>
 </name>
 <rolePlayed ref="association.3.role.1"></rolePlayed>

@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.rest.v1.topic;
 
 import java.io.IOException;
 import java.util.Map;
-import org.junit.Assert;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.rest.Constants;
@@ -31,6 +30,7 @@ import net.ontopia.topicmaps.rest.model.Topic;
 import net.ontopia.topicmaps.rest.v1.AbstractV1ResourceTest;
 import net.ontopia.topicmaps.xml.TMXMLReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.restlet.data.MediaType;
@@ -52,7 +52,7 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 		Assert.assertEquals("1", topic.getObjectId());
 
 		Assert.assertNotNull(topic.getItemIdentifiers());
-		Assert.assertEquals("foo:#topic1", topic.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:bar#topic1", topic.getItemIdentifiers().iterator().next().getAddress());
 
 		Assert.assertNotNull(topic.getSubjectIdentifiers());
 		Assert.assertEquals("foo:bar", topic.getSubjectIdentifiers().iterator().next().getAddress());
@@ -119,10 +119,10 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 
 		try {
 			Assert.assertNotNull(xtm);
-			XTMTopicMapReader reader = new XTMTopicMapReader(xtm.getReader(), URILocator.create("foo:"));
-			reader.setValidation(false); // ignore foo: url failures
+			XTMTopicMapReader reader = new XTMTopicMapReader(xtm.getReader(), URILocator.create("foo:bar"));
+			reader.setValidation(false); // ignore foo:bar url failures
 			TopicMapIF tm = reader.read();
-			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#topic1")));
+			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:bar#topic1")));
 		} finally {
 			xtm.release();
 		}
@@ -133,8 +133,8 @@ public class TopicResourceGETTest extends AbstractV1ResourceTest {
 		Representation tmxml = getRaw("5", Constants.TMXML_MEDIA_TYPE);
 		try {
 			Assert.assertNotNull(tmxml);
-			TopicMapIF tm = new TMXMLReader(new InputSource(tmxml.getReader()), URILocator.create("foo:")).read();
-			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:#topic2")));
+			TopicMapIF tm = new TMXMLReader(new InputSource(tmxml.getReader()), URILocator.create("foo:bar")).read();
+			Assert.assertNotNull(tm.getObjectByItemIdentifier(URILocator.create("foo:bar#topic2")));
 		} finally {
 			tmxml.release();
 		}

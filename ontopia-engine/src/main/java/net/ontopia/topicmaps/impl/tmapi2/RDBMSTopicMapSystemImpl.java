@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,7 +97,7 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
   private LocatorIF createLocatorIF(String reference) {
     try {
       return new URILocator(reference);
-    } catch (MalformedURLException ex) {
+    } catch (URISyntaxException ex) {
       throw new MalformedIRIException(ex.getMessage());
     }
   }

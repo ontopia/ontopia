@@ -24,6 +24,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 
 /**
  * INTERNAL: Utilities for working with URIs.
@@ -59,6 +60,17 @@ public class URIUtils {
       return file.toURI().toURL();
     } catch (MalformedURLException mufe) {
       throw new OntopiaRuntimeException(mufe); // impossible
+    }
+  }
+  
+  /**
+   * INTERNAL: Utility that resolves external topicmap resources referenced from topic map files by means of mergemap.
+   */
+  public static LocatorIF resolveMergeResource(LocatorIF base, String resource) {
+    try {
+      return new URILocator(new URL(((URILocator) base).getUri().toURL(), resource));  
+    } catch (MalformedURLException mufe) {
+      throw new OntopiaRuntimeException("External resources must be resolvable by URL: " + mufe.getMessage(), mufe);
     }
   }
 }

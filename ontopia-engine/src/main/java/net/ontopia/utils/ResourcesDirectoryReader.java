@@ -219,13 +219,16 @@ public class ResourcesDirectoryReader {
   }
 
   public static class FilenameExtensionFilter implements ResourcesFilterIF {
-    private final String filenameFilter;
+    private final String[] filenameFilters;
     public FilenameExtensionFilter(String filenameFilter) {
-      this.filenameFilter = filenameFilter;
+      filenameFilters = filenameFilter.split("\\|");
     }
     @Override
     public boolean ok(String resourcePath) {
-      return resourcePath.endsWith(filenameFilter);
+      for (String ext : filenameFilters) {
+        if (resourcePath.endsWith(ext)) return true;
+      }
+      return false;
     }
   }
 

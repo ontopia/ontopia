@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -223,6 +224,8 @@ public class RDFTopicMapReader implements TopicMapReaderIF {
       if (generate_names) {
         RDFToTopicMapConverter.generateNames(topicmap);
       }
+    } catch (URISyntaxException e) {
+      throw new IOException(e);
     } catch (JenaException e) {
       throw new OntopiaRuntimeException(e);
     }

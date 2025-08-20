@@ -57,7 +57,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="opera-template.xtmp#ontopus"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/region.htm"/>
+    <resourceRef xlink:href="file:///C:/topicmaps/opera/occurs/region.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>

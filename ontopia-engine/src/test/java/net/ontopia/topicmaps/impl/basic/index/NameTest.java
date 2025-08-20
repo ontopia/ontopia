@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -174,11 +173,11 @@ public class NameTest {
   }
 
   @Test
-  public void testLTMImport() throws IOException, MalformedURLException {
+  public void testLTMImport() throws IOException {
     String ltm = "    [random-id : user = \"Karl Popper\" = \"popper\" / username] " +
     "ansatt-ved(ontopia-uni : arbeidsgiver, random-id : ansatt)";
 
-    LocatorIF base = new URILocator("http://www.example.com");
+    LocatorIF base = URILocator.create("http://www.example.com");
     LTMTopicMapReader reader = new LTMTopicMapReader(new StringReader(ltm), base);
     reader.importInto(topicmap);
     topicmap.getStore().commit();

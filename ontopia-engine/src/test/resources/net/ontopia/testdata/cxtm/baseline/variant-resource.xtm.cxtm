@@ -10,7 +10,7 @@
 <value>Topic1</value>
 <type topicref="3"></type>
 <variant number="1">
-<value>http://variant1/</value>
+<value>http://variant1</value>
 <datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
 <scope>
 <scopingTopic topicref="2"></scopingTopic>

@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -49,6 +49,7 @@ import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -300,7 +301,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <MERGEMAP
     } else if ("mergeMap".equals(name)) {
-      loadMap(makeLocator(atts.getValue("", HREF)));
+      loadMap(URIUtils.resolveMergeResource(doc_address, atts.getValue("", HREF)));
 
       // <VARIANT
     } else if ("variant".equals(name)) {
@@ -347,7 +348,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
   
   public void endElement_(String uri, String name, String qName)
-    throws MalformedURLException {
+    throws URISyntaxException {
     if (!NS_XTM2.equals(uri)) { // we only react to XTM 2.0 elements
       return;
     }

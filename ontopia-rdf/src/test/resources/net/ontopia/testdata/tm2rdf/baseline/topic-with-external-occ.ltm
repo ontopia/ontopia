@@ -6,6 +6,6 @@
     <rdfs:label>Homepage</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:nodeID="A0">
-    <j.0:homepage rdf:resource="http://www.ontopia.net/"/>
+    <j.0:homepage rdf:resource="http://www.ontopia.net"/>
   </rdf:Description>
 </rdf:RDF>

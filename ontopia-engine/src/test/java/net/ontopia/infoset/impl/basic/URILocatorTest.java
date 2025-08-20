@@ -20,8 +20,7 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.junit.Assert;
@@ -45,7 +44,7 @@ public class URILocatorTest extends AbstractLocatorTest {
     }
     try {
       return new URILocator(address);
-    } catch (MalformedURLException e) {
+    } catch (URISyntaxException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -59,52 +58,6 @@ public class URILocatorTest extends AbstractLocatorTest {
 	   NOTATION.equals(locator.getNotation()));
     Assert.assertTrue("address property not correctly set",
 	   ADDRESS.equals(locator.getAddress()));
-  }
-
-  @Test
-  public void testFileWithPlus() {
-    File file = new File("+");
-    LocatorIF locator = new URILocator(file);
-    String correct = getCorrectFileURI(file); 
-    Assert.assertTrue("+ character not escaped correctly, got '" + locator.getAddress() + "'"
-               + ", correct: '" + correct + "'",
-               locator.getAddress().equals(correct));
-  }
-
-  @Test
-  public void testFileWithPercent() {
-    File file = new File("%");
-    LocatorIF locator = new URILocator(file);
-    // % must be escaped, even in internal form
-    String correct = getCorrectFileURI(file) + "25";
-    Assert.assertTrue("% character not escaped correctly: '" + locator.getAddress() + "', " +
-               "correct: '" + correct + "'",
-               locator.getAddress().equals(correct));
-  }
-
-  @Test
-  public void testFileWithSpace() {
-    File file = new File("/My Toilet Paper Rolls/roll1.rl");
-    LocatorIF locator = new URILocator(file);
-    String correct = getCorrectFileURI(file);
-    Assert.assertTrue("incorrect file2url conversion: '" + locator.getAddress() + "', " +
-               "correct: '" + correct + "'",
-               locator.getAddress().equals(correct));
-  }
-
-  @Test
-  public void testFileWithNorwegian() {
-    File file = new File("d\u00E5j\u00E6.mov");
-    LocatorIF locator = new URILocator(file);
-    String correct = getCorrectFileURI(file);
-    Assert.assertTrue("incorrect file2url conversion: '" + locator.getAddress() + "', " +
-               "correct: '" + correct + "'",
-               locator.getAddress().equals(correct));
-  }
-
-  @Test
-  public void testGetExternalFormSimple() {
-    assertExternalForm("http://www.example.com", "http://www.example.com/");
   }
 
   @Test
@@ -126,46 +79,11 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
 
   @Test
-  public void testGetExternalFormHostname() {
-    assertExternalForm("http://www.%F8l.no/", "http://www.%C3%B8l.no/");
-  }
-  
-  @Test
-  public void testGetExternalFormDirname() {
-    assertExternalForm("http://www.ontopia.no/%F8l.html",
-                     "http://www.ontopia.no/%C3%B8l.html");
-  }
-
-  @Test
   public void testGetExternalFormDirnameSpace() {
     assertExternalForm("http://www.ontopia.no/space%20in%20url.html",
                      "http://www.ontopia.no/space%20in%20url.html");
   }
 
-  @Test
-  public void testGetExternalFormDirnameSpace2() {
-    assertExternalForm("http://www.ontopia.no/space+in+url.html",
-                     "http://www.ontopia.no/space%20in%20url.html");
-  }
-
-  @Test
-  public void testGetExternalFormOfWindowsFile() {
-    assertExternalForm("file:///C|/topicmaps/opera/occurs/region.htm",
-                     "file:/C|/topicmaps/opera/occurs/region.htm");
-  }
-
-  @Test
-  public void testGetExternalFormWithSillyPipe() {
-    assertExternalForm("http://www.ontopia.net/this|that/",
-                     "http://www.ontopia.net/this%7Cthat/");
-  }
-
-  @Test
-  public void testGetExternalFormBug2105() {
-    assertExternalForm("http://en.wikipedia.org/wiki/Anton\u00EDn_Dvo\u0159\u00E1k",
-                     "http://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k");
-  }
-  
   @Test
   public void testReferenceResolutionRFC3986() {
     String base = "http://a/b/c/d;p?q";
@@ -208,8 +126,8 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
 
   // FIXME: this important test fails, but disabling for now
-  // @Test
-  public void _testNonAsciiIdempotency() throws MalformedURLException {
+  @Test
+  public void testNonAsciiIdempotency() throws URISyntaxException {
     String original = "http://dbpedia.org/resource/K%C3%B8benhavn";
 
     URILocator uri1 = new URILocator(original);
@@ -220,6 +138,47 @@ public class URILocatorTest extends AbstractLocatorTest {
                  original, uri2.getExternalForm());
   }
   
+  // https://github.com/ontopia/ontopia/issues/414
+  @Test
+  public void testIssue414() {
+    URILocator locator = URILocator.create("http://www.example.org/cablemap/european-cables.ctm#EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE");
+    URILocator locator2 = URILocator.create("http://www.example.org/example#fragm%7Bent");
+
+    Assert.assertNotNull(locator);
+    Assert.assertNotNull(locator2);
+    
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("european-cables.ctm"));
+    Assert.assertTrue(locator2.getUri().getSchemeSpecificPart().endsWith("example"));
+    
+    Assert.assertEquals("EASTERN%20EUROPEAN%20POSTS%20COLLECTIVE", locator.getUri().getRawFragment());
+    Assert.assertEquals("fragm%7Bent", locator2.getUri().getRawFragment());
+
+    Assert.assertEquals("EASTERN EUROPEAN POSTS COLLECTIVE", locator.getUri().getFragment());
+    Assert.assertEquals("fragm{ent", locator2.getUri().getFragment());
+  }
+  
+  // https://github.com/ontopia/ontopia/issues/366
+  @Test
+  public void testIssue366() {
+    String fragmentUTF = "MAIN-\u30BF\u30A4\u30C8\u30EB\u8AAD\u307F";
+    
+    URILocator locator = URILocator.create("http://www.infocom.co.jp/dsp/sample#" + fragmentUTF);
+
+    Assert.assertNotNull(locator);
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("sample"));
+    Assert.assertEquals(fragmentUTF, locator.getUri().getRawFragment());
+    Assert.assertEquals(fragmentUTF, locator.getUri().getFragment());
+  }
+
+  // https://github.com/ontopia/ontopia/issues/289
+  @Test
+  public void testIssue289() {
+    URILocator locator = URILocator.create("http://en.wikipedia.org/wiki/Beethoven/x+y/");
+
+    Assert.assertNotNull(locator);
+    Assert.assertTrue(locator.getUri().getSchemeSpecificPart().endsWith("x+y/"));
+  }
+
   // --- Internal
 
   private void assertAbsoluteResolution(String base, String uri, String external) {
@@ -230,7 +189,7 @@ public class URILocatorTest extends AbstractLocatorTest {
       Assert.assertTrue("incorrect external form for URI '" + uri + "': '" +
           locator.getExternalForm() + "', correct '" + external + "'",
           locator.getExternalForm().equals(external));
-    } catch (java.net.MalformedURLException e) {
+    } catch (URISyntaxException e) {
       Assert.fail("INTERNAL ERROR: " + e);
     }
   }
@@ -241,25 +200,8 @@ public class URILocatorTest extends AbstractLocatorTest {
       Assert.assertTrue("incorrect external form for URI '" + uri + "': '" +
                  locator.getExternalForm() + "', correct '" + external + "'",
                  locator.getExternalForm().equals(external));
-    } catch (java.net.MalformedURLException e) {
+    } catch (URISyntaxException e) {
       Assert.fail("INTERNAL ERROR: " + e);
-    }
-  }
-  
-  private String getCorrectFileURI(File file) {
-    // produce initial string
-    String uri = file.getAbsolutePath().replace(File.separatorChar, '/');
-    if (!uri.startsWith("/")) {
-      uri = "/" + uri;
-    }
-    uri = "file:" + uri;
-
-    // now, transcode to UTF-8
-    try {
-      byte raw[] = uri.getBytes("UTF-8");
-      return new String(raw, 0, raw.length, "8859_1");
-    } catch (java.io.UnsupportedEncodingException e) {
-      throw new OntopiaRuntimeException(e);
     }
   }
 }

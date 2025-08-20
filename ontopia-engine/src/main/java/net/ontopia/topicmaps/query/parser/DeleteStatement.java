@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -128,7 +128,7 @@ public class DeleteStatement extends ModificationFunctionStatement {
       String value = (String) v;
       try {
         object.removeItemIdentifier(new URILocator(value));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("Invalid URI: " + value);
       }
     }
@@ -149,7 +149,7 @@ public class DeleteStatement extends ModificationFunctionStatement {
       String value = (String) v;
       try {
         topic.removeSubjectIdentifier(new URILocator(value));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("Invalid URI: " + value);
       }
     }
@@ -170,7 +170,7 @@ public class DeleteStatement extends ModificationFunctionStatement {
       String value = (String) v;
       try {
         topic.removeSubjectLocator(new URILocator(value));
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         throw new OntopiaRuntimeException("Invalid URI: " + value);
       }
     }

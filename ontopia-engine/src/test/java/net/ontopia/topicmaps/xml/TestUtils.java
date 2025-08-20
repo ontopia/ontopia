@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
@@ -43,7 +43,7 @@ public class TestUtils {
    * correctly.
    */
   public static void fixItemIds(TopicMapIF tm, LocatorIF origbaseloc)
-    throws MalformedURLException {
+    throws URISyntaxException {
     String origbase = origbaseloc.getAddress();
     String base = tm.getStore().getBaseAddress().getAddress();
     Iterator it = tm.getTopics().iterator();

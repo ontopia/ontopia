@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.rest.exceptions.OntopiaRestErrors;
@@ -65,7 +65,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTopicByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		occurrence.setTopic(topic);
 		Occurrence added = put(occurrence, Occurrence.class);
 		
@@ -79,7 +79,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithTypeByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		occurrence.setType(topic);
 		Occurrence added = put(occurrence, Occurrence.class);
 		
@@ -90,7 +90,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	}
 
 	@Test
-	public void testAlternativeDatatype() throws MalformedURLException {
+	public void testAlternativeDatatype() throws URISyntaxException {
 		Occurrence occurrence = createOccurrence();
 		occurrence.setValue("1");
 		occurrence.setDatatype(DataTypes.TYPE_INTEGER);
@@ -118,13 +118,13 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	@Test
 	public void testWithItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
-		occurrence.getItemIdentifiers().add(URILocator.create("foo:bar"));
+		occurrence.getItemIdentifiers().add(URILocator.create("foo:barbar"));
 		
 		Occurrence added = put(occurrence, Occurrence.class);
 		Assert.assertNotNull(added);
 		Assert.assertNotNull(added.getItemIdentifiers());
 		Assert.assertFalse(added.getItemIdentifiers().isEmpty());
-		Assert.assertEquals("foo:bar", added.getItemIdentifiers().iterator().next().getAddress());
+		Assert.assertEquals("foo:barbar", added.getItemIdentifiers().iterator().next().getAddress());
 	}	
 	
 	@Test
@@ -183,7 +183,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithScopeByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic1"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic1"));
 		occurrence.getScope().add(topic);
 		
 		Occurrence added = put(occurrence, Occurrence.class);
@@ -209,7 +209,7 @@ public class OccurrenceResourcePUTTest extends AbstractV1ResourceTest {
 	public void testWithReificationByItemIdentifier() {
 		Occurrence occurrence = createOccurrence();
 		Topic topic = new Topic();
-		topic.getItemIdentifiers().add(URILocator.create("foo:#topic2"));
+		topic.getItemIdentifiers().add(URILocator.create("foo:bar#topic2"));
 		occurrence.setReifier(topic);
 		
 		Occurrence added = put(occurrence, Occurrence.class);

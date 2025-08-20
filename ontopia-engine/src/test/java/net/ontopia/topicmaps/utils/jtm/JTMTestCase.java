@@ -63,7 +63,7 @@ public class JTMTestCase {
     String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
             filename + ".cxtm");
     // Path to the output (canonicalized output of exported jtm topic map).
-    File out = new File(base + File.separator + "out" + filename
+    File out = new File(base + File.separator + "out" + File.separator + filename
             + ".cxtm");
 
     TopicMapIF jtmMap = new JTMTopicMapReader(TestFileUtils.getTestInputURL(in)).read();

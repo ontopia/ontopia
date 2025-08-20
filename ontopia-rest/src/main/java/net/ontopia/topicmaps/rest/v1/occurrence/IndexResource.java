@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest.v1.occurrence;
 
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -75,7 +75,7 @@ public class IndexResource extends AbstractTransactionalResource {
 					setStatus(Status.CLIENT_ERROR_NOT_FOUND, TYPE_ERROR_MESSAGE);
 					return null;
 			}
-		} catch (MalformedURLException mufe) {
+		} catch (URISyntaxException mufe) {
 			throw OntopiaRestErrors.MALFORMED_LOCATOR.build(mufe, datatype);
 		}
 	}

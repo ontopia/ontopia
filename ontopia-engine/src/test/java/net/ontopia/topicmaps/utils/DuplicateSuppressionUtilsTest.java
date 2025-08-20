@@ -195,9 +195,9 @@ public class DuplicateSuppressionUtilsTest {
   public void testTopicNameItemIds() throws MalformedURLException {
     TopicIF topic = builder.makeTopic();
     TopicNameIF bn = builder.makeTopicName(topic, "test");
-    bn.addItemIdentifier(new URILocator("http://psi.example.org"));
+    bn.addItemIdentifier(URILocator.create("http://psi.example.org"));
     TopicNameIF bn2 = builder.makeTopicName(topic, "test");
-    bn2.addItemIdentifier(new URILocator("http://psi.example.com"));
+    bn2.addItemIdentifier(URILocator.create("http://psi.example.com"));
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 
@@ -213,9 +213,9 @@ public class DuplicateSuppressionUtilsTest {
     TopicIF type = builder.makeTopic();
     TopicIF topic = builder.makeTopic();
     OccurrenceIF occ = builder.makeOccurrence(topic, type, "duplicate");
-    occ.addItemIdentifier(new URILocator("http://psi.example.org"));
+    occ.addItemIdentifier(URILocator.create("http://psi.example.org"));
     occ = builder.makeOccurrence(topic, type, "duplicate");
-    occ.addItemIdentifier(new URILocator("http://psi.example.com"));
+    occ.addItemIdentifier(URILocator.create("http://psi.example.com"));
 
     DuplicateSuppressionUtils.removeDuplicates(topic);
 

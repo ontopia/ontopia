@@ -1,10 +1,10 @@
 <topicMap>
 <topic number="1">
 <subjectIdentifiers>
-<locator>http://example.org/Lars Marius</locator>
+<locator>http://example.org/Lars_Marius</locator>
 </subjectIdentifiers>
 <occurrence number="1">
-<value>Lars Mariusontopia</value>
+<value>Lars_Mariusontopia</value>
 <datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
 <type topicref="7"></type>
 </occurrence>
@@ -12,10 +12,10 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://example.org/Une M. Ployed</locator>
+<locator>http://example.org/Une_M._Ployed</locator>
 </subjectIdentifiers>
 <occurrence number="1">
-<value>Une M. Ployed</value>
+<value>Une_M._Ployed</value>
 <datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
 <type topicref="7"></type>
 </occurrence>

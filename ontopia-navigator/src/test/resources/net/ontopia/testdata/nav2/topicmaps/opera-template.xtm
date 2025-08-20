@@ -77,7 +77,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="geography.xtm#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/nom-de-plume.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/nom-de-plume.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="geography.xtm#guidelines"/></instanceOf>
@@ -359,7 +359,7 @@
   <occurrence>
     <instanceOf><topicRef xlink:href="geography.xtm#guidelines"/></instanceOf>
     <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
-    <resourceRef xlink:href="file:///C|/ontopia/topicmaps/opera/occurs/opera.htm"/>
+    <resourceRef xlink:href="file:///C:/ontopia/topicmaps/opera/occurs/opera.htm"/>
   </occurrence>
   <occurrence>
     <instanceOf><topicRef xlink:href="geography.xtm#guidelines"/></instanceOf>

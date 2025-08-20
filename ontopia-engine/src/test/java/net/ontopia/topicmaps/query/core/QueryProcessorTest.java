@@ -879,7 +879,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     addMatch(matches, "T", getTopicById("white-horse"),
              "D", null);
     addMatch(matches, "T", getTopicById("horse"),
-             "D", "http://www.hest.no/");
+             "D", "http://www.hest.no");
 
     assertQueryOrder(matches,
                      "instance-of($T, bbtopic), " +

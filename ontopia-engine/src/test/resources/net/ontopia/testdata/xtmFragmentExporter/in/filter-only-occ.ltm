@@ -1,4 +1,4 @@
-#PREFIX tests @"http://xtmFragmentExporter/tests#"
+#PREFIX tests @"http://xtmfragmentexporter/tests#"
 
 [tests:ot1 = "fOccs-ot1"]
 [tests:t1 = "t1"]

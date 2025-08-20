@@ -6,7 +6,7 @@
 </baseName>
 <occurrence>
 <instanceOf href="#id3"></instanceOf>
-<resourceRef href="http://www.ontopia.net/script.cgi?param=a%22b"></resourceRef>
+<resourceRef href="http://www.ontopia.net/script.cgi?param=a&amp;b"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id2">
