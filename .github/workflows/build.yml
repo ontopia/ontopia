@@ -28,7 +28,6 @@ jobs:
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: "**/jacoco.xml"
-        coverage-reporter-version: "14.1.0"
 
     - name: Build with Docker
       run: docker build .
