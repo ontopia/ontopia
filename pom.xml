@@ -756,6 +756,7 @@
 								<goals>
 									<goal>report</goal>
 								</goals>
+								<phase>package</phase>
 								<configuration>
 									<formats>
 										<format>XML</format>
