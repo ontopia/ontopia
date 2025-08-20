@@ -27,7 +27,8 @@ jobs:
       uses: codacy/codacy-coverage-reporter-action@v1.3.0
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: "*/target/site/jacoco/jacoco.xml"
+        coverage-reports: "**/jacoco.xml"
+        coverage-reporter-version: "14.1.0"
 
     - name: Build with Docker
       run: docker build .
