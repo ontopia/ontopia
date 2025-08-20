@@ -9,7 +9,27 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.5.0 2025-04-17</p>
+<span class="version">5.6.0 2025-08-20</p>
+
+### Ontopia 5.6.0 release notes ###
+
+The following changes have been made:
+
+*  **Ontopia now requires Java 17**
+*  Applied more automation via GitHub actions
+*  Fixed errors in the new `DBCPDataSource`
+*  Fixed a null pointer exception `ParameterArray.equals`, triggered due to garbage collection on previously never cleaned cache
+*  Added code coverage to Codacy reports
+
+#### The following dependencies have been upgraded:
+
+*  Upgraded to Jena 4.10.0
+*  Upgraded
+*  [Issue 578: commons-beanutils to 1.11.0](https://github.com/ontopia/ontopia/pull/578)
+*  [Issue 579: commons-fileupload to 1.6.0](https://github.com/ontopia/ontopia/pull/579)
+*  [Issue 580: commons-lang3 to 3.18.0](https://github.com/ontopia/ontopia/pull/580)
+*  Upgrade to Tomcat 9.0.107
+
 
 ### Ontopia 5.5.0 release notes ###
 
@@ -62,7 +82,7 @@ The following changes have been made:
 *  Moved JDBC Spy files into separate module
 *  Improved cross-transaction merge handling
 *  `&lt;template:get&gt;` tag now supports fallback value
-*  Applied `AutoClosable` interface on `TopicmapStoreIF`, `TopicMapReferenceIF`, `TopicMapSourceIF` and `QueryResultIF` 
+*  Applied `AutoClosable` interface on `TopicmapStoreIF`, `TopicMapReferenceIF`, `TopicMapSourceIF` and `QueryResultIF`
 *  Added `OccurrenceIndexIF.getOccurrences` methods based on value and type
 *  Added `NameIndexIF.getTopicNames` methods based on value and type
 *  A lot of code quality improvements
@@ -73,7 +93,7 @@ The following changes have been made:
 *  Removed antiquated concurrency dependency
 *  Added `ClassInstanceIndexIF.getAllTopicNames`, `ClassInstanceIndexIF.getAllVariantNames` and `ClassInstanceIndexIF.getAllOccurrences`
 *  Added `IdentifierIndexIF`
-*  Replaced Ontopia specific utility classes with java functional classes where possible. Moved the replaced files into 
+*  Replaced Ontopia specific utility classes with java functional classes where possible. Moved the replaced files into
    a separate [ontopia-deprecated-utils module](https://github.com/ontopia/ontopia/tree/master/ontopia-deprecated-utils). The following replacements have been performed:
     *  `DeciderIF` &rarr; `Predicate`
     *  `GrabberIF` &rarr; `Function`
