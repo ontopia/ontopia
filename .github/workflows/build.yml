@@ -1,6 +1,6 @@
 name: Build
 
-on: 
+on:
   push:
   pull_request:
     types: [opened]
@@ -21,7 +21,13 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B -Dstyle.color=always package -Pontopia-distribution-tomcat
+      run: mvn -B -Dstyle.color=always package -Pontopia-distribution-tomcat -Pcoverage
+
+    - name: Save test coverage
+      uses: codacy/codacy-coverage-reporter-action@v1.3.0
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: '**/jacoco.xml'
 
     - name: Build with Docker
       run: docker build .

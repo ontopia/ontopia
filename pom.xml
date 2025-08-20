@@ -138,7 +138,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.22.2</version>
+					<version>3.5.3</version>
 					<configuration>
 						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m</argLine>
 						<includes>
@@ -725,12 +725,11 @@
 	<profiles>
 		<profile>
 			<!-- Profile used for generating a test coverage report -->
-			<id>jacoco</id>
+			<id>coverage</id>
 			<build>
 				<plugins>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.20.1</version>
 						<configuration>
 							<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} ${argLine}</argLine>
 						</configuration>
@@ -738,13 +737,30 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.0</version>
+						<version>0.8.13</version>
 						<executions>
 							<execution>
-								<id>default-prepare-agent</id>
+								<id>prepare-agent</id>
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
+							</execution>
+							<execution>
+								<id>prepare-agent-integration</id>
+								<goals>
+									<goal>prepare-agent-integration</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<formats>
+										<format>XML</format>
+									</formats>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
