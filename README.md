@@ -5,7 +5,7 @@
 [<img src="https://img.shields.io/github/release/ontopia/ontopia.svg" alt="release"/>](https://github.com/ontopia/ontopia/releases)
 [<img src="https://img.shields.io/maven-central/v/net.ontopia/ontopia-engine.svg" alt="maven central"/>](https://search.maven.org/search?q=g:net.ontopia%20a:ontopia-engine)
 
-![Ontopia Logo](https://ontopia.net/images/logoBig.gif)
+<img width="192" height="101" alt="Ontopia Logo" src="https://github.com/user-attachments/assets/d60899fa-cbcd-4e46-b66f-a84c8d42d8c1" />
 
 Welcome to Ontopia, the open source tools for building, maintaining and deploying 
 [Topic Maps](http://en.wikipedia.org/wiki/Topic_Maps)-based applications. 
@@ -14,7 +14,7 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [the Ontopia.net website](http://ontopia.net).
 
 ## Get Ontopia
-[<img src="https://ontopia.net/images/download-button.png"/>](https://github.com/ontopia/ontopia/releases/latest)
+[<img width="287" height="90" alt="image" src="https://github.com/user-attachments/assets/46268553-94d7-4e16-abc6-4db293c841f1" />](https://github.com/ontopia/ontopia/releases/latest)
 
 ### Older versions
  * [Ontopia 5.3.0](https://github.com/ontopia/ontopia/releases/tag/release-5.3.0)
