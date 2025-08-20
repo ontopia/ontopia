@@ -17,7 +17,7 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [<img width="287" height="90" alt="image" src="https://github.com/user-attachments/assets/46268553-94d7-4e16-abc6-4db293c841f1" />](https://github.com/ontopia/ontopia/releases/latest)
 
 ### Older versions
- * [Ontopia 5.3.0](https://github.com/ontopia/ontopia/releases/tag/release-5.3.0)
+ * [Ontopia 5.5.0](https://github.com/ontopia/ontopia/releases/tag/release-5.5.0)
 
 > **Note**: Using older versions is not advised
 
@@ -32,27 +32,21 @@ working with Topic Maps. See the [requirements](https://github.com/ontopia/ontop
 You can also use Ontopia as a [maven](https://maven.apache.org/) dependency, allowing you to build Topic Maps 
 applications yourself:
 ```xml
-<repositories>
-    <repository>
-        <id>ontopia-releases</id>
-        <url>http://ontopia.googlecode.com/svn/maven-repository</url>
-    </repository>
-</repositories>
 <dependencies>
     <dependency>
         <groupId>net.ontopia</groupId>
         <artifactId>ontopia-engine</artifactId>
-        <version>5.4.0</version>
+        <version>5.6.0</version>
     </dependency>
 </dependencies>
 ````
-See the [[Modules]] page for more possible maven modules and their function.
+See the [Modules](https://github.com/ontopia/ontopia/wiki/Modules) page for more possible maven modules and their function.
 
 ## Building Ontopia
 To build the current Ontopia distribution run
 
 ```
-$ mvn clean install && mvn clean install -Pontopia-distribution-tomcat
+$ mvn clean install -Pontopia-distribution-tomcat
 ```
 
 from a terminal. The distribution can then be found in 
