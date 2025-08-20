@@ -1,5 +1,6 @@
-[<img src="https://img.shields.io/travis/com/ontopia/ontopia.svg" alt="build status"/>](https://travis-ci.com/ontopia/ontopia)
+[![Build](https://github.com/ontopia/ontopia/actions/workflows/build.yml/badge.svg)](https://github.com/ontopia/ontopia/actions/workflows/build.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/72f4a97299d3481db797de3c56b24096)](https://app.codacy.com/gh/ontopia/ontopia?utm_source=github.com&utm_medium=referral&utm_content=ontopia/ontopia&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b5df7b2cd80f4fd7919a8a079dfd7913)](https://app.codacy.com/gh/ontopia/ontopia/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [<img src="https://img.shields.io/github/license/ontopia/ontopia.svg" alt="license"/>](https://github.com/ontopia/ontopia/blob/master/LICENSE.txt)
 [<img src="https://img.shields.io/github/release/ontopia/ontopia.svg" alt="release"/>](https://github.com/ontopia/ontopia/releases)
 [<img src="https://img.shields.io/maven-central/v/net.ontopia/ontopia-engine.svg" alt="maven central"/>](https://search.maven.org/search?q=g:net.ontopia%20a:ontopia-engine)
