@@ -15,7 +15,7 @@
 	<description>Ontopia Rest services</description>
 	
 	<properties>
-		<restlet.version>2.4.3</restlet.version>
+		<restlet.version>2.6.0</restlet.version>
 	</properties>
 
 	<repositories>
@@ -52,25 +52,25 @@
 		
 		<!-- rest -->
 		<dependency>
-			<groupId>org.restlet.jee</groupId>
+			<groupId>org.restlet</groupId>
 			<artifactId>org.restlet.ext.servlet</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.restlet.jee</groupId>
+			<groupId>org.restlet</groupId>
 			<artifactId>org.restlet.ext.slf4j</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.restlet.jee</groupId>
+			<groupId>org.restlet</groupId>
 			<artifactId>org.restlet.ext.jackson</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.restlet.jee</groupId>
+			<groupId>org.restlet</groupId>
 			<artifactId>org.restlet.ext.velocity</artifactId>
 			<version>${restlet.version}</version>
 			<exclusions>
@@ -89,38 +89,63 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.56.v20240826</version>
+				<groupId>org.eclipse.jetty.ee9</groupId>
+				<artifactId>jetty-ee9-maven-plugin</artifactId>
+				<version>12.0.21</version>
 				<configuration>
-					<stopPort>9999</stopPort>
+					<supportedPackagings>jar</supportedPackagings>
+					<useTestScope>true</useTestScope>
+					<webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
 					<stopKey>ontopia</stopKey>
+					<stopPort>9999</stopPort>
+					<httpConnector>
+						<port>${ontopia.jetty.port}</port>
+					</httpConnector>
+					<webApp>
+						<contextPath>/</contextPath>
+					</webApp>
 				</configuration>
 				<executions>
 					<execution>
 						<id>start-jetty</id>
-						<phase>test-compile</phase>
+						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
 						</goals>
-						<configuration>
-							<httpConnector>
-								<port>${ontopia.jetty.port}</port>
-							</httpConnector>
-							<webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
-							<useTestClasspath>true</useTestClasspath>
-							<webApp>
-								<contextPath>/</contextPath>
-								<webInfIncludeJarPattern>__NONE__</webInfIncludeJarPattern>
-							</webApp>
-							<supportedPackagings>jar</supportedPackagings>
-						</configuration>
 					</execution>
 					<execution>
 						<id>stop-jetty</id>
-						<phase>test</phase>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.5.3</version>
+				<configuration>
+					<trimStackTrace>false</trimStackTrace>
+					<includes>
+						<include>**/Test*.java</include>
+						<include>**/*Test.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>web-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>

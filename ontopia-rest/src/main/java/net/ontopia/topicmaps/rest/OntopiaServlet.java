@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.rest;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import org.restlet.Application;
 import org.restlet.Component;
 import org.restlet.Context;
