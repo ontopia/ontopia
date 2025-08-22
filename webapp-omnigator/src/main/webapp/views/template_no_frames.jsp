@@ -7,7 +7,7 @@
                                  net.ontopia.topicmaps.core.TopicMapIF,
                                  net.ontopia.topicmaps.entry.*,
                                  java.io.File,
-                                 javax.servlet.ServletContext" %>
+                                 jakarta.servlet.ServletContext" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template' prefix='template'   %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 <framework:response/>
