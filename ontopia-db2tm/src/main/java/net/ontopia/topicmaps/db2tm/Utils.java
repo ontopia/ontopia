@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
