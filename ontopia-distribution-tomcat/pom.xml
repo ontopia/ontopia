@@ -146,7 +146,7 @@
 	</dependencies>
 
 	<properties>
-		<tomcat.version>9.0.107</tomcat.version>
+		<tomcat.version>10.0.8</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${project.build.directory}/rdbms/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
@@ -207,9 +207,9 @@
 						<artifactId>cargo-maven3-plugin</artifactId>
 						<configuration>
 							<container>
-								<containerId>tomcat9x</containerId>
+								<containerId>tomcat10x</containerId>
 								<zipUrlInstaller>
-									<url>https://archive.apache.org/dist/tomcat/tomcat-9/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}-windows-x64.zip</url>
+									<url>https://archive.apache.org/dist/tomcat/tomcat-10/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}-windows-x64.zip</url>
 									<extractDir>${project.build.directory}</extractDir>
 								</zipUrlInstaller>
 							</container>
