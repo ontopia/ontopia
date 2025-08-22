@@ -200,8 +200,8 @@
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven2-plugin</artifactId>
-					<version>1.6.6</version>
+					<artifactId>cargo-maven3-plugin</artifactId>
+					<version>1.10.19</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
