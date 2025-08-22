@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.nav2.core;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import javax.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspTagException;
 
 /**
  * INTERNAL: base class for a generic problem occurring when

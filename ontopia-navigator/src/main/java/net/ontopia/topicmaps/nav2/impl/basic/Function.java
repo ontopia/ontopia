@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.IOException;
 import java.util.Collection;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.utils.ontojsp.JSPPageExecuter;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;

@@ -23,9 +23,9 @@ package net.ontopia.topicmaps.nav2.plugins;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * INTERNAL: Servlet that returns a PNG image.

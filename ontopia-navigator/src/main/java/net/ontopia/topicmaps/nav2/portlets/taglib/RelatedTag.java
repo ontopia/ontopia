@@ -23,10 +23,10 @@ package net.ontopia.topicmaps.nav2.portlets.taglib;
 import java.util.List;
 import java.util.Collection;
 import java.util.Set;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
