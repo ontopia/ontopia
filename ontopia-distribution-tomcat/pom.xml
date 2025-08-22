@@ -238,6 +238,7 @@
 							</execution>
 						</executions>
 						<configuration>
+							<binary>true</binary>
 							<optimizations>false</optimizations>
 							<patchDirectory>src/main/patches</patchDirectory>
 							<patches>001.catalina.properties.patch</patches>
