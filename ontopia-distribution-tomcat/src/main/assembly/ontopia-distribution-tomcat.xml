@@ -91,18 +91,7 @@
 			<useProjectArtifact>false</useProjectArtifact>
 			<excludes>
 				<exclude>*:war:*</exclude>
-				<exclude>*:vizlet:*</exclude>
-				<exclude>*:standard:*</exclude>
 			</excludes>
-		</dependencySet>
-		
-		<dependencySet>
-			<outputDirectory>extras</outputDirectory>
-			<useProjectArtifact>false</useProjectArtifact>
-			<includes>
-				<include>*:vizlet:*</include>
-			</includes>
-			<outputFileNameMapping>ontopia-vizlet-${version}.jar</outputFileNameMapping>
 		</dependencySet>
 		
 		<!-- add ROOT webapp -->
@@ -129,7 +118,7 @@
 			<unpackOptions>
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
-					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>WEB-INF/classes/org/apache/jsp/**</exclude>
 					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
@@ -174,7 +163,7 @@
 			<unpackOptions>
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
-					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>WEB-INF/classes/org/apache/jsp/**</exclude>
 					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
@@ -192,7 +181,6 @@
 					<include>examples/*.jsp</include>
 					<include>WEB-INF/web.xml</include>
 					<include>WEB-INF/config/**</include>
-					<include>WEB-INF/lib/wicket*.jar</include>
 					<include>WEB-INF/lib/ontopoly*.jar</include>
 				</includes>
 			</unpackOptions>
