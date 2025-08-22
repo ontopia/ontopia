@@ -43,15 +43,6 @@
   <build>
     <plugins>
       <plugin>
-        <!-- usage: mvn jetty:run-exploded -->
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>maven-jetty-plugin</artifactId>
-        <version>6.1.26</version>
-        <configuration>
-          <contextPath>/</contextPath>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>net.sf.alchim</groupId>
         <artifactId>winstone-maven-plugin</artifactId>
         <version>1.2</version>
