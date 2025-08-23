@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.Collection;
-import javax.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspTagException;
 
 
 /**

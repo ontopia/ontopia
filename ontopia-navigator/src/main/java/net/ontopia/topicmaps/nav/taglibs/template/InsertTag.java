@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.util.HashMap;
 import java.util.Stack;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
@@ -71,7 +71,7 @@ public class InsertTag extends TagSupport {
       throw new NavigatorRuntimeException("InsertTag: I/O Error while including " +
                                           "template '" + template + "'", ex);
     }
-    catch(javax.servlet.ServletException ex) {
+    catch(jakarta.servlet.ServletException ex) {
       throw new NavigatorRuntimeException("InsertTag: while including " +
                                           "template '" + template + "'", ex);
     }

@@ -23,10 +23,10 @@ package net.ontopia.topicmaps.nav2.taglibs.framework;
 import java.io.IOException;
 import java.util.Iterator;
 
-import javax.servlet.ServletException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.IncludePluginIF;

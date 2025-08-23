@@ -22,8 +22,8 @@ package net.ontopia.topicmaps.nav2.core;
 
 import java.io.IOException;
 import java.util.Iterator;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.JspTagException;
 
 /**
  * INTERNAL: Implemented by a tag which produces

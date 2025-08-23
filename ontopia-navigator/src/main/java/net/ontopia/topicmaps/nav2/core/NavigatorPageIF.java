@@ -102,7 +102,7 @@ public interface NavigatorPageIF {
    *
    * @since 1.3.2
    */
-  javax.servlet.jsp.PageContext getPageContext();
+  jakarta.servlet.jsp.PageContext getPageContext();
 
   /**
    * INTERNAL: Gets the tolog declaration context.

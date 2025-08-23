@@ -23,9 +23,9 @@ package net.ontopia.topicmaps.nav2.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletContext;
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.jsp.PageContext;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;

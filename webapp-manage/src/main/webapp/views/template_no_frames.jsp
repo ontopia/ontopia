@@ -4,7 +4,7 @@
                                  net.ontopia.topicmaps.nav2.plugins.PluginIF,
                                  net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
                                  java.io.File,
-                                 javax.servlet.ServletContext" %>
+                                 jakarta.servlet.ServletContext" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template' prefix='template'   %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 <framework:response/>

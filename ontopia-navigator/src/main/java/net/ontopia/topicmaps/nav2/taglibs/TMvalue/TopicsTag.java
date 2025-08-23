@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Collection;
 import java.util.Iterator;
-import javax.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspTagException;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;

@@ -65,7 +65,7 @@
     <jsp file="occurrencesWithTypes.jsp" tm="opera.xtm" id="puccini" />
 
     <jsp file="occurrencesIllegalType.jsp" tm="opera.ltm" id="puccini" fail="true"
-         exception="javax.servlet.jsp.JspException" />
+         exception="jakarta.servlet.jsp.JspException" />
 
     <!-- this test should deliver everytime different content  -->
     <jsp file="randomOcc.jsp" tm="opera.xtm" id="puccini" fail="true"/>
@@ -474,39 +474,39 @@
 
     <!-- Cases that raise (and should raise) an exception.-->
     <jsp file="ttl-err-choose-empty.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
 
     <jsp file="ttl-err-foreach-empty-and-lonely.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-empty-groupBy.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-groupBy-no-query.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-invalid-groupBy.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-insuff-groupBy-nested-descendant.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-insuff-groupBy-nested-self-contained.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-insuff-groupBy-root.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-no-query-invalid-ancestor.jsp" fail="true"
          exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
     <jsp file="ttl-err-foreach-no-query-self-contained.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-not-ordered.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-foreach-wrong-order.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
 
 
     <jsp file="ttl-err-if-no-attributes.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-if-var-query.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
 
     <jsp file="ttl-err-otherwise-no-choose.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
 
     <jsp file="ttl-err-out-unbound.jsp"
          exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
@@ -520,22 +520,22 @@
          exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
 
     <jsp file="ttl-err-set-none.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-set-query-reqparam.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
     <jsp file="ttl-err-set-empty-request.jsp"
          exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
 
     <jsp file="ttl-err-when-no-choose.jsp"
-         exception="javax.servlet.jsp.JspTagException"/>
+         exception="jakarta.servlet.jsp.JspTagException"/>
 
     <jsp file="ttl-normalize.jsp"/>
 
     <!-- Currently not supported -->
     <!--jsp file="ttl-err-set-body-closed.jsp"
-         exception="javax.servlet.jsp.JspTagException"/-->
+         exception="jakarta.servlet.jsp.JspTagException"/-->
     <!--jsp file="ttl-err-set-body-value.jsp"
-         exception="javax.servlet.jsp.JspTagException"/-->
+         exception="jakarta.servlet.jsp.JspTagException"/-->
     <!--jsp file="ttl-query.jsp"/-->
   </test>
 

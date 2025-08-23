@@ -20,7 +20,7 @@
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.Collection;
-import javax.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspTagException;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.infoset.fulltext.topicmaps.TopicMapSearchResult;
 import net.ontopia.topicmaps.core.TopicMapIF;

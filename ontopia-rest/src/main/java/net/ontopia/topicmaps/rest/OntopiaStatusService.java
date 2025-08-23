@@ -47,14 +47,14 @@ public class OntopiaStatusService extends StatusService {
 	}
 
 	@Override
-    public Status getStatus(Throwable throwable, Request request, Response response) {
+    public Status toStatus(Throwable throwable, Request request, Response response) {
 		
 		if (throwable instanceof ResourceException) {
 			ResourceException re = (ResourceException) throwable;
 			if (re.getCause() == null) {
 				return (re.getCause() != null ? new Status(re.getStatus(), re.getCause()) : re.getStatus());
 			} else {
-				return getStatus(throwable.getCause(), request, response);
+				return toStatus(throwable.getCause(), request, response);
 			}
 		}
 		
@@ -68,7 +68,7 @@ public class OntopiaStatusService extends StatusService {
 		
 		if (throwable instanceof JsonProcessingException) {
 			// error parsing json which is a client exception
-			return new Status(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, throwable, throwable.getMessage().replace('\n', ' ').replace('\r', ' '));
+			return new Status(Status.CLIENT_ERROR_BAD_REQUEST, throwable, throwable.getMessage().replace('\n', ' ').replace('\r', ' '));
 		}
 		
 		// fallback
@@ -78,7 +78,7 @@ public class OntopiaStatusService extends StatusService {
     }	
 
 	@Override
-	public Representation getRepresentation(Status status, Request request, Response response) {
+	public Representation toRepresentation(Status status, Request request, Response response) {
 		//if (status.isClientError()) {
 			return new JacksonRepresentation<>(new Error(status));
 		//}

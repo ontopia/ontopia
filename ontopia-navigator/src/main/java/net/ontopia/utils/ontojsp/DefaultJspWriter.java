@@ -23,7 +23,7 @@ package net.ontopia.utils.ontojsp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import javax.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.JspWriter;
 
 /**
  * Fake the JspWriter, needed for execution of a JSP.

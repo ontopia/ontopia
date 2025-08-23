@@ -24,12 +24,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.fileupload.DefaultFileItemFactory;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload2.core.DiskFileItem;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -74,7 +75,7 @@ public class ClassifyUtils {
     // out.write("CT: " + contentType + " " + tm + " " + id);
     if (contentType != null && contentType.startsWith("multipart/form-data")) {
       try {
-        FileUpload upload = new FileUpload(new DefaultFileItemFactory());
+        JakartaServletFileUpload<DiskFileItem, DiskFileItemFactory> upload = new JakartaServletFileUpload(new DiskFileItemFactory.Builder().get());
         for (FileItem item : upload.parseRequest(request)) {
           if (item.getSize() > 0) {
             // ISSUE: could make use of content type if known

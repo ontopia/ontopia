@@ -20,8 +20,8 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.HistoryMap;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * the session scope.
  *
  * @see net.ontopia.topicmaps.nav2.core.UserIF
- * @see javax.servlet.jsp.PageContext#findAttribute
+ * @see jakarta.servlet.jsp.PageContext#findAttribute
  */
 public class ModifyUserHistoryTag extends TagSupport {
 

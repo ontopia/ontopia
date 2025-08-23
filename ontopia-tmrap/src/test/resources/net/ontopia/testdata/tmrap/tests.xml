@@ -1,27 +1,27 @@
 <tests>
   <!-- *************** Testing the get-tolog operation *************** -->
-  <test exception ="javax.servlet.ServletException"
+  <test exception ="jakarta.servlet.ServletException"
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=ping"
         comment="get-tolog: Invalid 'syntax' parameter (not supported)."/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;view=ping"
         comment="get-tolog: Invalid 'view' parameter (not supported)"/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?tolog=topic($T)?"
         comment="get-tolog: Missing 'tolog' parameter."/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm"
         comment="get-tolog: Missing 'topicmap' parameter."/>
-  <test exception ="javax.servlet.ServletException"
+  <test exception ="jakarta.servlet.ServletException"
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;tolog=topic($T)?"
         comment="get-tolog: Repeated 'tolog' parameter."/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;view=stub"
         comment="get-tolog: Repeated 'topicmap' parameter."/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;view=stub&amp;view=stub"
         comment="get-tolog: Repeated 'syntax' parameter."/>
-  <test exception ="javax.servlet.ServletException" 
+  <test exception ="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;syntax=application/x-xtm&amp;view=stub"
         comment="get-tolog: Repeated 'view' parameter."/>
 
@@ -32,16 +32,16 @@
 
   <!-- *************** Testing the get-topic operation *************** -->
 
-  <test exception="javax.servlet.ServletException" 
+  <test exception="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;syntax=ping"
         comment="get-topic: Invalid 'syntax' parameter (not supported)"/>
-  <test exception="javax.servlet.ServletException" 
+  <test exception="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;view=pong"
         comment="get-topic: Invalid 'syntax' parameter (not supported)"/>
-  <test exception="javax.servlet.ServletException" 
+  <test exception="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-topic?syntax=application/x-xtm&amp;syntax=application/x-xtm"
         comment="Repeated 'syntax' parameter."/>
-  <test exception="javax.servlet.ServletException" 
+  <test exception="jakarta.servlet.ServletException" 
         uri="http://localhost:8080/omnigator/plugins/viz/get-topic?view=stub&amp;view=stub"
         comment="Repeated 'view' parameter."/>
 

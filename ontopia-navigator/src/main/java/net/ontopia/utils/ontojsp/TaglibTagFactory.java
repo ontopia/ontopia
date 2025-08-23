@@ -22,7 +22,7 @@ package net.ontopia.utils.ontojsp;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -111,7 +111,7 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
       Class tagclass = Class.forName(classname, true, classLoader);
       // try to instaniate an object of tag class
       tag = (TagSupport) tagclass.newInstance();
-    } catch (Exception e) {
+    } catch (Throwable e) {
       String msg = "TaglibTagFactory - unable to create instance of class " +
         classname + " for tag " + tagname;
       throw new NavigatorRuntimeException(msg, e);

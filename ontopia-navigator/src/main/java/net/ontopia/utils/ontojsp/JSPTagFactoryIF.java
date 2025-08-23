@@ -21,7 +21,7 @@
 package net.ontopia.utils.ontojsp;
 
 import java.util.Map;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
 /**

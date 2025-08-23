@@ -21,8 +21,8 @@
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.util.Map;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 
 /**
  * INTERNAL: Used to hold the TMRAP configuration settings. Mainly

@@ -20,19 +20,16 @@
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 
-import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Enumeration;
 import java.io.UnsupportedEncodingException;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspEngineInfo;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-
-import net.ontopia.utils.OntopiaRuntimeException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.jsp.JspFactory;
+import jakarta.servlet.jsp.JspEngineInfo;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspTagException;
 
 /**
  * INTERNAL: This class is used to hide the differences between the
@@ -116,17 +113,7 @@ public class JSPEngineWrapper {
     @Override
     public JspTagException getJspTagException(String message,
                                               Exception exception) {
-      try {
-        Class theclass = Class.forName("javax.servlet.jsp.JspTagException");
-        Class string = "".getClass();
-        Class throwable = Class.forName("java.lang.Throwable");
-        Class[] types = {string, throwable};
-        Constructor c = theclass.getConstructor(types);
-        Object[] args = {message, exception};
-        return (JspTagException) c.newInstance(args);
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException(e);
-      }
+      return new JspTagException(message, exception);
     }
   }
   
