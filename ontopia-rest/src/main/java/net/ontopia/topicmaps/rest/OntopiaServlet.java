@@ -20,11 +20,9 @@
 
 package net.ontopia.topicmaps.rest;
 
-import jakarta.servlet.ServletException;
 import org.restlet.Application;
 import org.restlet.Component;
 import org.restlet.Context;
-import org.restlet.engine.Engine;
 import org.restlet.engine.log.LoggerFacade;
 import org.restlet.ext.servlet.ServerServlet;
 import org.restlet.ext.slf4j.Slf4jLoggerFacade;
@@ -33,35 +31,12 @@ import org.restlet.service.LogService;
 public class OntopiaServlet extends ServerServlet {
 	private static final long serialVersionUID = 201701091214L;
 	
-	public static final String LOGGER_FACADE_ATTRIBUTE = LoggerFacade.class.getName();
-	public static final String LOGGER_FACADE_ATTRIBUTE_DEFAULT_VALUE = Slf4jLoggerFacade.class.getName();
-	
 	public static final String LOGGER_NAME_ATTRIBUTE = LogService.class.getName() + ".logger";
 	public static final String LOGGER_NAME_ATTRIBUTE_DEFAULT_VALUE = OntopiaServlet.class.getPackage().getName() + ".logger";
 	
 	public static final String LOGGER_FORMAT_ATTRIBUTE = LogService.class.getName() + ".format";
 	public static final String LOGGER_FORMAT_ATTRIBUTE_DEFAULT_VALUE = "{p} {m} {rp} {rq} {emt} {S}";
 
-	@Override
-	public void init() throws ServletException {
-		String facade = getInitParameter(LOGGER_FACADE_ATTRIBUTE, LOGGER_FACADE_ATTRIBUTE_DEFAULT_VALUE);
-		
-		if (!Boolean.FALSE.toString().equalsIgnoreCase(facade)) {
-			try {
-				Class<?> facadeClass = Class.forName(facade);
-				Engine.getInstance().setLoggerFacade((LoggerFacade) facadeClass.newInstance());
-			} catch (ClassNotFoundException ex) {
-				log("[Restlet] OntopiaServlet could not find logger facade class '" + facade + "'");
-			} catch (InstantiationException ex) {
-				log("[Restlet] OntopiaServlet could not instantiate logger facade of class '" + facade + "'");
-			} catch (IllegalAccessException ex) {
-				log("[Restlet] OntopiaServlet could not access logger facade class '" + facade + "'");
-			}
-		}
-		
-		super.init();
-	}
-	
 	@Override
 	protected Application createApplication(Context parentContext) {
 		Application application = super.createApplication(parentContext);
@@ -93,4 +68,16 @@ public class OntopiaServlet extends ServerServlet {
 		
 		return component;
 	}
+
+  /**
+   * Creates a new logger facade to be set in the Restlet Engine. By default it redirects all
+   * logging call to the {@link Slf4jLoggerFacade}.
+   *
+   * @return A new logger facade to be set in the Restlet Engine.
+   */
+  @Override
+  protected LoggerFacade createLoggerFacade() {
+    // fallback to slf4j when not overridden
+    return new Slf4jLoggerFacade();
+  }
 }
