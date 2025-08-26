@@ -20,14 +20,13 @@
 
 package net.ontopia;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Calendar;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * INTERNAL: Class for representing information about a the Ontopia
@@ -39,57 +38,31 @@ import net.ontopia.utils.StreamUtils;
  */
 
 public final class Ontopia {
-  
+
   private static String name;
-  private static int major_version;
-  private static int minor_version;
-  private static int micro_version;
-  private static int beta_version;
-  private static Calendar build_date;
+  private static String version;
+  private static String build_date;
   private static String build_user;
 
   static {
-	
-    try {
-      InputStream i = StreamUtils.getInputStream("classpath:net/ontopia/Ontopia.info");
 
-      BufferedReader r = new BufferedReader(new InputStreamReader(i));
+    try (InputStream i = StreamUtils.getInputStream("classpath:net/ontopia/Ontopia.info")) {
+      List<String> lines = IOUtils.readLines(i, StandardCharsets.UTF_8);
 
-      name = r.readLine();
-      String version = r.readLine();
-      String datetime = r.readLine();
-      build_user = r.readLine();
+      name = lines.get(0);
+      version = lines.get(1);
+      build_date = lines.get(2);
+      build_user = lines.get(3);
 
-      r.close();
+    } catch (Throwable ex) {
 
-      String[] v = version.split("[\\.-]");
-      major_version = Integer.parseInt(v[0]);
-      minor_version = Integer.parseInt(v[1]);
-      micro_version = Integer.parseInt(v[2]);
-
-      // 3 = SNAPSHOT / ALPHA / BETA
-      // 4 = ALPHA / BETA version
-      if (v.length > 4) {
-        beta_version = Integer.parseInt(v[4]);
-      }
-
-      String[] d = datetime.split("-");
-      build_date = Calendar.getInstance();
-      build_date.set(Integer.parseInt(d[0]), Integer.parseInt(d[1]) - 1, Integer.parseInt(d[2]), Integer.parseInt(d[3]), Integer.parseInt(d[4]));
-
-    } catch (IOException ex) {
-      
       System.err.println("Build Error: could not find version file");
       // fail safe
 
       name = "Ontopia Topic Maps Engine";
-      major_version = 0;
-      minor_version = 0;
-      micro_version = 0;
-      beta_version = 0;
-      build_date = Calendar.getInstance();
+      version = "0";
+      build_date = "unknown";
       build_user = "unknown";
-
     }
   }
 
@@ -102,61 +75,18 @@ public final class Ontopia {
   public static String getName() {
     return name;
   }
-  
+
   /**
-   * PUBLIC: Returns the product version. E.g. "1.0, "1.4.2" or "1.4.0 b3".
+   * PUBLIC: Returns the product version. E.g. "1.0, "1.4.2".
    */
   public static String getVersion() {
-    return getMajorVersion() + "." + getMinorVersion() + "." + getMicroVersion()
-      + (getBetaVersion() <= 0 ? "" : "b" + getBetaVersion())
-      ;
-  }
-  
-  /**
-   * PUBLIC: Returns the product major version number. E.g. 1 when the
-   * version number is 1.4.2.
-   */
-  public static int getMajorVersion() {
-    return major_version;
-  }
-
-  /**
-   * PUBLIC: Returns the product minor version number. E.g. 4 when the
-   * version number is 1.4.2.
-   */
-  public static int getMinorVersion() {
-    return minor_version;
-  }
-
-  /**
-   * PUBLIC: Returns the product micro version number. E.g. 2 when the
-   * version number is 1.4.2. If this version number isn't applicable
-   * -1 is returned.
-   */
-  public static int getMicroVersion() {
-    return micro_version;
-  }
-
-  /**
-   * PUBLIC: Returns the product beta version number. E.g. 3 when the
-   * version number is 1.4.2 b3. If this version number isn't applicable
-   * -1 is returned.
-   */
-  public static int getBetaVersion() {
-    return beta_version;
-  }
-
-  /**
-   * PUBLIC: Returns true if the product is a beta release.
-   */
-  public static boolean isBeta() {
-    return (beta_version > 0);
+    return version;
   }
 
   /**
    * PUBLIC: Returns the time when the product was built.
    */
-  public static Calendar getBuildDate() {
+  public static String getBuildDate() {
     return build_date;
   }
 
@@ -172,20 +102,7 @@ public final class Ontopia {
    * and build user.
    */
   public static String getBuild() {
-    int year = getBuildDate().get(Calendar.YEAR);
-    int month = getBuildDate().get(Calendar.MONTH) + 1;
-    int day = getBuildDate().get(Calendar.DATE);
-    int hour = getBuildDate().get(Calendar.HOUR_OF_DAY);
-    int minute = getBuildDate().get(Calendar.MINUTE);
-
-    String user = getBuildUser();
-
-    return year + "-"
-      + (month < 10 ? "0" + month : String.valueOf(month)) + "-"
-      + (day < 10 ? "0" + day : String.valueOf(day))
-      + " " +  (hour < 10 ? "0" + hour : String.valueOf(hour)) + ":"
-      + (minute < 10 ? "0" + minute : String.valueOf(minute))
-      + (user == null ? "" : " by " + getBuildUser());
+    return getBuildDate() + (getBuildUser() == null ? "" : " by " + getBuildUser());
   }
 
   private static void checkClass(String class_name, String jar_file) {
@@ -239,18 +156,13 @@ public final class Ontopia {
     }
   }
 
-  public static String getInfo() {  
+  public static String getInfo() {
     return getName() + " " + getVersion() + " (" + getBuild() + ")";
   }
-  
+
   public static void main(String argv[]) {
     CmdlineUtils.initializeLogging();
     Ontopia.checkProduct();
   }
-  
+
 }
-
-
-
-
-
