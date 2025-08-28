@@ -14,9 +14,9 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 
-<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
-<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload2.core.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload2.core.FileItem"%>
 <framework:response/>
 
 <script type="text/javascript">
@@ -64,9 +64,9 @@ boolean update = false;
 boolean readonly = true;
 
 // IMPORT TOPICMAP
-if (ServletFileUpload.isMultipartContent(request)) {
-  ServletFileUpload servletFileUpload = 
-    new ServletFileUpload(new DiskFileItemFactory());
+if (JakartaServletFileUpload.isMultipartContent(request)) {
+  JakartaServletFileUpload servletFileUpload = 
+    new JakartaServletFileUpload(DiskFileItemFactory.builder().get());
   List fileItemsList = servletFileUpload.parseRequest(request);
 
   String optionalFileName = "";
@@ -97,7 +97,7 @@ if (ServletFileUpload.isMultipartContent(request)) {
 
       File saveTo = new File(dirName + fileName);
       try {
-        fileItem.write(saveTo);
+        fileItem.write(saveTo.toPath());
         report = "Successfully uploaded topic map: <br/>" +
         	"File name: " + fileName + "<br/>" + 
         	"File size: " + fileItem.getSize();

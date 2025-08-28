@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import org.junit.Test;
 import org.junit.Assert;

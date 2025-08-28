@@ -37,7 +37,7 @@ import java.util.Map;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -153,7 +153,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
 
   /**
    * @return Display name of the web application {@link
-   *         javax.servlet.ServletContext#getServletContextName()}.
+   *         jakarta.servlet.ServletContext#getServletContextName()}.
    */
   @Override
   public String getName() {

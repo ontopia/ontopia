@@ -23,7 +23,7 @@ package net.ontopia.utils.ontojsp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 /**
  * INTERNAL: The Ontopia JSPTreeNode class. This class is the node of

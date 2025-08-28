@@ -25,9 +25,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Locale;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * INTERNAL: Fake the ServletResponse, needed for execution of a servlet/JSP.
@@ -241,5 +241,12 @@ public class FakeServletResponse implements HttpServletResponse {
   @Override
   public Collection<String> getHeaderNames() {
     throw new UnsupportedOperationException();
+  }
+
+  // servlet 5.0.0, jsp 3.0.0
+
+  @Override
+  public void setContentLengthLong(long length) {
+    // no-op
   }
 }

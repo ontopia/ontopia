@@ -21,9 +21,9 @@
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.Collections;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.BodyTagSupport;
-import javax.servlet.jsp.tagext.BodyContent;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.tagext.BodyTagSupport;
+import jakarta.servlet.jsp.tagext.BodyContent;
 
 import net.ontopia.topicmaps.nav2.core.ValueAcceptingTagIF;
 

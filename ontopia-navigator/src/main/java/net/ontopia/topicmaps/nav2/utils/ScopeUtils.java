@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.nav2.utils;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 import net.ontopia.topicmaps.core.ScopedIF;
 
 import net.ontopia.topicmaps.core.TopicMapIF;

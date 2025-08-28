@@ -22,9 +22,9 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspWriter;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicNameIF;

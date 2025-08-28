@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.classify;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * INTERNAL: Interface implemented by ClassifyPluginIFs that want

@@ -20,14 +20,14 @@
 package ontopoly.rdbms;
 
 import java.io.File;
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextEvent;
 import java.sql.Connection;
 import net.ontopia.persistence.rdbms.DatabaseProjectReader;
 import net.ontopia.persistence.rdbms.GenericSQLProducer;
 import net.ontopia.persistence.rdbms.Project;
-import org.h2.server.web.DbStarter;
+import org.h2.server.web.JakartaDbStarter;
 
-public class H2DatabaseStarter extends DbStarter {
+public class H2DatabaseStarter extends JakartaDbStarter {
 
   @Override
   public void contextInitialized(ServletContextEvent servletContextEvent) {

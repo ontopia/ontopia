@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.TestFileUtils;
@@ -171,7 +171,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
           Assert.assertTrue("Could not find file: " + e.getMessage(), false);
         } else if (e.getClass().getName().equals(expectedException)) {
           try {
-            javax.servlet.jsp.JspWriter out = makePageContext().getOut();
+            jakarta.servlet.jsp.JspWriter out = makePageContext().getOut();
             out.print(e.getMessage());
             out.flush();
             log.info("Compare results.");
