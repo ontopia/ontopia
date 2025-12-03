@@ -368,6 +368,7 @@ options {
       reader = AbstractTopicMapReader.makeReader(url, extloc, new LTMEncodingSniffer());
       LTMParser parser = new LTMParser(new LTMLexer(reader));
       parser.setBase(extloc);
+      parser.setURL(new URL(url, extloc.getAddress()));
       parser.setTopicMap(topicmap);
       parser.setSubordinate(true);
       parser.init();
