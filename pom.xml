@@ -67,6 +67,7 @@
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
 		<module>ontopia-instrumentation</module>
+		<module>ontopia-jgroups</module>
 
 		<!-- Web Apps -->
 		<module>webapp-root</module>

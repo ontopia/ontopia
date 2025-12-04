@@ -18,13 +18,18 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import net.ontopia.persistence.proxy.ClusterIF;
+import net.ontopia.persistence.proxy.EvictableIF;
+import net.ontopia.persistence.proxy.IdentityIF;
+import net.ontopia.persistence.proxy.InstrumentedClusterIF;
+import net.ontopia.persistence.proxy.StorageIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import org.jgroups.JChannel;
@@ -46,22 +51,21 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   protected JChannel dchannel;
   
   protected String clusterId;
-  protected String clusterProps;
   
   protected StorageIF storage;
   protected ConcurrentLinkedQueue<JGroupsEvent> queue;
 
   // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
   
-  protected JGroupsCluster(String clusterId, String clusterProps, StorageIF storage) {
+  protected JGroupsCluster(String clusterId, StorageIF storage) {
     this.clusterId = clusterId;
-    this.clusterProps = clusterProps;
     this.storage = storage;
     this.queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   }
   
   @Override
   public synchronized void join() {   
+    String clusterProps = storage.getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
     try {
       String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
 

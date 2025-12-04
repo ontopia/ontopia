@@ -18,12 +18,13 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import net.ontopia.persistence.proxy.IdentityIF;
 
 /**
  * INTERNAL: 
