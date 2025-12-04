@@ -24,11 +24,9 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Collection;
+import net.ontopia.persistence.proxy.ClusterIF;
 import net.ontopia.persistence.proxy.IdentityIF;
-
-/**
- * INTERNAL: 
- */
 
 public class JGroupsEvent implements Externalizable {
 
@@ -36,7 +34,18 @@ public class JGroupsEvent implements Externalizable {
   public Object value;
   public IdentityIF namespace;
   public int field;
-  
+
+  public JGroupsEvent() {
+
+  }
+
+  public JGroupsEvent(int eventType, Object value, IdentityIF namespace, int field) {
+    this.eventType = eventType;
+    this.value = value;
+    this.namespace = namespace;
+    this.field = field;
+  }
+
   @Override
   public String toString() {
     return eventType + " " + namespace + " " + value + " " + field;
@@ -57,5 +66,34 @@ public class JGroupsEvent implements Externalizable {
     value = in.readObject();
     field = in.readInt();
   }
-  
+
+  public static JGroupsEvent evictIdentity(IdentityIF identity) {
+    return new JGroupsEvent(ClusterIF.DATA_CACHE_IDENTITY_EVICT, identity, null, 0);
+  }
+
+  public static JGroupsEvent evictFields(IdentityIF identity) {
+    return new JGroupsEvent(ClusterIF.DATA_CACHE_FIELDS_EVICT, identity, null, 0);
+  }
+
+  public static JGroupsEvent evictField(IdentityIF identity, int field) {
+    return new JGroupsEvent(ClusterIF.DATA_CACHE_FIELD_EVICT, identity, null, field);
+  }
+
+  public static JGroupsEvent clear() {
+    return new JGroupsEvent(ClusterIF.DATA_CACHE_CLEAR, null, null, 0);
+  }
+
+  // event type is same as cache type
+  public static JGroupsEvent evictCache(IdentityIF namespace, int cacheType, Object key) {
+    return new JGroupsEvent(cacheType, key, namespace, 0);
+  }
+
+  public static JGroupsEvent evictCache(IdentityIF namespace, int cacheType, Collection keys) {
+    return new JGroupsEvent(cacheType, keys, namespace, 0);
+  }
+
+  // event type is same as cache type + 1
+  public static JGroupsEvent clearCache(IdentityIF namespace, int cacheType) {
+    return new JGroupsEvent(cacheType + 1, null, namespace, 0);
+  }
 }

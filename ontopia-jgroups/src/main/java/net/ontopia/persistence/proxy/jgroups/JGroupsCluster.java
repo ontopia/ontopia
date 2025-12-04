@@ -115,69 +115,42 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
       channel = null;
     }
   }
-  
+
   @Override
   public void evictIdentity(IdentityIF identity) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = ClusterIF.DATA_CACHE_IDENTITY_EVICT;
-    e.value = identity;
-    queue(e);
+    queue.add(JGroupsEvent.evictIdentity(identity));
   }
-  
+
   @Override
   public void evictFields(IdentityIF identity) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = ClusterIF.DATA_CACHE_FIELDS_EVICT;
-    e.value = identity;
-    queue(e);
+    queue.add(JGroupsEvent.evictFields(identity));
   }
-  
+
   @Override
   public void evictField(IdentityIF identity, int field) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = ClusterIF.DATA_CACHE_FIELD_EVICT;
-    e.value = identity;
-    e.field = field;
-    queue(e);
+    queue.add(JGroupsEvent.evictField(identity, field));
   }
 
   @Override
   public void clearDatacache() {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = ClusterIF.DATA_CACHE_CLEAR;
-    queue(e);
+    queue.add(JGroupsEvent.clear());
   }
-  
+
   @Override
   public void evictCache(IdentityIF namespace, int cacheType, Object key) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = cacheType; // event type is same as cache type
-    e.namespace = namespace;
-    e.value = key;
-    queue(e);
+    queue.add(JGroupsEvent.evictCache(namespace, cacheType, key));
   }
-  
+
   @Override
   public void evictCache(IdentityIF namespace, int cacheType, Collection keys) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = cacheType; // event type is same as cache type
-    e.namespace = namespace;
-    e.value = keys;
-    queue(e);
+    queue.add(JGroupsEvent.evictCache(namespace, cacheType, keys));
   }
 
   @Override
   public void clearCache(IdentityIF namespace, int cacheType) {
-    JGroupsEvent e = new JGroupsEvent();
-    e.eventType = cacheType + 1; // event type is same as cache type + 1
-    e.namespace = namespace;
-    queue(e);
+    queue.add(JGroupsEvent.clearCache(namespace, cacheType));
   }
 
-  private void queue(JGroupsEvent e) {
-    queue.add(e);
-  }
-  
   // -----------------------------------------------------------------------------
   // Event I/O
   // -----------------------------------------------------------------------------
