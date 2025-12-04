@@ -53,7 +53,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
 
-  protected JChannel dchannel;
+  protected JChannel channel;
   
   protected String clusterId;
   
@@ -80,14 +80,14 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
         if (url == null) {
           if (clusterProps == null) {
             log.info(joinMessage + ", using default cluster properties.");
-            this.dchannel = new JChannel();
+            this.channel = new JChannel();
           } else {
             log.info(joinMessage + ", using cluster properties as given: '" + clusterProps + "'");
-            this.dchannel = new JChannel(clusterProps);
+            this.channel = new JChannel(clusterProps);
           }
         } else {
           log.info(joinMessage + ", using cluster properties in: '" + url + "'");
-          this.dchannel = new JChannel(url);
+          this.channel = new JChannel(url);
         }
       } catch (Exception e) {
         throw new OntopiaRuntimeException("Problems occurred while loading " + 
@@ -95,12 +95,12 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
           clusterId + "'", e);
       }
       
-      dchannel.setReceiver(this);
-      dchannel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
+      channel.setReceiver(this);
+      channel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
 
-      this.dchannel.connect(clusterId);
+      this.channel.connect(clusterId);
 
-      log.info("Connected to cluster {} as {}", clusterId, this.dchannel.getAddress());
+      log.info("Connected to cluster {} as {}", clusterId, this.channel.getAddress());
     } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
@@ -110,9 +110,9 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   public synchronized void leave() {
     log.info("Leaving cluster: '" + clusterId + "'");
     flush();
-    if (dchannel != null) {
-      dchannel.close();
-      dchannel = null;
+    if (channel != null) {
+      channel.close();
+      channel = null;
     }
   }
   
@@ -202,7 +202,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
     log.debug("Sending: " + e);
     try {
       Message msg = new Message(null, e);
-      dchannel.send(msg);
+      channel.send(msg);
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
     }
@@ -291,42 +291,42 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
 
   @Override
   public String getClusterState() {
-    return dchannel.getState();
+    return channel.getState();
   }
 
   @Override
   public long getClusterReceivedBytes() {
-    return dchannel.getReceivedBytes();
+    return channel.getReceivedBytes();
   }
 
   @Override
   public long getClusterReceivedMessages() {
-    return dchannel.getReceivedMessages();
+    return channel.getReceivedMessages();
   }
 
   @Override
   public long getClusterSentBytes() {
-    return dchannel.getSentBytes();
+    return channel.getSentBytes();
   }
 
   @Override
   public long getClusterSentMessages() {
-    return dchannel.getSentMessages();
+    return channel.getSentMessages();
   }
 
   @Override
   public long getClusterNodeCount() {
-    return dchannel.getView().getMembers().size();
+    return channel.getView().getMembers().size();
   }
 
   @Override
   public Set<String> getClusterNodes() {
-    return dchannel.getView().getMembers().stream().map(Address::toString).collect(Collectors.toSet());
+    return channel.getView().getMembers().stream().map(Address::toString).collect(Collectors.toSet());
   }
 
   @Override
   public String getClusterNode() {
-    return dchannel.getAddressAsString();
+    return channel.getAddressAsString();
   }
 
   @Override
