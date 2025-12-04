@@ -177,6 +177,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
 
   @Override
   public synchronized void flush() {
+    if (queue.isEmpty()) { return; }
     // retrieve all pending events from event queue and send event list to cluster
     ArrayList<JGroupsEvent> data = new ArrayList<JGroupsEvent>(queue);
     log.debug("Sending " + data.size() + " events.");
