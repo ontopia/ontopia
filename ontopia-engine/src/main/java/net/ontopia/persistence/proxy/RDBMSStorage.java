@@ -966,12 +966,12 @@ public class RDBMSStorage implements StorageIF {
     @Override public Map<Long, CacheMetricsIF> getTopicIFgetRolesByType2QueryCacheMetrics()                { return getQueryCacheMetrics("TopicIF.getRolesByType2"); }
 
     // clustering
-    @Override public String getClusterName()           { return cluster == null ? null : ((JGroupsCluster) cluster).clusterId; }
-    @Override public String getClusterState()          { return cluster == null ? null : ((JGroupsCluster) cluster).getState(); }
-    @Override public long getClusterReceivedBytes()    { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedBytes(); }
-    @Override public long getClusterReceivedMessages() { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedMessages(); }
-    @Override public long getClusterSentBytes()        { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentBytes(); }
-    @Override public long getClusterSentMessages()     { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentMessages(); }
+    @Override public String getClusterName()           { return cluster instanceof InstrumentedClusterIF c ? c.getClusterName() : null; }
+    @Override public String getClusterState()          { return cluster instanceof InstrumentedClusterIF c ? c.getClusterState() : null; }
+    @Override public long getClusterReceivedBytes()    { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedBytes() : -1; }
+    @Override public long getClusterReceivedMessages() { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedMessages() : -1; }
+    @Override public long getClusterSentBytes()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentBytes() : -1; }
+    @Override public long getClusterSentMessages()     { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentMessages() : -1; }
 
     // access
     @Override public long getAccessCount() { return access_counter; }

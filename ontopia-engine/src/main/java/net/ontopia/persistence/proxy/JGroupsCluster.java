@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Class that represents a cluster of OKS instances.
  */
 
-public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
+public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
@@ -273,23 +273,33 @@ public class JGroupsCluster extends ReceiverAdapter implements ClusterIF {
     log.info("Cluster members changes: {}", view.getMembers());
   }
 
-  long getReceivedBytes() {
+  @Override
+  public String getClusterName() {
+    return clusterId;
+  }
+
+  @Override
+  public String getClusterState() {
+    return dchannel.getState();
+  }
+
+  @Override
+  public long getClusterReceivedBytes() {
     return dchannel.getReceivedBytes();
   }
 
-  long getReceivedMessages() {
+  @Override
+  public long getClusterReceivedMessages() {
     return dchannel.getReceivedMessages();
   }
 
-  long getSentBytes() {
+  @Override
+  public long getClusterSentBytes() {
     return dchannel.getSentBytes();
   }
 
-  long getSentMessages() {
+  @Override
+  public long getClusterSentMessages() {
     return dchannel.getSentMessages();
-  }
-
-  String getState() {
-    return dchannel.getState();
   }
 }
