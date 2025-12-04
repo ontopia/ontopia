@@ -45,24 +45,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * INTERNAL: Class that represents a cluster of OKS instances.
+ * INTERNAL: Class that represents a jgroups cluster of Ontopia instances.
  */
-
-public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
-
-  // Define a logging category.
-  private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
+// Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
+  public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
+  private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class);
 
   protected JChannel channel;
-  
   protected String clusterId;
-  
   protected StorageIF storage;
   protected ConcurrentLinkedQueue<JGroupsEvent> queue;
   protected final Set<ClusterNodeListenerIF> listeners = new HashSet<>();
 
-  // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
-  
   protected JGroupsCluster(String clusterId, StorageIF storage) {
     this.clusterId = clusterId;
     this.storage = storage;
@@ -157,25 +151,17 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
 
   @Override
   public synchronized void flush() {
-    // retrieve all pending events from event queue
-    JGroupsEvent o = queue.poll();
-    if (o != null) {
-      ArrayList<JGroupsEvent> data = new ArrayList<JGroupsEvent>();
-      do {
-        data.add(o);
-        o = queue.poll();
-      } while (o != null);
-      // send event list to cluster
-      log.debug("Sending " + data.size() + " events.");
-      sendEvent(data);
-    }    
+    // retrieve all pending events from event queue and send event list to cluster
+    ArrayList<JGroupsEvent> data = new ArrayList<JGroupsEvent>(queue);
+    log.debug("Sending " + data.size() + " events.");
+    sendEvent(data);
+    queue.clear();
   }
-    
+
   private void sendEvent(java.io.Serializable e) {
     log.debug("Sending: " + e);
     try {
-      Message msg = new Message(null, e);
-      channel.send(msg);
+      channel.send(new Message(null, e));
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
     }
@@ -188,48 +174,47 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
       return;
     }
     switch (e.eventType) {
-    case ClusterIF.DATA_CACHE_IDENTITY_EVICT:
-      log.debug("  IE: " + e.value);
-      storage.getStorageCache().evictIdentity((IdentityIF)e.value, false);
-      break;
-    case ClusterIF.DATA_CACHE_FIELDS_EVICT:
-      log.debug("  FE: " + e.value);
-      storage.getStorageCache().evictFields((IdentityIF)e.value, false);
-      break;
-    case ClusterIF.DATA_CACHE_FIELD_EVICT:
-      log.debug("  FI: " + e.field + " " + e.value);
-      storage.getStorageCache().evictField((IdentityIF)e.value, e.field, false);
-      break;
-    case ClusterIF.DATA_CACHE_CLEAR:
-      log.debug("  DC!");
-      storage.getStorageCache().clear(false);
-      break;
-    case ClusterIF.QUERY_CACHE_SRCLOC_EVICT:
-    case ClusterIF.QUERY_CACHE_SUBIND_EVICT:
-    case ClusterIF.QUERY_CACHE_SUBLOC_EVICT:
-    case ClusterIF.QUERY_CACHE_RT1_EVICT:
-    case ClusterIF.QUERY_CACHE_RT2_EVICT: {
-      log.debug("  QE " + e.eventType + ": " + e.value);
-      EvictableIF evictable = storage.getHelperObject(e.eventType, e.namespace);
-      if (e.value instanceof Collection) {
-        evictable.removeAll((Collection)e.value, false);
-      } else {
-        evictable.remove(e.value, false);
+      case ClusterIF.DATA_CACHE_IDENTITY_EVICT:
+        log.debug("evict identity {}", e.value);
+        storage.getStorageCache().evictIdentity((IdentityIF)e.value, false);
+        break;
+      case ClusterIF.DATA_CACHE_FIELDS_EVICT:
+        log.debug("evict fields {}", e.value);
+        storage.getStorageCache().evictFields((IdentityIF)e.value, false);
+        break;
+      case ClusterIF.DATA_CACHE_FIELD_EVICT:
+        log.debug("evict field {} for {}", e.field, e.value);
+        storage.getStorageCache().evictField((IdentityIF)e.value, e.field, false);
+        break;
+      case ClusterIF.DATA_CACHE_CLEAR:
+        log.debug("clear ALL cache");
+        storage.getStorageCache().clear(false);
+        break;
+      case ClusterIF.QUERY_CACHE_SRCLOC_EVICT:
+      case ClusterIF.QUERY_CACHE_SUBIND_EVICT:
+      case ClusterIF.QUERY_CACHE_SUBLOC_EVICT:
+      case ClusterIF.QUERY_CACHE_RT1_EVICT:
+      case ClusterIF.QUERY_CACHE_RT2_EVICT: {
+        log.debug("evict query in {}: {}", e.eventType, e.value);
+        EvictableIF evictable = storage.getHelperObject(e.eventType, e.namespace);
+        if (e.value instanceof Collection) {
+          evictable.removeAll((Collection)e.value, false);
+        } else {
+          evictable.remove(e.value, false);
+        }
+        break;
       }
-      break;
-    }
-    case ClusterIF.QUERY_CACHE_SRCLOC_CLEAR:
-    case ClusterIF.QUERY_CACHE_SUBIND_CLEAR:
-    case ClusterIF.QUERY_CACHE_SUBLOC_CLEAR:
-    case ClusterIF.QUERY_CACHE_RT1_CLEAR:
-    case ClusterIF.QUERY_CACHE_RT2_CLEAR: {
-      log.debug("  QC " + e.eventType + ": " + e.value);
-      EvictableIF evictable = storage.getHelperObject(e.eventType-1 , e.namespace);
-      evictable.clear(false);
-      break;
-    }
-    default:
-      log.debug("Ignored event: " + e);
+      case ClusterIF.QUERY_CACHE_SRCLOC_CLEAR:
+      case ClusterIF.QUERY_CACHE_SUBIND_CLEAR:
+      case ClusterIF.QUERY_CACHE_SUBLOC_CLEAR:
+      case ClusterIF.QUERY_CACHE_RT1_CLEAR:
+      case ClusterIF.QUERY_CACHE_RT2_CLEAR: {
+        log.debug("clear query cache {}: {}", e.eventType, e.value);
+        storage.getHelperObject(e.eventType - 1 , e.namespace).clear(false);
+        break;
+      }
+      default:
+        log.debug("Ignored event: " + e);
     }
   }
 
@@ -240,12 +225,9 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   @Override
   public void receive(Message msg) {
     try {
-      List data = (List)msg.getObject();
+      List<JGroupsEvent> data = msg.getObject();
       log.debug("Received " + data.size() + " events.");
-      for (int i=0; i < data.size(); i++) {
-        JGroupsEvent e = (JGroupsEvent)data.get(i);
-        processEvent(e);
-      }
+      data.forEach(this::processEvent);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }
