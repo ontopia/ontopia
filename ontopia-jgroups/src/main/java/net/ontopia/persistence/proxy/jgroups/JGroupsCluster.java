@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Class that represents a jgroups cluster of Ontopia instances.
  */
 // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
-  public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
+public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
   private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class);
 
   protected JChannel channel;
