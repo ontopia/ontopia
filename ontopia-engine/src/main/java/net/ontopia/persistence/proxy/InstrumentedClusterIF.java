@@ -27,6 +27,7 @@ public interface InstrumentedClusterIF extends ClusterIF {
 
   String getClusterName();
   String getClusterState();
+  long getClusterNodeCount();
   long getClusterReceivedBytes();
   long getClusterReceivedMessages();
   long getClusterSentBytes();

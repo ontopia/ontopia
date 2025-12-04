@@ -302,4 +302,9 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   public long getClusterSentMessages() {
     return dchannel.getSentMessages();
   }
+
+  @Override
+  public long getClusterNodeCount() {
+    return dchannel.getView().getMembers().size();
+  }
 }

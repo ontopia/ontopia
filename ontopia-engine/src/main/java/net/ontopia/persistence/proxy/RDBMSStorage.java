@@ -974,6 +974,7 @@ public class RDBMSStorage implements StorageIF {
     @Override public long getClusterReceivedMessages() { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedMessages() : -1; }
     @Override public long getClusterSentBytes()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentBytes() : -1; }
     @Override public long getClusterSentMessages()     { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentMessages() : -1; }
+    @Override public long getClusterNodeCount()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterNodeCount() : -1; }
 
     // access
     @Override public long getAccessCount() { return access_counter; }
