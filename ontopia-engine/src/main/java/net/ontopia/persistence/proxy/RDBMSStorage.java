@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
@@ -486,6 +487,11 @@ public class RDBMSStorage implements StorageIF {
     if (cluster != null) {
       cluster.flush();
     }
+  }
+
+  @Override
+  public Optional<ClusterIF> getCluster() {
+    return Optional.ofNullable(cluster);
   }
 
   // -----------------------------------------------------------------------------
