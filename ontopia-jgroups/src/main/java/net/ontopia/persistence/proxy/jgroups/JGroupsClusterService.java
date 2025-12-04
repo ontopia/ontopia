@@ -30,6 +30,8 @@ public class JGroupsClusterService implements ClusterServiceIF {
 
 	public static final String JGROUPS = "jgroups";
 
+	private static JChannel channel = null;
+
 	@Override
 	public String type() {
 		return JGROUPS;
@@ -37,11 +39,17 @@ public class JGroupsClusterService implements ClusterServiceIF {
 
 	@Override
 	public ClusterIF getCluster(String clusterName, RDBMSStorage storage) {
-		return new JGroupsCluster(clusterName, storage);
+		return channel == null
+			? new JGroupsCluster(clusterName, storage)
+			: new JGroupsCluster(clusterName, channel);
 	}
 
 	@Override
 	public CachesIF getCaches(ClusterIF cluster) {
 		return new JGroupsCaches(cluster);
+	}
+
+	public static void setExternalChannel(JChannel channel) {
+		JGroupsClusterService.channel = channel;
 	}
 }

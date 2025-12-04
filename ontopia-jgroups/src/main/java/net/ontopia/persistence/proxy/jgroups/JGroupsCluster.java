@@ -39,6 +39,7 @@ import net.ontopia.utils.StreamUtils;
 import org.jgroups.Address;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
+import org.jgroups.Receiver;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 import org.slf4j.Logger;
@@ -62,15 +63,39 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
     this.storage = storage;
   }
   
-  @Override
-  public synchronized void join() {   
-    try {
-      channel = createChannel();
-      channel.setReceiver(this);
-      channel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
-      channel.connect(clusterId);
+  public JGroupsCluster(String clusterId, JChannel channel) {
+    this.clusterId = clusterId;
+    this.channel = channel;
+  }
 
-      log.info("Joining JGroups cluster: {} as {}, using shared channel", clusterId, channel.getAddress());
+  @Override
+  public synchronized void join() {
+    try {
+      if (channel == null) {
+        channel = createChannel();
+        channel.setReceiver(this);
+        channel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
+        channel.connect(clusterId);
+      } else {
+
+        // wrap the receiver
+        Receiver wrapped = channel.getReceiver();
+        channel.setReceiver((msg) -> {
+          Object object = msg.getObject();
+          if ((object instanceof List list) && list.stream().allMatch(JGroupsEvent.class::isInstance)) {
+            receive(msg);
+          } else {
+            wrapped.receive(msg);
+          }
+        });
+
+        if (channel.isConnected()) {
+          clusterId = channel.clusterName();
+        } else {
+          channel.connect(clusterId);
+        }
+        log.info("Joining JGroups cluster: {} as {}, using shared channel", clusterId, channel.getAddress());
+      }
     } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
