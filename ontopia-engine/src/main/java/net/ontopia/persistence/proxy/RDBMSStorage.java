@@ -37,7 +37,6 @@ import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.naming.Context;
@@ -64,7 +63,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jgroups.util.DefaultThreadFactory;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,8 +76,6 @@ public class RDBMSStorage implements StorageIF {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
-  private static final ThreadFactory tFactory = new DefaultThreadFactory("nonTransactionalReadConnectionTimer-", true, true);
-
   public static final String PROPERTIES_ROOT = "net.ontopia.topicmaps.impl.rdbms.";
 
   private Map<String, String> properties;
@@ -109,7 +106,8 @@ public class RDBMSStorage implements StorageIF {
 
   private boolean nonTransactionalReadAllowed = true;
   private int nonTransactionalReadConnectionTimeout = 10;
-  private final ScheduledExecutorService nonTransactionalReadConnectionTimer = Executors.newSingleThreadScheduledExecutor(tFactory);
+  private final ScheduledExecutorService nonTransactionalReadConnectionTimer = Executors.newSingleThreadScheduledExecutor(
+          BasicThreadFactory.builder().namingPattern("nonTransactionalReadConnectionTimer").daemon().build());
   private final Map<Thread, NonTransactionalReadConnection> nonTransactionalReadConnections = new WeakHashMap<>();
 
   private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
