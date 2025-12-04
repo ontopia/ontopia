@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.net.URL;
 import net.ontopia.utils.OntopiaRuntimeException;

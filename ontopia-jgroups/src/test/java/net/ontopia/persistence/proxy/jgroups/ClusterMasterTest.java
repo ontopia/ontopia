@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.util.ArrayList;
 import java.util.Collections;
