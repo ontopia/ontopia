@@ -970,6 +970,7 @@ public class RDBMSStorage implements StorageIF {
     // clustering
     @Override public String getClusterName()           { return cluster instanceof InstrumentedClusterIF c ? c.getClusterName() : null; }
     @Override public String getClusterState()          { return cluster instanceof InstrumentedClusterIF c ? c.getClusterState() : null; }
+    @Override public String getClusterNode()           { return cluster instanceof InstrumentedClusterIF c ? c.getClusterNode() : null; }
     @Override public long getClusterReceivedBytes()    { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedBytes() : -1; }
     @Override public long getClusterReceivedMessages() { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedMessages() : -1; }
     @Override public long getClusterSentBytes()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentBytes() : -1; }

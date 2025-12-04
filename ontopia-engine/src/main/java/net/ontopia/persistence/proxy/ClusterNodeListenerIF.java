@@ -21,15 +21,13 @@
 package net.ontopia.persistence.proxy;
 
 /**
- * A ClusterIF implementation that exposes metrics about the cluster.
+ * Listener that is notified when cluster members change.
  */
-public interface InstrumentedClusterIF extends ClusterIF {
+public interface ClusterNodeListenerIF {
 
-  String getClusterState();
-
-  long getClusterReceivedBytes();
-  long getClusterReceivedMessages();
-  long getClusterSentBytes();
-  long getClusterSentMessages();
+  /**
+   * Notification that the members of the cluster this listener was added to have changed.
+   */
+  void notifyNodeChange();
 
 }

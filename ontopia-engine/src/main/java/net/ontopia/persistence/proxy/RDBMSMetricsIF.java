@@ -63,6 +63,7 @@ public interface RDBMSMetricsIF {
 
   String getClusterName();
   String getClusterState();
+  String getClusterNode();
   long getClusterNodeCount();
   long getClusterReceivedBytes();
   long getClusterReceivedMessages();

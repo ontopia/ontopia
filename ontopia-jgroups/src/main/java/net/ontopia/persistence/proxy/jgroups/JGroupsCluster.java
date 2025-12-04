@@ -23,15 +23,20 @@ package net.ontopia.persistence.proxy.jgroups;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 import net.ontopia.persistence.proxy.ClusterIF;
+import net.ontopia.persistence.proxy.ClusterNodeListenerIF;
 import net.ontopia.persistence.proxy.EvictableIF;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.InstrumentedClusterIF;
 import net.ontopia.persistence.proxy.StorageIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
+import org.jgroups.Address;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
@@ -54,6 +59,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   
   protected StorageIF storage;
   protected ConcurrentLinkedQueue<JGroupsEvent> queue;
+  protected final Set<ClusterNodeListenerIF> listeners = new HashSet<>();
 
   // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
   
@@ -275,6 +281,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   @Override
   public void viewAccepted(View view) {
     log.info("Cluster members changes: {}", view.getMembers());
+    listeners.forEach(ClusterNodeListenerIF::notifyNodeChange);
   }
 
   @Override
@@ -310,5 +317,25 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   @Override
   public long getClusterNodeCount() {
     return dchannel.getView().getMembers().size();
+  }
+
+  @Override
+  public Set<String> getClusterNodes() {
+    return dchannel.getView().getMembers().stream().map(Address::toString).collect(Collectors.toSet());
+  }
+
+  @Override
+  public String getClusterNode() {
+    return dchannel.getAddressAsString();
+  }
+
+  @Override
+  public void addClusterNodeListener(ClusterNodeListenerIF listener) {
+    listeners.add(listener);
+  }
+
+  @Override
+  public void removeClusterNodeListener(ClusterNodeListenerIF listener) {
+    listeners.remove(listener);
   }
 }
