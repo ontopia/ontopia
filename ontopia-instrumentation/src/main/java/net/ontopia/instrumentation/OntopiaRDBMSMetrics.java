@@ -126,14 +126,14 @@ public class OntopiaRDBMSMetrics {
 				Info clusterNames = Info.builder(config)
 					.name(PREFIX + "cluster_info")
 					.help("Information about the jgroups cluster per TopicMapSource")
-					.labelNames(OntopiaMetrics.LABEL_SOURCE, "name", "state")
+					.labelNames(OntopiaMetrics.LABEL_SOURCE, "name", "state", "address")
 					.register(registry);
 
 				Runnable updateClusterInfo = () -> 
 					getRDBMSTopicMapSources(repository).forEach(source -> {
 						Optional<RDBMSMetricsIF> metrics = getMetrics(source);
 						if (metrics.isPresent()) {
-							clusterNames.setLabelValues(source.getId(), metrics.get().getClusterName(), metrics.get().getClusterState());
+							clusterNames.setLabelValues(source.getId(), metrics.get().getClusterName(), metrics.get().getClusterState(), metrics.get().getClusterNode());
 						}
 					});
 
