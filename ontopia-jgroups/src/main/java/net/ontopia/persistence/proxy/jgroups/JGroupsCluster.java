@@ -188,7 +188,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   private void sendEvent(java.io.Serializable e) {
     log.debug("Sending: " + e);
     try {
-      channel.send(new Message(null, e));
+      channel.send(new Message(null, e).setTransientFlag(Message.TransientFlag.DONT_LOOPBACK));
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
     }
