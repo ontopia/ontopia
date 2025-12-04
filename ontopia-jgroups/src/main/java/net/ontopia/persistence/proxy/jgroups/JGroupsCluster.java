@@ -65,40 +65,42 @@ import org.slf4j.LoggerFactory;
   
   @Override
   public synchronized void join() {   
-    String clusterProps = storage.getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
     try {
-      String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
-
-      try {
-        URL url = (clusterProps != null ? StreamUtils.getResource(clusterProps) : null);
-        if (url == null) {
-          if (clusterProps == null) {
-            log.info(joinMessage + ", using default cluster properties.");
-            this.channel = new JChannel();
-          } else {
-            log.info(joinMessage + ", using cluster properties as given: '" + clusterProps + "'");
-            this.channel = new JChannel(clusterProps);
-          }
-        } else {
-          log.info(joinMessage + ", using cluster properties in: '" + url + "'");
-          this.channel = new JChannel(url);
-        }
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException("Problems occurred while loading " + 
-          "JGroups properties from " + clusterProps + ", trying to join cluster '" +
-          clusterId + "'", e);
-      }
-      
+      channel = createChannel();
       channel.setReceiver(this);
       channel.setName(System.getProperty("net.ontopia.persistence.proxy.nodeName"));
+      channel.connect(clusterId);
 
-      this.channel.connect(clusterId);
-
-      log.info("Connected to cluster {} as {}", clusterId, this.channel.getAddress());
+      log.info("Joining JGroups cluster: {} as {}, using shared channel", clusterId, channel.getAddress());
     } catch (Exception e) {
       throw new OntopiaRuntimeException("Could not connect to cluster '" + clusterId + "'.", e);
     }
   }
+
+  protected JChannel createChannel() {
+    String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
+	  String clusterProps = storage.getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
+
+	  try {
+      URL url = (clusterProps != null ? StreamUtils.getResource(clusterProps) : null);
+      if (url == null) {
+        if (clusterProps == null) {
+        log.info(joinMessage + ", using default cluster properties.");
+        return new JChannel();
+        } else {
+        log.info(joinMessage + ", using cluster properties as given: '" + clusterProps + "'");
+        return new JChannel(clusterProps);
+        }
+      } else {
+        log.info(joinMessage + ", using cluster properties in: '" + url + "'");
+        return new JChannel(url);
+      }
+	  } catch (Exception e) {
+      throw new OntopiaRuntimeException("Problems occurred while loading " +
+        "JGroups properties from " + clusterProps + ", trying to join cluster '" +
+        clusterId + "'", e);
+	  }
+  }  
   
   @Override
   public synchronized void leave() {
