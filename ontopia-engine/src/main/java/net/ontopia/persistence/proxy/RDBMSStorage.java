@@ -307,12 +307,14 @@ public class RDBMSStorage implements StorageIF {
     // initialize cluster
     String clusterId = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
     if (clusterId != null) {
-      if (clusterId.startsWith("jgroups:")) {
-        String clusterProps = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
-        this.cluster = new JGroupsCluster(StringUtils.removeStart(clusterId, "jgroups:"), clusterProps, this);
-        this.caches = new JGroupsCaches(cluster);
-      } else {
-        throw new OntopiaRuntimeException("Not able to figure out cluster type from cluster id: " + clusterId);
+      String[] clusterNameSplit = StringUtils.split(clusterId, ":", 2);
+      if (clusterNameSplit.length > 1) {
+        ClusterServiceIF clusterService = ClusterServiceIF.getClusterService(clusterNameSplit[0]);
+        if (clusterService == null) {
+          throw new OntopiaRuntimeException("Not able to figure out cluster type from cluster id: " + clusterId);
+        }
+        this.cluster = clusterService.getCluster(clusterNameSplit[1], this);
+        this.caches = clusterService.getCaches(this.cluster);
       }
     }
     if (this.caches == null) {
