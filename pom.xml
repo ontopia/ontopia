@@ -560,7 +560,7 @@
 			<dependency>
 				<groupId>org.jgroups</groupId>
 				<artifactId>jgroups</artifactId>
-				<version>4.0.0.Final</version>
+				<version>4.2.30.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
