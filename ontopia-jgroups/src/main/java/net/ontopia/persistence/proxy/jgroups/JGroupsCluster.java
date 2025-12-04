@@ -54,13 +54,12 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   protected JChannel channel;
   protected String clusterId;
   protected StorageIF storage;
-  protected ConcurrentLinkedQueue<JGroupsEvent> queue;
+  protected ConcurrentLinkedQueue<JGroupsEvent> queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   protected final Set<ClusterNodeListenerIF> listeners = new HashSet<>();
 
   protected JGroupsCluster(String clusterId, StorageIF storage) {
     this.clusterId = clusterId;
     this.storage = storage;
-    this.queue = new ConcurrentLinkedQueue<JGroupsEvent>();
   }
   
   @Override
