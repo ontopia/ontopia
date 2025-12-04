@@ -139,8 +139,8 @@ public class OntopiaRDBMSMetrics {
 
 				updateClusterInfo.run();
 
-				createCounter(repository, registry, "cluster_send_bytes", "Number of bytes send to the cluster by jgroups", RDBMSMetricsIF::getClusterSentBytes, Unit.BYTES);
-				createCounter(repository, registry, "cluster_send_total", "Number of messages send to the cluster by jgroups", RDBMSMetricsIF::getClusterSentMessages);
+				createCounter(repository, registry, "cluster_sent_bytes", "Number of bytes sent to the cluster by jgroups", RDBMSMetricsIF::getClusterSentBytes, Unit.BYTES);
+				createCounter(repository, registry, "cluster_sent_total", "Number of messages sent to the cluster by jgroups", RDBMSMetricsIF::getClusterSentMessages);
 				createCounter(repository, registry, "cluster_received_bytes", "Number of bytes recieved to the cluster by jgroups", RDBMSMetricsIF::getClusterReceivedBytes, Unit.BYTES);
 				createCounter(repository, registry, "cluster_received_total", "Number of messages recieved to the cluster by jgroups", RDBMSMetricsIF::getClusterReceivedMessages);
 
