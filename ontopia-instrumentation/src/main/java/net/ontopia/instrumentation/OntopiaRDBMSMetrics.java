@@ -39,6 +39,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource;
+import org.apache.commons.lang3.StringUtils;
 
 public class OntopiaRDBMSMetrics {
 	public static final String PREFIX = OntopiaMetrics.PREFIX + "topicmap_rdbms_";
@@ -133,7 +134,7 @@ public class OntopiaRDBMSMetrics {
 					getRDBMSTopicMapSources(repository).forEach(source -> {
 						Optional<RDBMSMetricsIF> metrics = getMetrics(source);
 						if (metrics.isPresent()) {
-							clusterNames.setLabelValues(source.getId(), metrics.get().getClusterName(), metrics.get().getClusterState(), metrics.get().getClusterNode());
+							clusterNames.setLabelValues(source.getId(), StringUtils.defaultIfBlank(metrics.get().getClusterName(), ""), StringUtils.defaultIfBlank(metrics.get().getClusterState(), ""), StringUtils.defaultIfBlank(metrics.get().getClusterNode(), ""));
 						}
 					});
 
