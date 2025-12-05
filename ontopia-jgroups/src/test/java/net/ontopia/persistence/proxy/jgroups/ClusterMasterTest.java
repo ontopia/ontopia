@@ -41,6 +41,7 @@ import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import org.jgroups.Message;
+import org.jgroups.ObjectMessage;
 import org.junit.Ignore;
 
 /**
@@ -794,7 +795,7 @@ public class ClusterMasterTest extends AbstractClusterTest {
   protected void sendTest(MasterTest mt) {
     System.out.println("Sending: " + mt.testname);
     try {
-      Message msg = new Message(null, mt);
+      Message msg = new ObjectMessage(null, mt);
       channel.send(msg);
     } catch (Exception ex1) {
       ex1.printStackTrace();

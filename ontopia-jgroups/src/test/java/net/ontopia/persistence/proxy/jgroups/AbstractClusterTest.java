@@ -25,11 +25,11 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
-import org.jgroups.ReceiverAdapter;
+import org.jgroups.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
-public abstract class AbstractClusterTest extends ReceiverAdapter {
+public abstract class AbstractClusterTest implements Receiver {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(AbstractClusterTest.class.getName());
@@ -76,7 +76,7 @@ public abstract class AbstractClusterTest extends ReceiverAdapter {
           }
         } else {
           log.debug("Using cluster properties in: '" + url + "'");
-          this.channel = new JChannel(url);
+          this.channel = new JChannel(url.openStream());
         }
       } catch (Exception e) {
         throw new OntopiaRuntimeException("Problems occurred while loading JGroups properties from " + clusterProps, e);

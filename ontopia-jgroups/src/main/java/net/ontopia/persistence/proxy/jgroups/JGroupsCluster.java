@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import net.ontopia.persistence.proxy.ClusterIF;
 import net.ontopia.persistence.proxy.ClusterNodeListenerIF;
@@ -39,9 +40,11 @@ import net.ontopia.utils.StreamUtils;
 import org.jgroups.Address;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
+import org.jgroups.ObjectMessage;
 import org.jgroups.Receiver;
-import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
+import org.jgroups.protocols.MsgStats;
+import org.jgroups.protocols.TP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Class that represents a jgroups cluster of Ontopia instances.
  */
 // Sample cluster properties: UDP(mcast_addr=228.10.9.8;mcast_port=5678):PING:FD
-public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClusterIF {
+public class JGroupsCluster implements InstrumentedClusterIF, Receiver {
   private static final Logger log = LoggerFactory.getLogger(JGroupsCluster.class);
 
   protected JChannel channel;
@@ -79,15 +82,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
       } else {
 
         // wrap the receiver
-        Receiver wrapped = channel.getReceiver();
-        channel.setReceiver((msg) -> {
-          Object object = msg.getObject();
-          if ((object instanceof List list) && list.stream().allMatch(JGroupsEvent.class::isInstance)) {
-            receive(msg);
-          } else {
-            wrapped.receive(msg);
-          }
-        });
+        channel.setReceiver(new WrappedReceiver(channel.getReceiver()));
 
         if (channel.isConnected()) {
           clusterId = channel.clusterName();
@@ -117,7 +112,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
         }
       } else {
         log.info(joinMessage + ", using cluster properties in: '" + url + "'");
-        return new JChannel(url);
+        return new JChannel(url.openStream());
       }
 	  } catch (Exception e) {
       throw new OntopiaRuntimeException("Problems occurred while loading " +
@@ -188,7 +183,7 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   private void sendEvent(java.io.Serializable e) {
     log.debug("Sending: " + e);
     try {
-      channel.send(new Message(null, e).setTransientFlag(Message.TransientFlag.DONT_LOOPBACK));
+      channel.send(new ObjectMessage(null, e).setFlag(Message.TransientFlag.DONT_LOOPBACK));
     } catch (Exception ex) {
       log.error(ex.getMessage(), ex);
     }
@@ -276,24 +271,32 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
     return channel.getState();
   }
 
+  protected long getStat(ToLongFunction<MsgStats> statMethod) {
+    return channel.getProtocolStack().getProtocols().stream()
+      .filter(TP.class::isInstance)
+      .map(TP.class::cast)
+      .map(TP::getMessageStats)
+      .collect(Collectors.summingLong(statMethod));
+  }
+
   @Override
   public long getClusterReceivedBytes() {
-    return channel.getReceivedBytes();
+    return getStat(MsgStats::getNumBytesReceived);
   }
 
   @Override
   public long getClusterReceivedMessages() {
-    return channel.getReceivedMessages();
+    return getStat(MsgStats::getNumMsgsReceived);
   }
 
   @Override
   public long getClusterSentBytes() {
-    return channel.getSentBytes();
+    return getStat(MsgStats::getNumBytesSent);
   }
 
   @Override
   public long getClusterSentMessages() {
-    return channel.getSentMessages();
+    return getStat(MsgStats::getNumMsgsSent);
   }
 
   @Override
@@ -319,5 +322,24 @@ public class JGroupsCluster extends ReceiverAdapter implements InstrumentedClust
   @Override
   public void removeClusterNodeListener(ClusterNodeListenerIF listener) {
     listeners.remove(listener);
+  }
+
+  protected class WrappedReceiver implements Receiver {
+
+    private final Receiver wrapped;
+
+    protected WrappedReceiver(Receiver wrapped) {
+      this.wrapped = wrapped;
+    }
+
+    @Override
+    public void receive(Message msg) {
+      Object object = msg.getObject();
+      if ((object instanceof List list) && list.stream().allMatch(JGroupsEvent.class::isInstance)) {
+        receive(msg);
+      } else {
+        wrapped.receive(msg);
+      }
+    }
   }
 }
