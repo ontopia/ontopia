@@ -24,7 +24,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -66,7 +65,7 @@ public class JGroupsCluster implements InstrumentedClusterIF, Receiver {
     this.clusterId = clusterId;
     this.storage = storage;
   }
-  
+
   public JGroupsCluster(String clusterId, JChannel channel) {
     this.clusterId = clusterId;
     this.channel = channel;
@@ -120,7 +119,7 @@ public class JGroupsCluster implements InstrumentedClusterIF, Receiver {
         "JGroups properties from " + clusterProps + ", trying to join cluster '" +
         clusterId + "'", e);
 	  }
-  }  
+  }
 
   public JChannel getChannel() {
     return channel;
@@ -344,6 +343,14 @@ public class JGroupsCluster implements InstrumentedClusterIF, Receiver {
         receive(msg);
       } else if (wrapped != null) {
         wrapped.receive(msg);
+      }
+    }
+
+    @Override
+    public void viewAccepted(View new_view) {
+      JGroupsCluster.this.viewAccepted(new_view);
+      if (wrapped != null) {
+        wrapped.viewAccepted(new_view);
       }
     }
   }
