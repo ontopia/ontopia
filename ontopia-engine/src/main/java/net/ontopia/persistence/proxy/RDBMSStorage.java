@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -781,21 +782,27 @@ public class RDBMSStorage implements StorageIF {
    * @param cause The transaction that committed the merge
    * @since 5.4.0
    */
-  public synchronized void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
+  public void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
     // block other transactons until we have processed the merge
+     synchronized (transactions) {
       for (AbstractTransaction transaction : transactions) {
         if (!transaction.equals(cause)) {
           transaction.objectMerged(source, target);
         }
       }
+    }
   }
 
   public int getActiveTransactionCount() {
-    return transactions.size();
+     synchronized (transactions) {
+      return transactions.size();
+     }
   }
 
   protected void transactionClosed(AbstractTransaction transaction) {
-    transactions.remove(transaction);
+     synchronized (transactions) {
+      transactions.remove(transaction);
+     }
   }
 
   /**
@@ -803,7 +810,9 @@ public class RDBMSStorage implements StorageIF {
    * @since 5.4.0
    */
   public Set<AbstractTransaction> getTransactions() {
-    return transactions;
+     synchronized (transactions) {
+      return new HashSet<>(transactions);
+     }
   }
 
   protected Connection getNonTransactionalReadConnection() {
