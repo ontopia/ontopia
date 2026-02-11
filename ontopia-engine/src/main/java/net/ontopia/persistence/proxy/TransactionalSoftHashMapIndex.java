@@ -31,8 +31,8 @@ public class TransactionalSoftHashMapIndex<K, V>
   extends ReferenceMap<K, V> implements TransactionalLookupIndexIF<K, V> {
   private static final long serialVersionUID = 1L;
 
-  public TransactionalSoftHashMapIndex() {
-    super(ReferenceStrength.SOFT, ReferenceStrength.HARD);
+  public TransactionalSoftHashMapIndex() { 
+    super(ReferenceStrength.SOFT, ReferenceStrength.SOFT);
   }
 
   @Override
