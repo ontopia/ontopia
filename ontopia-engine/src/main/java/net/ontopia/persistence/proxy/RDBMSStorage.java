@@ -978,6 +978,8 @@ public class RDBMSStorage implements StorageIF {
     // access
     @Override public long getAccessCount() { return access_counter; }
 
+    @Override public long getNonTransactionalReadConnectionCount() { return RDBMSStorage.this.getNonTransactionalReadConnectionCount(); }
+
     private Map<Long, CacheMetricsIF> getQueryCacheMetrics(String identifier) {
       return qcmap.entrySet().stream().collect(Collectors.toMap(
           entry -> (Long) entry.getKey().getKey(0),

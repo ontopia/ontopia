@@ -74,4 +74,7 @@ public interface RDBMSMetricsIF {
 
   long getAccessCount();
 
+  // non-transaction reading
+  long getNonTransactionalReadConnectionCount();
+
 }

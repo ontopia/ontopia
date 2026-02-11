@@ -160,6 +160,10 @@ public class OntopiaRDBMSMetrics {
 				// --- Transactions
 
 				createGauge(repository, registry, "access_counter", "A counter for opened RDBMSAccess instances, rougly indicates number of transactions", RDBMSMetricsIF::getAccessCount);
+
+				// --- non-transactional-read connections
+
+				createGauge(repository, registry, "non_transactional_read_connection", "A counter for currently open non-transactional-read connections ", RDBMSMetricsIF::getNonTransactionalReadConnectionCount);
 			}
 		}
 
@@ -213,7 +217,7 @@ public class OntopiaRDBMSMetrics {
 				.filter(r -> ((RDBMSTopicMapReference) r).getTopicMapId() == tm)
 				.findAny()
 				.map(TopicMapReferenceIF::getId)
-				.orElse("unknown");
+				.orElse("unknown-" + tm);
 		}
 
 		private boolean isNotNegative(Long t) {
