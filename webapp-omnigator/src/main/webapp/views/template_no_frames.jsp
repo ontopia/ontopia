@@ -45,7 +45,8 @@
           <td align="right" valign="top" width="300">
             <!-- Right -->
             <div id="oksmenu">
-              <a href="/" title="Go to application home page.">Home</a>&nbsp;|&nbsp;<a href="/manage/manage.jsp" title="Refresh sources, reload settings, manage plug-ins, create indexes, etc.">Manage</a>&nbsp;|&nbsp;<a href="http://www.ontopia.net/" title="Go to the Ontopia website.">Website</a>&nbsp;|&nbsp;<a href="http://groups.google.com/group/ontopia" title="Mailing list.">Support</a>&nbsp;|&nbsp;<a href="/about.jsp">About</a>
+              <% boolean onlineMode = ("ontopia.net".equals(System.getProperty("ontopia.omnigator.mode"))); %>
+              <a href="<%= onlineMode ? "https://ontopia.net" : "/" %>" title="Go to application home page.">Home</a>&nbsp;|&nbsp;<% if (!onlineMode) { %><a href="/manage/manage.jsp" title="Refresh sources, reload settings, manage plug-ins, create indexes, etc.">Manage</a>&nbsp;|&nbsp;<% } %><a href="http://www.ontopia.net/" title="Go to the Ontopia website.">Website</a>&nbsp;|&nbsp;<a href="http://groups.google.com/group/ontopia" title="Mailing list.">Support</a><% if (!onlineMode) { %>&nbsp;|&nbsp;<a href="/about.jsp">About</a><% } %>
             <%
               String tm = request.getParameter("tm");
               if (tm != null && tm.equals("null"))
