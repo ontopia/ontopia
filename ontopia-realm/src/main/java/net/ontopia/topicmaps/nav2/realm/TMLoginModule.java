@@ -21,6 +21,7 @@
 package net.ontopia.topicmaps.nav2.realm;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -53,7 +54,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.commons.codec.binary.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,7 +274,7 @@ public class TMLoginModule implements LoginModule {
     String encodedPassword;
     if ("base64".equals(hashMethod)) {
       try {
-        encodedPassword = Base64.encodeBase64String((username+password).getBytes("ISO-8859-1"));
+        encodedPassword = Base64.getEncoder().encodeToString((username+password).getBytes("ISO-8859-1"));
       } catch (Exception e) {
         throw new OntopiaRuntimeException(
                 "Problem occurred when attempting to hash password", e);
@@ -283,7 +283,7 @@ public class TMLoginModule implements LoginModule {
       try {
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] digest = messageDigest.digest((username+password).getBytes("ISO-8859-1"));
-        encodedPassword = Base64.encodeBase64String(digest);
+        encodedPassword = Base64.getEncoder().encodeToString(digest);
       } catch (Exception e) {
         throw new OntopiaRuntimeException(
                 "Problems occurrend when attempting to hash password", e);

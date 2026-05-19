@@ -31,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +48,6 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -1421,7 +1421,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
         return null;
       }
 
-      icon = new ImageIcon(Base64.decodeBase64(base64));
+      icon = new ImageIcon(Base64.getDecoder().decode(base64));
       iconCache.put(filename, icon);
     }
     return icon;
@@ -1451,7 +1451,7 @@ public class VizTopicMapConfigurationManager extends VizConfigurationManager {
       ImageIcon icon = new ImageIcon(bytes);
       iconCache.put(string, icon);
       output.reset();
-      output.write(Base64.encodeBase64(bytes));
+      output.write(Base64.getEncoder().encode(bytes));
     } catch (IOException e) {
       // should never occur
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
