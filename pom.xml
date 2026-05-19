@@ -139,7 +139,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.5.3</version>
+					<version>3.5.5</version>
 					<configuration>
 						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m</argLine>
 						<includes>
