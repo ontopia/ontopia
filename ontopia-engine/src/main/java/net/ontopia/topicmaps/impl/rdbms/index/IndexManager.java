@@ -26,7 +26,6 @@ import java.util.Map;
 import net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapTransaction;
-import net.ontopia.topicmaps.core.TransactionNotActiveException;
 import net.ontopia.topicmaps.core.index.IdentifierIndexIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
@@ -72,12 +71,6 @@ public class IndexManager extends AbstractIndexManager {
   
   @Override
   public IndexIF getIndex(String name) {
-    // Check to see if transaction is active.
-    if (!transaction.isActive()) {
-      throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
-    }
-
-    // Create index
     IndexIF ix = indexes.get(name);
     if (ix == null) {
       // Throw unsupported exception if index is unsupported.
