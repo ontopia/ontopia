@@ -63,6 +63,8 @@ public interface RDBMSMetricsIF {
 
   String getClusterName();
   String getClusterState();
+  String getClusterNode();
+  long getClusterNodeCount();
   long getClusterReceivedBytes();
   long getClusterReceivedMessages();
   long getClusterSentBytes();
@@ -71,5 +73,8 @@ public interface RDBMSMetricsIF {
   // access
 
   long getAccessCount();
+
+  // non-transaction reading
+  long getNonTransactionalReadConnectionCount();
 
 }

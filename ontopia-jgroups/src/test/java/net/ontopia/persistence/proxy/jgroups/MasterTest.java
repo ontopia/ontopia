@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.util.Map;
 import net.ontopia.topicmaps.core.AssociationIF;

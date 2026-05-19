@@ -21,6 +21,7 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * INTERNAL: Cluster implementation interface.
@@ -71,4 +72,11 @@ public interface ClusterIF {
 
   void clearCache(IdentityIF namespace, int cacheType);
   
+  String getClusterName();
+  long getClusterNodeCount();
+  Set<String> getClusterNodes();
+  String getClusterNode();
+
+  void addClusterNodeListener(ClusterNodeListenerIF listener);
+  void removeClusterNodeListener(ClusterNodeListenerIF listener);
 }

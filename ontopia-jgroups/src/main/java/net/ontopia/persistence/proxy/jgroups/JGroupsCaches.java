@@ -18,10 +18,15 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 import java.util.Collections;
 import java.util.Map;
+import net.ontopia.persistence.proxy.CacheIF;
+import net.ontopia.persistence.proxy.CachesIF;
+import net.ontopia.persistence.proxy.ClusterIF;
+import net.ontopia.persistence.proxy.ClusteredCache;
+import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.ReferenceMap;

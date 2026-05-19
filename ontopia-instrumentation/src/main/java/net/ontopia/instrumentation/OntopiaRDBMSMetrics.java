@@ -39,7 +39,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource;
-import org.jgroups.JChannel;
+import org.apache.commons.lang3.StringUtils;
 
 public class OntopiaRDBMSMetrics {
 	public static final String PREFIX = OntopiaMetrics.PREFIX + "topicmap_rdbms_";
@@ -127,21 +127,43 @@ public class OntopiaRDBMSMetrics {
 				Info clusterNames = Info.builder(config)
 					.name(PREFIX + "cluster_info")
 					.help("Information about the jgroups cluster per TopicMapSource")
-					.labelNames(OntopiaMetrics.LABEL_SOURCE, "name")
+					.labelNames(OntopiaMetrics.LABEL_SOURCE, "name", "state", "address")
 					.register(registry);
-				getRDBMSTopicMapSources(repository).forEach(source ->
-					getMetrics(source).map(RDBMSMetricsIF::getClusterName).ifPresent(name -> clusterNames.addLabelValues(source.getId(), name))
-				);
 
-				createCounter(repository, registry, "cluster_send_bytes", "Number of bytes send to the cluster by jgroups", RDBMSMetricsIF::getClusterSentBytes, Unit.BYTES);
-				createCounter(repository, registry, "cluster_send_total", "Number of messages send to the cluster by jgroups", RDBMSMetricsIF::getClusterSentMessages);
+				Runnable updateClusterInfo = () -> 
+					getRDBMSTopicMapSources(repository).forEach(source -> {
+						Optional<RDBMSMetricsIF> metrics = getMetrics(source);
+						if (metrics.isPresent()) {
+							clusterNames.setLabelValues(source.getId(), StringUtils.defaultIfBlank(metrics.get().getClusterName(), ""), StringUtils.defaultIfBlank(metrics.get().getClusterState(), ""), StringUtils.defaultIfBlank(metrics.get().getClusterNode(), ""));
+						}
+					});
+
+				updateClusterInfo.run();
+
+				createCounter(repository, registry, "cluster_sent_bytes", "Number of bytes sent to the cluster by jgroups", RDBMSMetricsIF::getClusterSentBytes, Unit.BYTES);
+				createCounter(repository, registry, "cluster_sent_total", "Number of messages sent to the cluster by jgroups", RDBMSMetricsIF::getClusterSentMessages);
 				createCounter(repository, registry, "cluster_received_bytes", "Number of bytes recieved to the cluster by jgroups", RDBMSMetricsIF::getClusterReceivedBytes, Unit.BYTES);
 				createCounter(repository, registry, "cluster_received_total", "Number of messages recieved to the cluster by jgroups", RDBMSMetricsIF::getClusterReceivedMessages);
-				createGauge(repository, registry, "cluster_state", "The state of the cluster (ordinal)", m -> m.getClusterState() == null ? -1 : (long) JChannel.State.valueOf(m.getClusterState()).ordinal());
+
+				GaugeWithCallback.builder(config)
+					.name(PREFIX + "cluster_node_count")
+					.help("The number of nodes in the cluster")
+					.labelNames(OntopiaMetrics.LABEL_SOURCE)
+					.callback(c -> {
+						updateClusterInfo.run(); // update cluster state info
+
+						getRDBMSTopicMapSources(repository).forEach(source ->
+							getMetrics(source).map(RDBMSMetricsIF::getClusterNodeCount).ifPresent(count -> c.call(count, source.getId())));
+					})
+					.register(registry);
 
 				// --- Transactions
 
 				createGauge(repository, registry, "access_counter", "A counter for opened RDBMSAccess instances, rougly indicates number of transactions", RDBMSMetricsIF::getAccessCount);
+
+				// --- non-transactional-read connections
+
+				createGauge(repository, registry, "non_transactional_read_connection", "A counter for currently open non-transactional-read connections ", RDBMSMetricsIF::getNonTransactionalReadConnectionCount);
 			}
 		}
 
@@ -195,7 +217,7 @@ public class OntopiaRDBMSMetrics {
 				.filter(r -> ((RDBMSTopicMapReference) r).getTopicMapId() == tm)
 				.findAny()
 				.map(TopicMapReferenceIF::getId)
-				.orElse("unknown");
+				.orElse("unknown-" + tm);
 		}
 
 		private boolean isNotNegative(Long t) {

@@ -159,7 +159,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   }
 
   @Override
-  public synchronized TopicMapStoreIF createStore(boolean readonly) {
+  public TopicMapStoreIF createStore(boolean readonly) {
     if (!isOpen()) {
       open();
     }
@@ -175,17 +175,18 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     try {
 
       if (readonly) {
-       if (rostore == null) { 
-         rostore = _createStore(true);
-       } else {
-         boolean valid = rostore.validate();
-         if (!valid) {
-           try { rostore.close(); } catch (Exception e) { }
+        synchronized (this) {
+         if (rostore == null) {
            rostore = _createStore(true);
+         } else {
+           boolean valid = rostore.validate();
+           if (!valid) {
+             try { rostore.close(); } catch (Exception e) { }
+             rostore = _createStore(true);
+           }
          }
-       }
-       return rostore;
-
+         return rostore;
+        }
       } else {
        // borrow store from pool and set managed members
        AbstractTopicMapStore store = (AbstractTopicMapStore) pool.borrowObject();
@@ -325,7 +326,7 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
   // --- store pooling
   
   @Override
-  public synchronized void storeClosed(TopicMapStoreIF store) {
+  public void storeClosed(TopicMapStoreIF store) {
     if (!store.isReadOnly()) {
       // dereference listeners
       ((AbstractTopicMapStore)store).setTopicListeners(null);

@@ -114,7 +114,7 @@ public final class LongIdentity implements IdentityIF, Externalizable {
   
   @Override
   public String toString() {
-    return "<LongIdentity [" + key + "] " + type + ">";
+    return "<LongIdentity [" + key + "] " + type.getSimpleName() + ">";
   }
 
   // -----------------------------------------------------------------------------

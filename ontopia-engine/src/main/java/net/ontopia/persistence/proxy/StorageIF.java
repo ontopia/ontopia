@@ -21,6 +21,7 @@
 package net.ontopia.persistence.proxy;
 
 import java.util.Map;
+import java.util.Optional;
   
 /**
  * INTERNAL: Interface for accessing storage definitions.<p>
@@ -57,7 +58,13 @@ public interface StorageIF {
    * that batched cluster events can be broadcasted.
    */
   void notifyCluster();
-  
+
+  /**
+   * Returns the ClusterIF if one was configured.
+   * @return the ClusterIF if one was configured.
+   */
+  Optional<ClusterIF> getCluster();
+
   /**
    * INTERNAL: Creates a new storage access instance.
    */

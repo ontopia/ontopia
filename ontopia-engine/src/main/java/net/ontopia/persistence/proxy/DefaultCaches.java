@@ -68,6 +68,6 @@ public class DefaultCaches implements CachesIF {
   }
 
   private <K, V> Map<K, V> createSoftHashMap() {
-    return new ReferenceMap<K, V>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.HARD);
+    return new ReferenceMap<K, V>(AbstractReferenceMap.ReferenceStrength.SOFT, AbstractReferenceMap.ReferenceStrength.SOFT);
   }
 }

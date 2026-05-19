@@ -3,6 +3,7 @@ nb-configuration.xml
 .vscode
 .project
 .classpath
+.secrets
 
 # Maven
 target/

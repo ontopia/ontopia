@@ -70,6 +70,11 @@
 			<artifactId>ontopia-lucene</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-jgroups</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 
 		<!-- Webapps -->
 		<dependency>

@@ -18,7 +18,7 @@
  * !#
  */
 
-package net.ontopia.persistence.proxy;
+package net.ontopia.persistence.proxy.jgroups;
 
 public abstract class ClientTest {
   

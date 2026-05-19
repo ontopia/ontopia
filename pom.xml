@@ -67,6 +67,7 @@
 		<module>ontopia-lucene</module>
 		<module>ontopia-rest</module>
 		<module>ontopia-instrumentation</module>
+		<module>ontopia-jgroups</module>
 
 		<!-- Web Apps -->
 		<module>webapp-root</module>
@@ -546,7 +547,7 @@
 			<dependency>
 				<groupId>org.jgroups</groupId>
 				<artifactId>jgroups</artifactId>
-				<version>4.0.0.Final</version>
+				<version>5.5.1.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>

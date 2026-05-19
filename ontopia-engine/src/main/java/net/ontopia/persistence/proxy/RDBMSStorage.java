@@ -28,15 +28,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.naming.Context;
@@ -63,7 +64,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StreamUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jgroups.util.DefaultThreadFactory;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,8 +77,6 @@ public class RDBMSStorage implements StorageIF {
 
   // Define a logging category.
   private static final Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
-  private static final ThreadFactory tFactory = new DefaultThreadFactory("nonTransactionalReadConnectionTimer-", true, true);
-
   public static final String PROPERTIES_ROOT = "net.ontopia.topicmaps.impl.rdbms.";
 
   private Map<String, String> properties;
@@ -108,7 +107,8 @@ public class RDBMSStorage implements StorageIF {
 
   private boolean nonTransactionalReadAllowed = true;
   private int nonTransactionalReadConnectionTimeout = 10;
-  private final ScheduledExecutorService nonTransactionalReadConnectionTimer = Executors.newSingleThreadScheduledExecutor(tFactory);
+  private final ScheduledExecutorService nonTransactionalReadConnectionTimer = Executors.newSingleThreadScheduledExecutor(
+          BasicThreadFactory.builder().namingPattern("nonTransactionalReadConnectionTimer").daemon().build());
   private final Map<Thread, NonTransactionalReadConnection> nonTransactionalReadConnections = new WeakHashMap<>();
 
   private final IdentityIF NULL_OBJECT_IDENTITY = new IdentityIF() {
@@ -308,12 +308,14 @@ public class RDBMSStorage implements StorageIF {
     // initialize cluster
     String clusterId = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
     if (clusterId != null) {
-      if (clusterId.startsWith("jgroups:")) {
-        String clusterProps = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.properties");
-        this.cluster = new JGroupsCluster(StringUtils.removeStart(clusterId, "jgroups:"), clusterProps, this);
-        this.caches = new JGroupsCaches(cluster);
-      } else {
-        throw new OntopiaRuntimeException("Not able to figure out cluster type from cluster id: " + clusterId);
+      String[] clusterNameSplit = StringUtils.split(clusterId, ":", 2);
+      if (clusterNameSplit.length > 1) {
+        ClusterServiceIF clusterService = ClusterServiceIF.getClusterService(clusterNameSplit[0]);
+        if (clusterService == null) {
+          throw new OntopiaRuntimeException("Not able to figure out cluster type from cluster id: " + clusterId);
+        }
+        this.cluster = clusterService.getCluster(clusterNameSplit[1], this);
+        this.caches = clusterService.getCaches(this.cluster);
       }
     }
     if (this.caches == null) {
@@ -335,18 +337,7 @@ public class RDBMSStorage implements StorageIF {
         this.scache = new StatisticsCache("scache", scache, dinterval);
       }
     } else if (this.cluster != null) {
-      log.warn("");
-      log.warn("");
-      log.warn("  /vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\\");
-      log.warn("  >                                                                                  <");
-      log.warn("  >         Joining a cluster without a shared storage cache will not work !         <");
-      log.warn("  >                                                                                  <");
-      log.warn("  >  Don't set property 'net.ontopia.topicmaps.impl.rdbms.Cache.shared' to 'false'   <");
-      log.warn("  >   in combination with property 'net.ontopia.topicmaps.impl.rdbms.Cluster.id'.    <");
-      log.warn("  >                                                                                  <");
-      log.warn("  \\^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^/");
-      log.warn("");
-      log.warn("");
+      throw new OntopiaRuntimeException("Cannot join a cluster without a shared storage cache. Setting 'net.ontopia.topicmaps.impl.rdbms.Cache.shared' cannot be false when using a cluster.");
     }
 
     // join cluster
@@ -486,6 +477,11 @@ public class RDBMSStorage implements StorageIF {
     if (cluster != null) {
       cluster.flush();
     }
+  }
+
+  @Override
+  public Optional<ClusterIF> getCluster() {
+    return Optional.ofNullable(cluster);
   }
 
   // -----------------------------------------------------------------------------
@@ -786,21 +782,27 @@ public class RDBMSStorage implements StorageIF {
    * @param cause The transaction that committed the merge
    * @since 5.4.0
    */
-  public synchronized void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
+  public void objectMerged(IdentityIF source, IdentityIF target, AbstractTransaction cause) {
     // block other transactons until we have processed the merge
+     synchronized (transactions) {
       for (AbstractTransaction transaction : transactions) {
         if (!transaction.equals(cause)) {
           transaction.objectMerged(source, target);
         }
       }
+    }
   }
 
   public int getActiveTransactionCount() {
-    return transactions.size();
+     synchronized (transactions) {
+      return transactions.size();
+     }
   }
 
   protected void transactionClosed(AbstractTransaction transaction) {
-    transactions.remove(transaction);
+     synchronized (transactions) {
+      transactions.remove(transaction);
+     }
   }
 
   /**
@@ -808,7 +810,9 @@ public class RDBMSStorage implements StorageIF {
    * @since 5.4.0
    */
   public Set<AbstractTransaction> getTransactions() {
-    return transactions;
+     synchronized (transactions) {
+      return new HashSet<>(transactions);
+     }
   }
 
   protected Connection getNonTransactionalReadConnection() {
@@ -962,15 +966,19 @@ public class RDBMSStorage implements StorageIF {
     @Override public Map<Long, CacheMetricsIF> getTopicIFgetRolesByType2QueryCacheMetrics()                { return getQueryCacheMetrics("TopicIF.getRolesByType2"); }
 
     // clustering
-    @Override public String getClusterName()           { return cluster == null ? null : ((JGroupsCluster) cluster).clusterId; }
-    @Override public String getClusterState()          { return cluster == null ? null : ((JGroupsCluster) cluster).getState(); }
-    @Override public long getClusterReceivedBytes()    { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedBytes(); }
-    @Override public long getClusterReceivedMessages() { return cluster == null ? -1 : ((JGroupsCluster) cluster).getReceivedMessages(); }
-    @Override public long getClusterSentBytes()        { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentBytes(); }
-    @Override public long getClusterSentMessages()     { return cluster == null ? -1 : ((JGroupsCluster) cluster).getSentMessages(); }
+    @Override public String getClusterName()           { return cluster instanceof InstrumentedClusterIF c ? c.getClusterName() : null; }
+    @Override public String getClusterState()          { return cluster instanceof InstrumentedClusterIF c ? c.getClusterState() : null; }
+    @Override public String getClusterNode()           { return cluster instanceof InstrumentedClusterIF c ? c.getClusterNode() : null; }
+    @Override public long getClusterReceivedBytes()    { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedBytes() : -1; }
+    @Override public long getClusterReceivedMessages() { return cluster instanceof InstrumentedClusterIF c ? c.getClusterReceivedMessages() : -1; }
+    @Override public long getClusterSentBytes()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentBytes() : -1; }
+    @Override public long getClusterSentMessages()     { return cluster instanceof InstrumentedClusterIF c ? c.getClusterSentMessages() : -1; }
+    @Override public long getClusterNodeCount()        { return cluster instanceof InstrumentedClusterIF c ? c.getClusterNodeCount() : -1; }
 
     // access
     @Override public long getAccessCount() { return access_counter; }
+
+    @Override public long getNonTransactionalReadConnectionCount() { return RDBMSStorage.this.getNonTransactionalReadConnectionCount(); }
 
     private Map<Long, CacheMetricsIF> getQueryCacheMetrics(String identifier) {
       return qcmap.entrySet().stream().collect(Collectors.toMap(

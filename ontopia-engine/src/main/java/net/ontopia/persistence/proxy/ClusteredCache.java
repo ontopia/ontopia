@@ -37,7 +37,7 @@ public final class ClusteredCache<K, V> implements CacheIF<K, V> {
   protected int cacheType;
   protected IdentityIF namespace;
   
-  ClusteredCache(Map<K, V> cache, ClusterIF cluster, int cacheType, IdentityIF namespace) {
+  public ClusteredCache(Map<K, V> cache, ClusterIF cluster, int cacheType, IdentityIF namespace) {
     this.cache = cache;
     this.cluster = cluster;
     this.cacheType = cacheType;
