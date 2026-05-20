@@ -242,4 +242,11 @@ public class FakeServletResponse implements HttpServletResponse {
   public Collection<String> getHeaderNames() {
     throw new UnsupportedOperationException();
   }
+
+  // servlet 4.0.0
+
+  @Override
+  public void setContentLengthLong(long len) {
+    // no-op
+  }
 }

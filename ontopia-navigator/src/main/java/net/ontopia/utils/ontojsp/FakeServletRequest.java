@@ -41,6 +41,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -455,5 +456,22 @@ public class FakeServletRequest implements HttpServletRequest {
       }
     }
     return result;
+  }
+
+  // servlet 4.0.0
+
+  @Override
+  public long getContentLengthLong() {
+    return getContentLength();
+  }
+
+  @Override
+  public String changeSessionId() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+    throw new UnsupportedOperationException();
   }
 }
