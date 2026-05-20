@@ -441,7 +441,8 @@
 						<goals><goal>update-project-license</goal></goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<licenseFile>${basedir}/target/generated-sources/license/LICENSE.txt</licenseFile>
+							<licenseFile>${basedir}/target/LICENSE.txt</licenseFile>
+							<generateBundle>true</generateBundle>
 						</configuration>
 					</execution>
 					<execution>
