@@ -22,7 +22,7 @@ package net.ontopia.topicmaps.utils.rdf;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdfxml.xmlinput.ALiteral;
+import org.apache.jena.rdfxml.xmlinput1.ALiteral;
 import org.apache.jena.shared.JenaException;
 
 /**
@@ -38,7 +38,7 @@ public class ALiteralWrapper implements ALiteral {
 
   @Override
   public boolean isWellFormedXML() {
-    return literal.isWellFormedXML();
+    return true;
   }
 
   @Override
@@ -71,4 +71,3 @@ public class ALiteralWrapper implements ALiteral {
   }
 
 }
-
