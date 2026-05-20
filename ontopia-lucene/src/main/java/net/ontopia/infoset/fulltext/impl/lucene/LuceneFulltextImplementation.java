@@ -36,6 +36,7 @@ import net.ontopia.topicmaps.impl.utils.FulltextIndexManager;
 import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -58,7 +59,7 @@ public class LuceneFulltextImplementation implements FulltextImplementationIF {
   private static Logger logger = LoggerFactory.getLogger(LuceneFulltextImplementation.class);
 
   private static final Object READER_LOCK = new Object();
-  private static final Analyzer ANALYZER = new StopAnalyzer();
+  private static final Analyzer ANALYZER = new StopAnalyzer(CharArraySet.EMPTY_SET);
 
   private final WeakHashMap<TopicMapStoreIF, FulltextIndexManager> managers = new WeakHashMap<>();
 
