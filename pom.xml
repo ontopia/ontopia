@@ -339,7 +339,7 @@
 				<plugin>
 					<groupId>io.github.cleydyr</groupId>
 					<artifactId>dart-sass-maven-plugin</artifactId>
-					<version>0.3.0</version>
+					<version>1.5.0</version>
 					<executions>
 						<execution>
 							<id>site-default</id>
@@ -348,6 +348,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<version>1.99.0</version>
 						<quietDeps>true</quietDeps>
 						<inputFolder>${basedir}/../src/sass/</inputFolder>
 						<outputFolder>${basedir}/target/site/</outputFolder>
