@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import net.ontopia.utils.OntopiaRuntimeException;
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -46,7 +45,7 @@ public class PDFFormatModule implements FormatModuleIF {
   @Override
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
-      PDDocument pdoc = PDDocument.load(new BufferedInputStream(new ByteArrayInputStream(cc.getContent())));
+      PDDocument pdoc = Loader.loadPDF(cc.getContent());
       PDFTextStripper stripper = new PDFTextStripper();
       String s = stripper.getText(pdoc);
       pdoc.close();
