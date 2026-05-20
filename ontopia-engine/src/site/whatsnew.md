@@ -11,6 +11,48 @@ more detail.
 
 <span class="version">5.6.0 2025-08-20</p>
 
+### Ontopia 5.7.0 release notes ###
+
+The following changes have been made:
+
+* [PR 543](https://github.com/ontopia/ontopia/pull/543) Refactored URILocator to use Java's URI as backing object, removing the specific and outdated implementation of the URI spec. This also fixes:
+  * [Issue 366](https://github.com/ontopia/ontopia/issues/366) RDFToTopicMapConverter throws MalformedURLException for double byte character
+  * [Issue 414](https://github.com/ontopia/ontopia/issues/414) URLLocator: Spaces in fragments not allowed?
+  * [Issue 289](https://github.com/ontopia/ontopia/issues/289) problem with character + (plus)
+* Fixed missed use of `LocatorIF` in LTM include statments
+* Simplified version and build date parsing
+* Fixed broken sub imports in `LTMTopicmapReader`
+* Refactored clustering support by introducing `ClusterServiceIF`
+* Moved jGroups cluster logic into seperate module
+* Refactored synchronization regarding `RDBMSTopicmapReference` and `RDBMSStorage` reducing unintended locking
+* [Issue 583](https://github.com/ontopia/ontopia/issues/583): Switched to Soft reference values for caches
+* More non-transactional read fixes
+
+#### The following dependencies have been upgraded:
+
+* [PR 584](https://github.com/ontopia/ontopia/pull/584) Restlet to 2.4.4
+* [PR 585](https://github.com/ontopia/ontopia/pull/585) POI to 5.5.1
+* [PR 592](https://github.com/ontopia/ontopia/pull/592) velocity to 2.4.1
+* [PR 593](https://github.com/ontopia/ontopia/pull/593) javax.el-api to 3.0.0
+* [PR 595](https://github.com/ontopia/ontopia/pull/595) commons-collections4 to 4.5.0
+* [PR 599](https://github.com/ontopia/ontopia/pull/599) tagsoup to 1.2.1
+* [PR 601](https://github.com/ontopia/ontopia/pull/601) pdfbox to 3.0.7
+* [PR 603](https://github.com/ontopia/ontopia/pull/603) h2database to 2.4.240
+* [PR 604](https://github.com/ontopia/ontopia/pull/604) commons-codec to 1.22.0
+* [PR 608](https://github.com/ontopia/ontopia/pull/608) opencsv to 2.3
+* [PR 611](https://github.com/ontopia/ontopia/pull/611) lucene to 8.11.4
+* [PR 612](https://github.com/ontopia/ontopia/pull/612) slf4j-reload4j to 2.0.18
+* [PR 614](https://github.com/ontopia/ontopia/pull/614) jgroups to 5.5.5.Final
+* [PR 615](https://github.com/ontopia/ontopia/pull/615) slf4j to 2.0.18
+* [PR 616](https://github.com/ontopia/ontopia/pull/616) javax.servlet.jsp-api to 2.3.3
+* [PR 621](https://github.com/ontopia/ontopia/pull/621) commons-lang3 to 3.20.0
+* [PR 623](https://github.com/ontopia/ontopia/pull/623) prometheus to 1.6.1
+* [PR 624](https://github.com/ontopia/ontopia/pull/624) commons-dbcp2 to 2.14.0
+* [PR 626](https://github.com/ontopia/ontopia/pull/626) jena to 5.6.0
+* [PR 630](https://github.com/ontopia/ontopia/pull/630) javax.servlet-api to 4.0.1
+* [PR 631](https://github.com/ontopia/ontopia/pull/631) commons-io to 2.22.0
+
+
 ### Ontopia 5.6.0 release notes ###
 
 The following changes have been made:
