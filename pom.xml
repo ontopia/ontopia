@@ -287,7 +287,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>license-maven-plugin</artifactId>
-					<version>1.14</version>
+					<version>2.7.1</version>
 					<configuration>
 						<verbose>false</verbose>
 						<licenseName>apache_v2</licenseName>
@@ -442,7 +442,8 @@
 						<goals><goal>update-project-license</goal></goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<licenseFile>${basedir}/target/generated-sources/license/LICENSE.txt</licenseFile>
+							<licenseFile>${basedir}/target/LICENSE.txt</licenseFile>
+							<generateBundle>true</generateBundle>
 						</configuration>
 					</execution>
 					<execution>
