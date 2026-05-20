@@ -396,7 +396,7 @@
 			<!-- disabled default site to allow our own implementation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7</version>
+				<version>3.21.0</version>
 				<configuration>
 					<skip>true</skip>
 					<generateReports>false</generateReports>
