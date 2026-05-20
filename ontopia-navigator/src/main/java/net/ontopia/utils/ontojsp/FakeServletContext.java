@@ -39,6 +39,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
@@ -389,5 +390,47 @@ public class FakeServletContext implements ServletContext {
   @Override
   public void declareRoles(String... roleNames) {
     throw new UnsupportedOperationException();
+  }
+
+  // servlet 4.0.0
+
+  @Override
+  public Dynamic addJspFile(String servletName, String jspFile) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getVirtualServerName() {
+    return null;
+  }
+
+  @Override
+  public int getSessionTimeout() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setSessionTimeout(int sessionTimeout) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getRequestCharacterEncoding() {
+    return null;
+  }
+
+  @Override
+  public void setRequestCharacterEncoding(String encoding) {
+    // no-op
+  }
+
+  @Override
+  public String getResponseCharacterEncoding() {
+    return null;
+  }
+
+  @Override
+  public void setResponseCharacterEncoding(String encoding) {
+    // no-op
   }
 }
