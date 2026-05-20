@@ -19,7 +19,7 @@ package net.ontopia.topicmaps.utils.jtm;
 /**
  * INTERNAL: JSON lexer for topic maps stored in JTM 1.0 notation.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "fallthrough"})
 %%
 
 %class JSONLexer
@@ -34,6 +34,8 @@ package net.ontopia.topicmaps.utils.jtm;
 %int
 
 %function token
+
+%no_suppress_warnings
 
 %{
 
@@ -104,4 +106,3 @@ String          = \"([^\\\"]|(\\[\\\"rntu/]))*\"
 }
 
 .|[^]                    { throw new Error("Illegal character <" + yytext() + "> at line " + getLine() + " column: " + getColumn()); }
-
