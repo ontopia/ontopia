@@ -57,9 +57,9 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdfxml.xmlinput.ALiteral;
-import org.apache.jena.rdfxml.xmlinput.AResource;
-import org.apache.jena.rdfxml.xmlinput.StatementHandler;
+import org.apache.jena.rdfxml.xmlinput1.ALiteral;
+import org.apache.jena.rdfxml.xmlinput1.AResource;
+import org.apache.jena.rdfxml.xmlinput1.StatementHandler;
 
 /**
  * PUBLIC: A topic map writer that can convert topic maps to RDF.  The
