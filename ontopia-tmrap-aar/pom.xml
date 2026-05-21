@@ -37,11 +37,6 @@
 			<version>${axis2.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2-java2wsdl</artifactId>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
