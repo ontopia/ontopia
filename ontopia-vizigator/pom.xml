@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.6.1-SNAPSHOT</version>
+		<version>5.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ontopia-vizigator</artifactId>
@@ -19,10 +19,6 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>ontopia-tmrap</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>graphlayout</groupId>

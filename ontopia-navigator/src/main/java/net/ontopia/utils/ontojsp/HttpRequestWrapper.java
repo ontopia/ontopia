@@ -340,20 +340,20 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.getDispatcherType();
   }
 
-  // servlet 5.0.0, jsp 3.0.0
+  // servlet 4.0.0
 
   @Override
-  public <T extends HttpUpgradeHandler> T upgrade​(Class<T> handlerClass) throws IOException, ServletException {
-    throw new UnsupportedOperationException();
+  public long getContentLengthLong() {
+    return request.getContentLengthLong();
   }
 
   @Override
   public String changeSessionId() {
-    throw new UnsupportedOperationException();
+    return request.changeSessionId();
   }
 
   @Override
-  public long getContentLengthLong() {
-    return request.getContentLength();
+  public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+    return request.upgrade(handlerClass);
   }
 }

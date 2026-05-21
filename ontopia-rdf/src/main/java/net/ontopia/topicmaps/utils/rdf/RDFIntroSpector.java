@@ -31,9 +31,9 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.rdfxml.xmlinput.ALiteral;
-import org.apache.jena.rdfxml.xmlinput.AResource;
-import org.apache.jena.rdfxml.xmlinput.StatementHandler;
+import org.apache.jena.rdfxml.xmlinput1.ALiteral;
+import org.apache.jena.rdfxml.xmlinput1.AResource;
+import org.apache.jena.rdfxml.xmlinput1.StatementHandler;
 
 /**
  * INTERNAL: Used by the RDF2TM plugin.

@@ -5,7 +5,7 @@
 	<groupId>net.ontopia</groupId>
 	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>5.6.1-SNAPSHOT</version>
+	<version>5.7.1-SNAPSHOT</version>
 
 	<name>Ontopia</name>
 	<description>Ontopia: Complete Topic Maps solution</description>
@@ -93,15 +93,15 @@
 		<jtm.revision>46</jtm.revision>
 		<tmxml.revision>68</tmxml.revision>
 		<!-- reused dependency versions -->
-		<lucene.version>7.1.0</lucene.version>
+		<lucene.version>8.11.4</lucene.version>
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
 		<axis2.version>1.6.4</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
-		<jena.version>4.10.0</jena.version>
+		<jena.version>5.6.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
-		<poi.version>5.4.0</poi.version>
+		<poi.version>5.5.1</poi.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -117,7 +117,7 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.8</version>
+					<version>3.2.0</version>
 					<executions>
 						<execution>
 							<goals>
@@ -128,18 +128,18 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.5.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.0</version>
+					<version>3.5.1</version>
 					<configuration>
 						<packagingExcludes>WEB-INF/classes/org/apache/jsp/**</packagingExcludes>
 					</configuration>
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.5.3</version>
+					<version>3.5.5</version>
 					<configuration>
 						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m</argLine>
 						<includes>
@@ -165,7 +165,7 @@
 				<plugin>
 					<groupId>de.jflex</groupId>
 					<artifactId>jflex-maven-plugin</artifactId>
-					<version>1.6.1</version>
+					<version>1.9.1</version>
 					<executions>
 						<execution>
 							<goals>
@@ -176,7 +176,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.7.0</version>
+					<version>3.15.0</version>
 					<configuration>
 						<fork>true</fork>
 						<maxmem>512m</maxmem>
@@ -207,17 +207,17 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.7.1</version>
+					<version>3.8.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<version>1.6.0</version>
+					<version>3.6.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.11.2</version>
+					<version>3.12.0</version>
 					<configuration>
 						<outputDirectory>${project.build.directory}/site/</outputDirectory>
 						<author>true</author>
@@ -261,7 +261,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.4.0</version>
 					<configuration>
 						<excludes>
 							<exclude>**/org/apache/jsp/**</exclude>
@@ -273,7 +273,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>license-maven-plugin</artifactId>
-					<version>1.14</version>
+					<version>2.7.1</version>
 					<configuration>
 						<verbose>false</verbose>
 						<licenseName>apache_v2</licenseName>
@@ -295,12 +295,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5.2</version>
+					<version>3.1.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-patch-plugin</artifactId>
-					<version>1.2</version>
+					<version>1.3</version>
 				</plugin>
 				<plugin>
 					<groupId>net.ontopia</groupId>
@@ -325,7 +325,7 @@
 				<plugin>
 					<groupId>io.github.cleydyr</groupId>
 					<artifactId>dart-sass-maven-plugin</artifactId>
-					<version>0.3.0</version>
+					<version>1.5.0</version>
 					<executions>
 						<execution>
 							<id>site-default</id>
@@ -334,6 +334,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<version>1.99.0</version>
 						<quietDeps>true</quietDeps>
 						<inputFolder>${basedir}/../src/sass/</inputFolder>
 						<outputFolder>${basedir}/target/site/</outputFolder>
@@ -342,7 +343,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
-					<version>3.2.7</version>
+					<version>3.2.8</version>
 					<configuration>
 						<!-- Prevent gpg from using pinentry programs -->
 						<gpgArguments>
@@ -354,7 +355,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.3.1</version>
 					<configuration>
 						<releaseProfiles>release,ontopia-distribution-tomcat</releaseProfiles>
 						<tagNameFormat>release-@{project.version}</tagNameFormat>
@@ -369,7 +370,7 @@
 				<plugin>
 					<groupId>org.sonatype.central</groupId>
 					<artifactId>central-publishing-maven-plugin</artifactId>
-					<version>0.8.0</version>
+					<version>0.10.0</version>
 					<extensions>true</extensions>
 					<configuration>
 						<publishingServerId>ossrh</publishingServerId>
@@ -381,7 +382,7 @@
 			<!-- disabled default site to allow our own implementation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7</version>
+				<version>3.21.0</version>
 				<configuration>
 					<skip>true</skip>
 					<generateReports>false</generateReports>
@@ -427,7 +428,8 @@
 						<goals><goal>update-project-license</goal></goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<licenseFile>${basedir}/target/generated-sources/license/LICENSE.txt</licenseFile>
+							<licenseFile>${basedir}/target/LICENSE.txt</licenseFile>
+							<generateBundle>true</generateBundle>
 						</configuration>
 					</execution>
 					<execution>
@@ -479,7 +481,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-dbcp2</artifactId>
-				<version>2.13.0</version>
+				<version>2.14.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-beanutils</groupId>
@@ -489,23 +491,23 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
-				<version>4.1</version>
+				<version>4.5.0</version>
 			</dependency>
 			<dependency>
 				<!-- might be removable for java 8 -->
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.10</version>
+				<version>1.22.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.18.0</version>
+				<version>3.20.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.14.0</version>
+				<version>2.22.0</version>
 			</dependency>
 			<dependency>
 				<groupId>urbanophile</groupId>
@@ -515,7 +517,7 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.7.36</version>
+				<version>2.0.18</version>
 			</dependency>
 			<dependency>
 				<groupId>antlr</groupId>
@@ -547,7 +549,7 @@
 			<dependency>
 				<groupId>org.jgroups</groupId>
 				<artifactId>jgroups</artifactId>
-				<version>5.5.1.Final</version>
+				<version>5.5.5.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
@@ -577,12 +579,12 @@
 			<dependency>
 				<groupId>org.apache.velocity</groupId>
 				<artifactId>velocity-engine-core</artifactId>
-				<version>2.3</version>
+				<version>2.4.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.opencsv</groupId>
 				<artifactId>opencsv</artifactId>
-				<version>1.8</version>
+				<version>2.3</version>
 			</dependency>
 			<dependency>
 				<groupId>graphlayout</groupId>
@@ -607,12 +609,12 @@
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
-				<version>2.0.24</version>
+				<version>3.0.7</version>
 			</dependency>
 			<dependency>
 				<groupId>org.ccil.cowan.tagsoup</groupId>
 				<artifactId>tagsoup</artifactId>
-				<version>1.2</version>
+				<version>1.2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -681,19 +683,19 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>2.3.232</version>
+				<version>2.4.240</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-reload4j</artifactId>
-				<version>1.7.36</version>
+				<version>2.0.18</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.13.1</version>
+				<version>4.13.2</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -726,7 +728,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.13</version>
+						<version>0.8.14</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
@@ -765,7 +767,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>3.0.0</version>
+						<version>3.6.1</version>
 						<executions>
 							<execution>
 								<id>current-year</id>
@@ -809,7 +811,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.2.1</version>
+						<version>3.4.0</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -822,7 +824,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.11.2</version>
+						<version>3.12.0</version>
 						<configuration>
 							<failOnError>false</failOnError>
 						</configuration>
@@ -838,7 +840,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.2.7</version>
+						<version>3.2.8</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>

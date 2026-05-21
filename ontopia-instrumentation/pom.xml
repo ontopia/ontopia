@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.6.1-SNAPSHOT</version>
+		<version>5.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ontopia-instrumentation</artifactId>
@@ -15,7 +15,7 @@
 	<description>Ontopia metrics for prometheus</description>
 
 	<properties>
-		<prometheus.version>1.3.6</prometheus.version>
+		<prometheus.version>1.6.1</prometheus.version>
 	</properties>
 
 	<dependencies>

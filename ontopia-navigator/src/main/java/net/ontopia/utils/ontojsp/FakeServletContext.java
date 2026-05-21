@@ -392,36 +392,16 @@ public class FakeServletContext implements ServletContext {
     throw new UnsupportedOperationException();
   }
 
-  // servlet 5.0.0, jsp 3.0.0
+  // servlet 4.0.0
 
   @Override
-  public void setResponseCharacterEncoding(String enc) {
-    // no=op
-  }
-
-  @Override
-  public String getResponseCharacterEncoding() {
-    return null;
-  }
-
-  @Override
-  public void setRequestCharacterEncoding(String enc) {
-    // no=op
-  }
-
-  @Override
-  public String getRequestCharacterEncoding() {
-    return null;
+  public Dynamic addJspFile(String servletName, String jspFile) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public String getVirtualServerName() {
     return null;
-  }
-
-  @Override
-  public Dynamic addJspFile(String servletName, String jspFile) {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -432,5 +412,25 @@ public class FakeServletContext implements ServletContext {
   @Override
   public void setSessionTimeout(int sessionTimeout) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getRequestCharacterEncoding() {
+    return null;
+  }
+
+  @Override
+  public void setRequestCharacterEncoding(String encoding) {
+    // no-op
+  }
+
+  @Override
+  public String getResponseCharacterEncoding() {
+    return null;
+  }
+
+  @Override
+  public void setResponseCharacterEncoding(String encoding) {
+    // no-op
   }
 }

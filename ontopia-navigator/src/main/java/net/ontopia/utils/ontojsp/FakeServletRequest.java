@@ -438,11 +438,11 @@ public class FakeServletRequest implements HttpServletRequest {
     throw new UnsupportedOperationException();
   }  
 
-  // servlet 5.0.0, jsp 3.0.0
+  // servlet 4.0.0
 
   @Override
-  public <T extends HttpUpgradeHandler> T upgrade​(Class<T> handlerClass) throws IOException, ServletException {
-    throw new UnsupportedOperationException();
+  public long getContentLengthLong() {
+    return getContentLength();
   }
 
   @Override
@@ -451,7 +451,7 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public long getContentLengthLong() {
+  public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
     throw new UnsupportedOperationException();
   }
 

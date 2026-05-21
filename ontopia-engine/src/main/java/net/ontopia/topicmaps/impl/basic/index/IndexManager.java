@@ -22,7 +22,6 @@ package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.Collection;
 import java.util.Map;
-import net.ontopia.topicmaps.core.TransactionNotActiveException;
 import net.ontopia.topicmaps.core.index.IdentifierIndexIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 import net.ontopia.topicmaps.impl.basic.SubjectIdentityCache;
@@ -65,11 +64,6 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
     
   @Override
   public IndexIF getIndex(String name) {
-    // Check to see if transaction is active.
-    if (!transaction.isActive()) {
-      throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
-    }
-
     // Create index
     IndexIF ix = indexes.get(name);
     if (ix == null) {

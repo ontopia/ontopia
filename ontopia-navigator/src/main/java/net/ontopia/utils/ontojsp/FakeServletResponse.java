@@ -243,10 +243,10 @@ public class FakeServletResponse implements HttpServletResponse {
     throw new UnsupportedOperationException();
   }
 
-  // servlet 5.0.0, jsp 3.0.0
+  // servlet 4.0.0
 
   @Override
-  public void setContentLengthLong(long length) {
+  public void setContentLengthLong(long len) {
     // no-op
   }
 }

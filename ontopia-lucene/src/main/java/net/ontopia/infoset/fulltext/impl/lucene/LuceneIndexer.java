@@ -55,7 +55,7 @@ public class LuceneIndexer implements IndexerIF {
    * INTERNAL: Returns the number of documents stored in the index.
    */
   public synchronized int getDocs() throws IOException {
-    return writer.numDocs();
+    return writer.getDocStats().numDocs;
   }
   
   @Override

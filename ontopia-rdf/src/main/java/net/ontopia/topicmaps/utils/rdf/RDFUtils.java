@@ -26,8 +26,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import net.ontopia.utils.OntopiaRuntimeException;
-import org.apache.jena.rdfxml.xmlinput.ARP;
-import org.apache.jena.rdfxml.xmlinput.StatementHandler;
+import org.apache.jena.rdfxml.xmlinput1.ARP;
+import org.apache.jena.rdfxml.xmlinput1.StatementHandler;
 
 /**
  * INTERNAL: Various utilities for working with RDF.

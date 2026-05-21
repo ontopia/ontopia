@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.6.1-SNAPSHOT</version>
+		<version>5.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ontopia-tmrap-aar</artifactId>
@@ -39,11 +39,6 @@
 			<groupId>org.apache.axis2</groupId>
 			<artifactId>axis2-adb</artifactId>
 			<version>${axis2.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2-java2wsdl</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

@@ -69,17 +69,11 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
 
   @Override
   public IndexManagerIF getIndexManager() {
-    if (!isActive()) {
-      throw new TransactionNotActiveException();
-    }
     return imanager;
   }
 
   @Override
   public TopicMapIF getTopicMap() {
-    if (!isActive()) {
-      throw new TransactionNotActiveException();
-    }
     return topicmap;
   }
 
