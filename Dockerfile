@@ -47,7 +47,7 @@ COPY $SRC/server.xml $CATALINA_HOME/conf
 # add h2 database as source
 COPY $SRC/tm-sources.xml $ONTOPIA_DIST
 COPY $SRC/h2.properties $ONTOPIA_DIST
-ADD https://repo1.maven.org/maven2/com/h2database/h2/2.1.214/h2-2.1.214.jar $CATALINA_HOME/lib
+ADD https://repo1.maven.org/maven2/com/h2database/h2/2.4.240/h2-2.4.240.jar $CATALINA_HOME/lib
 COPY $SRC/ontopia.mv.db $ONTOPIA_DIST
 
 # --- tweak the startup to allow for empty volume to be polulated with topicmaps
