@@ -77,7 +77,6 @@
 		<module>webapp-manage</module>
 		<module>webapp-omnigator</module>
 		<module>webapp-ontopoly</module>
-		<module>webapp-ontopoly-standalone</module>
 		<module>webapp-tmrap</module>
 
 		<!-- Distribution -->
