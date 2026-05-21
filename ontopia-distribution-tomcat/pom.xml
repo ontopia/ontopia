@@ -151,7 +151,7 @@
 	</dependencies>
 
 	<properties>
-		<tomcat.version>10.0.8</tomcat.version>
+		<tomcat.version>10.1.55</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${project.build.directory}/rdbms/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
