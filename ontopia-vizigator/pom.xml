@@ -50,24 +50,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>default</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<appendAssemblyId>true</appendAssemblyId>
-							<descriptors>
-								<descriptor>src/main/assembly/vizlet.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
