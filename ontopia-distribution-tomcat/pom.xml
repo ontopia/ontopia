@@ -117,6 +117,10 @@
 
 		<!-- Webapp dependencies -->
 		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-deprecated-utils</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
