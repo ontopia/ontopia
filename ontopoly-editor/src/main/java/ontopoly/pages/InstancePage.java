@@ -44,7 +44,6 @@ import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TopicDropDownChoice;
 import ontopoly.components.TopicTypesFunctionBoxPanel;
 import ontopoly.components.ViewsFunctionBoxPanel;
-import ontopoly.components.VizigatorLinkFunctionBoxPanel;
 import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
@@ -441,17 +440,6 @@ public class InstancePage extends OntopolyAbstractPage {
           }          
         });
         
-        list.add(new VizigatorLinkFunctionBoxPanel(id) {
-          @Override
-          protected String getTopicMapId() {
-            return getTopicMapModel().getTopicMap().getId();
-          }
-          @Override
-          protected String getTopicId() {
-            Topic tt = getTopicModel().getTopic();
-            return tt.getId();
-          }          
-        });
         return list;
       }
 

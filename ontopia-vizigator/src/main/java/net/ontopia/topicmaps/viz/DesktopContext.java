@@ -42,16 +42,6 @@ public class DesktopContext extends ApplicationContext {
   }
 
   @Override
-  public boolean isApplet() {
-    return false;
-  }
-
-  @Override
-  public void openPropertiesURL(String aUrl) {
-    // Not supported on Desktop mode.
-  }
-
-  @Override
   public void setStartTopic(TopicIF aTopic) {
     getTmConfig().setStartTopic(aTopic);
     desktop.resetStartTopicMenu();

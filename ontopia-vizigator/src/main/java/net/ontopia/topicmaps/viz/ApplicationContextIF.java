@@ -59,27 +59,11 @@ public interface ApplicationContextIF {
   int getDefaultLocality();
 
   /**
-   * Is this an applet?
-   * 
-   * @return boolean indicating if this context is an applet
-   */
-  boolean isApplet();
-
-  /**
    * Set the focus of the map to the specified topic
    * 
    * @param aTopic Topic to set as the central focus
    */
   void goToTopic(TopicIF aTopic);
-
-  /**
-   * Opens the supplied url string in a browser window. Which window
-   * is used is defined by the 'propTarget' applet parameter.  Does
-   * nothing for non applet context.
-   * 
-   * @param aUrl String representing the target url
-   */
-  void openPropertiesURL(String aUrl);
 
   /**
    * Assign the starting topic of the map to display.

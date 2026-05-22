@@ -20,8 +20,6 @@
 
 package net.ontopia.topicmaps.viz;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -75,18 +73,6 @@ public class PropertiesPanel extends JScrollPane {
         TreeSelectionModel.SINGLE_TREE_SELECTION);
 
     popup = new JPopupMenu();
-    goToMenuItem = new JMenuItem(Messages.getString("Viz.PopupGoTo"));
-    goToMenuItem.setEnabled(controller.isApplet());
-    goToMenuItem.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent anEvent) {
-
-        controller.openPropertiesURL(anEvent.getActionCommand());
-      }
-    });
-
-    popup.add(goToMenuItem);
 
     tree.addMouseListener(new MouseInputAdapter() {
       @Override
