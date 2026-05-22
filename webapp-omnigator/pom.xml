@@ -59,17 +59,6 @@
 			<artifactId>slf4j-reload4j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
-		<!-- 
-			vizlet jar 
-			does NOT overwrite navigator completely due to size stripping in assembly
-		-->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>ontopia-vizigator</artifactId>
-			<version>${project.version}</version>
-			<classifier>vizlet</classifier>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -148,33 +137,7 @@
           </execution>
         </executions>
       </plugin>      
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.10.0</version>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>ontopia-vizigator</artifactId>
-									<version>${project.version}</version>
-									<classifier>vizlet</classifier>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}/plugins/viz</outputDirectory>
-									<destFileName>ontopia-vizlet.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    </plugins>
+  </build>
 
 </project>
