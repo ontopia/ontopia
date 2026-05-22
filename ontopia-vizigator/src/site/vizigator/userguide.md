@@ -6,20 +6,20 @@ User's Guide
 
 <p class="introduction">
 This document introduces the reader to Vizigator. It provides guidance on the use of Vizigator to:
-<ul> 
-<li>visualize and navigate topic maps;</li> 
-<li>customize the visualization characteristics of a topic map for an application; and</li> 
-<li>embed a visualization window in web applications built using Ontopia.</li> 
+<ul>
+<li>visualize and navigate topic maps;</li>
+<li>customize the visualization characteristics of a topic map for an application; and</li>
+<li>embed a visualization window in web applications built using Ontopia.</li>
 </ul>
 </p>
 
 <p class="introduction">
 Reading this document assumes some basic knowledge about topic maps. If you are not familiar with
-topic maps, try reading one of the simple introductions, such as 
-<a href="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of Topic Maps</a>, available 
-from the Ontopia web site. If you are technically minded, you might also want to look at the 
-<a href="http://www.topicmaps.org/xtm/1.0/">XTM Specification</a> or the latest drafts of the new 
-version of ISO 13250, especially the 
+topic maps, try reading one of the simple introductions, such as
+<a href="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of Topic Maps</a>, available
+from the Ontopia web site. If you are technically minded, you might also want to look at the
+<a href="http://www.topicmaps.org/xtm/1.0/">XTM Specification</a> or the latest drafts of the new
+version of ISO 13250, especially the
 <a href="http://www.isotopicmaps.org/sam/sam-model/">Data Model</a>.
 </p>
 
@@ -58,17 +58,17 @@ Vizigator consists of three components which are related/dependent on each other
     VizDesktop can be used without any other Ontopia browsing environment. However, it is primarily a
     configuration tool for application designers to determine whether and/or how various topic types and
     associations will be graphically displayed. This is the entry point to the entire Ontopia Vizigator.
-    To get started, see 
+    To get started, see
     [VizDesktop - Getting started with Vizigator](#vizdesktop-getting-started-with-vizigator)
 *  **VizLet** - reusable applet component
 
     All of the visualization capability of VizDesktop, but without the configuration toolkit, VizLet can
-    be used within other web applications. To bring topic map visualization to any web site, see 
+    be used within other web applications. To bring topic map visualization to any web site, see
     [VizLet - Vizigating in web applications](#vizlet-vizigating-in-web-applications)
 *  **VizPlugin** - Omnigator plug-in
 
     Based on VizLet, VizPlugin can be used to visualize any topic currently under view in Omnigator. To
-    find out more about navigating visually in Omnigator, see 
+    find out more about navigating visually in Omnigator, see
     [VizPlugin - Vizigating in Omnigator](#vizplugin-vizigating-in-omnigator)
 
 Vizigator uses TouchGraph, an open source toolkit for graph visualization, which is maintained as a
@@ -102,12 +102,12 @@ designate their use (see [Starting VizDesktop](#starting-vizdesktop) and [Using 
 application](#using-vizlet-in-a-web-application)). Additional languages will be added over
 time.
 
-| Language | Code | Translation Acknowledgements | 
+| Language | Code | Translation Acknowledgements |
 |---|---|---|
-| English | en | &dash; | 
-| Japanese | ja | Thank you to Motomu Naito, CEO of partner [Knowledge Synergy](http://www.knowledge-synergy.com/), Inc., Japan  | 
-| German | de | Thank you to Ingo Schönfeld, Knowledge Engineer at ATLAS Elektronik GmbH, Germany | 
-| Norwegian | no | &dash; | 
+| English | en | &dash; |
+| Japanese | ja | Thank you to Motomu Naito, CEO of partner [Knowledge Synergy](http://www.knowledge-synergy.com/), Inc., Japan  |
+| German | de | Thank you to Ingo Schönfeld, Knowledge Engineer at ATLAS Elektronik GmbH, Germany |
+| Norwegian | no | &dash; |
 
 > **Note**
 > Users interested in translating the interface to an unsupported language should contact the
@@ -170,9 +170,9 @@ Conventions for visualization of topic map constructs are as follows:
     expand._
     *  use an unscoped name (randomly selected if more than 1),
     *  else, use a scoped name (randomly selected if more than 1).
-    > **Note** Very long topic names will be shortened algorithmically to aid visualization. 
-	> Shortened names will end in '...' and holding the mouse over the node will cause the name to 
-	> expand.	
+    > **Note** Very long topic names will be shortened algorithmically to aid visualization.
+	> Shortened names will end in '...' and holding the mouse over the node will cause the name to
+	> expand.
 *  **Topic Types** are distinguishable based on the shape, color, and other style characteristics
     applied to the node. The name of the type is available on the Properties box.
 *  **Associations** between topics are shown as edges (lines). Association types are distinguishable
@@ -184,7 +184,7 @@ Conventions for visualization of topic map constructs are as follows:
     Scoping](#association-scoping)).
 *  **Occurrences**, grouped by type, are viewable via the Properties box. _It is not possible to
     navigate to the occurrences in VizDesktop, only in VizLet and VizPlugin._
-    > **Note** It is not possible to navigate to the occurrences in VizDesktop, only in VizLet and 
+    > **Note** It is not possible to navigate to the occurrences in VizDesktop, only in VizLet and
     > VizPlugin.
 
 If no predefined configuration is associated with a topic map, each type of topic and each type of
@@ -231,7 +231,7 @@ Topic View
     double clicking on a topic or by defining or using a *Start Topic*. If in Map View at the time a
     Focus Node is chosen, the display changes to Topic View; if in Topic View, the display refocuses on
     the new Focus Node.
-    > **Note** The Focus Node is identified visually by a deep yellow color. Use of this color in a 
+    > **Note** The Focus Node is identified visually by a deep yellow color. Use of this color in a
     > configuration should be avoided.
     *  **Start Topic**. The node that is focused when the topic map is opened (if there is a pre-defined
    configuration that includes a Start Topic). Topic View is initiated when a topic is designated as
@@ -296,8 +296,8 @@ display through use of the check box.
 The main menu bar consists of the following menu items:
 
 *  **File** - menu choices include loading a topic map into the viewer, saving a configuration, and
-   specifying an RDF mapping file. 
-   
+   specifying an RDF mapping file.
+
     > **Note** When vizigating a topic map view of an RDF file, Vizigator looks
     > for an RDF mapping file. The default file is `mapping.rdff` and is located in
     > ``$TOMCAT_HOME\webapps\omnigator\WEB-INF\topicmaps`` (the default location for the mapping file used by
@@ -667,7 +667,7 @@ The following differences apply to VizLet compared to VizDesktop:
 VizLet can be added to a web page by adding the following HTML to the page:
 
 ````application/x-jsp
-  <applet width="800" height="800" alt="Ontopia vizlet" 
+  <applet width="800" height="800" alt="Ontopia vizlet"
           code="net.ontopia.topicmaps.viz.Vizlet.class"
           archive="ontopia-vizlet.jar">
     <param name="baseuri"  value="omnigator/plugins/viz/"/>
@@ -820,26 +820,26 @@ Menu items that are not mentioned in the file will be displayed (and if the para
 all items are displayed). The list of menu choice names is:
 
 |---|---|
-| expand.node | Expand node | 
-| collapse.node | Collapse node | 
-| hide.node | Hide node | 
-| hide.edge | Hide edge | 
-| sticky | Sticky | 
-| properties | Properties | 
-| set.start.topic | Set start topic | 
-| copy.name | Copy name | 
-| go.to.topic.page | Go to topic page | 
-| show.search.bar | Show search bar | 
-| toggle.controls | Toggle controls | 
-| set.all.nodes.sticky | Set all nodes sticky | 
-| set.all.nodes.unsticky | Set all nodes unsticky | 
-| stop.moving.nodes | Stop moving nodes | 
-| enable.motion.killer | Start/stop motion reduction | 
-| undo | Undo | 
-| redo | Redo | 
-| enable.neighbour.circle | Enable neighbour circle | 
-| topic.styles | Topic type configuration | 
-| association.styles | Association type configuration | 
+| expand.node | Expand node |
+| collapse.node | Collapse node |
+| hide.node | Hide node |
+| hide.edge | Hide edge |
+| sticky | Sticky |
+| properties | Properties |
+| set.start.topic | Set start topic |
+| copy.name | Copy name |
+| go.to.topic.page | Go to topic page |
+| show.search.bar | Show search bar |
+| toggle.controls | Toggle controls |
+| set.all.nodes.sticky | Set all nodes sticky |
+| set.all.nodes.unsticky | Set all nodes unsticky |
+| stop.moving.nodes | Stop moving nodes |
+| enable.motion.killer | Start/stop motion reduction |
+| undo | Undo |
+| redo | Redo |
+| enable.neighbour.circle | Enable neighbour circle |
+| topic.styles | Topic type configuration |
+| association.styles | Association type configuration |
 
 #### The "Copy name" operation ####
 
@@ -884,5 +884,3 @@ choose the additional menu item available , *Go to Topic Page*.
 VizPlugin will work for any topic map, regardless of whether a configuration has been created for it
 or not, but results are more likely to be more consistent if a configuration
 exists.
-
-
