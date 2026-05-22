@@ -12,7 +12,7 @@ functional blocks, represented by maven sub modules, as listed below.
 
 #### Usage ####
 
-You can use one of the modules as a dependency in your project by including the following snippet in 
+You can use one of the modules as a dependency in your project by including the following snippet in
 your POM:
 
 ````xml
@@ -65,14 +65,8 @@ your POM:
 `ontopia-tmprefs`
 :    Contains code that allows a Topic Map to serve as Java Preferences API store.
 
-`ontopia-tmrap`
-:    Contains the core functionality of the [TMRAP protocol](tmrap/dev-guide.html).
-
-`ontopia-tmrap-aar`
-:    The TMRAP code packaged as an Apache Axis archive (AAR).
-
 `ontopia-vizigator`
-:    Contains the core code of the [Vizigator](vizigator/userguide.html) and Vizlet.
+:    Contains the core code of the [Vizigator](vizigator/userguide.html).
 
 `ontopoly-editor`
 :    Contains the core code of the [Ontopoly Topic Maps editor](ontopoly/user-guide.html).
@@ -98,10 +92,5 @@ your POM:
 `webapp-root`
 :    The distribution start page.
 
-`webapp-tmrap`
-:    Exposes the TMRAP protocol as a webapplication.
-
 `webapp-xmltools`
 :    An example application used in the [navigator developer's guide](navigator/navguide.html).
-
-

@@ -87,9 +87,7 @@ Creating and editing topic maps via Vizigator is not supported at this time.
 
 Vizigator has internationalization support for translating the user interface into any language. The
 following table lists the currently supported languages and the codes that should be used to
-designate their use (see [Starting VizDesktop](#starting-vizdesktop) and [Using VizLet in a web
-application](#using-vizlet-in-a-web-application)). Additional languages will be added over
-time.
+designate their use (see [Starting VizDesktop](#starting-vizdesktop). Additional languages will be added over time.
 
 | Language | Code | Translation Acknowledgements |
 |---|---|---|
@@ -104,10 +102,7 @@ time.
 
 ### VizDesktop - Getting started with Vizigator ###
 
-VizDesktop provides:
-
-*  a simple graphical topic map browser;
-*  tools to configure views for Omnigator (VizPlugin) or your own application (VizLet).
+VizDesktop provides a simple graphical topic map browser.
 
 > **Note**
 > The VizDesktop application is developed using the GUI toolkit (Java Foundation Classes(JFC)/Swing)
@@ -171,10 +166,6 @@ Conventions for visualization of topic map constructs are as follows:
     By default, all associations in all scopes are displayed. It is possible to filter associations by
     scope using the *Association Scoping* menu item (see [Association
     Scoping](#association-scoping)).
-*  **Occurrences**, grouped by type, are viewable via the Properties box. _It is not possible to
-    navigate to the occurrences in VizDesktop, only in VizLet and VizPlugin._
-    > **Note** It is not possible to navigate to the occurrences in VizDesktop, only in VizLet and
-    > VizPlugin.
 
 If no predefined configuration is associated with a topic map, each type of topic and each type of
 association is automatically and randomly assigned a color each time the topic map is opened. These
@@ -232,9 +223,6 @@ Topic View
 When initially loading a topic map, dialog boxes allow the user to choose a Focus Node, to proceed
 with modelling a Map View, or to cancel the loading. From a Topic View, Map View can be can be
 restored via the `View\Map View` menu item.
-
-VizLet (and VizPlugin) and VizDesktop behave the same way, with the exception that VizLet always
-operates in topic view.
 
 ##### Screen Layout #####
 

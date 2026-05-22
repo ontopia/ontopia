@@ -10,7 +10,7 @@ is familiar with the basics of the host platform and of Java development. See th
 this release?* document for information about this release.
 </p>
 
-<span class="version">5.5.0 2025-04-17</p>
+<span class="version">5.8.0 2026-05-22</p>
 
 ### Requirements ###
 
@@ -18,7 +18,7 @@ The most important requirement is that you must have the Java Software Developme
 version 11 or newer. There should be no platform dependencies in the code, so the software should
 run on all operating systems for which there is a supported JDK available.
 
-We have verified that the Navigator Framework runs in Tomcat version 9. It is quite likely 
+We have verified that the Navigator Framework runs in Tomcat version 9. It is quite likely
 that the framework also works in other application servers than these, but this has not been verified.
 
 The RDBMS backend has been verified to work with Oracle 8.1.7, 9i, and 10g, PostgreSQL 8.1, 8.2 and
@@ -32,7 +32,6 @@ Ontopia has the following components:
     *  Full-text Integration
     *  Query Engine
 *  The Ontopia Navigator Framework
-    *  TMRAP
 *  The Ontopia Web Editor Framework
 *  The Ontopia Vizigator
 *  DB2TM
@@ -321,11 +320,6 @@ directory.
 *  DB2TM:
     1.  `opencsv.jar`, version 1.8, ([opencsv](http://opencsv.sourceforge.net/))
 
-*  TMRAP (AXIS+SOAP support):
-    1.  Ontopia uses AXIS2 version 1.2, ([Apache Web Services - Axis](http://ws.apache.org/axis/)), to
-       provide support for SOAP. The jar files used can be found in
-       `${basedir}/apache-tomcat/webapps/tmrap/WEB-INF/lib`.
-
 *  RDBMS Backend Connector:
     1.  `commons-pool.jar`, version 1.3, ([Apache Commons Pool](http://commons.apache.org/pool/))
     2.  `commons-dbcp.jar`, version 1.2.2, ([Apache Commons DBCP](http://commons.apache.org/dbcp/))
@@ -376,5 +370,3 @@ installed Java.
 On Windows 95/98/ME you can also edit the `AUTOEXEC.BAT` file in the root directory of your startup
 drive (usually `C:`) and insert a line like the following into it: `set JAVA_HOME=c:\path\to\java`.
 You will then need to reboot your computer before the change takes effect.
-
-

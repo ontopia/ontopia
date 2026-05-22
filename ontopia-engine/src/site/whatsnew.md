@@ -9,7 +9,19 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.7.0 2026-05-20</p>
+<span class="version">5.8.0 2026-05-22 TBD</p>
+
+### Ontopia 5.8.0 release notes ###
+
+The following changes have been made:
+
+* Vizlet was removed as Java Applets have been discontinued for a while
+* TMRAP was removed as SOAP has been a deprecated technology for a while, this includes:
+  * The `ontopia-tmrap` module
+  * The `ontopia-tmrap-aar` module
+  * The `webapp-tmrap` webapplication
+  * The Omnigator and Ontology plugins
+
 
 ### Ontopia 5.7.0 release notes ###
 

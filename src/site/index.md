@@ -48,10 +48,6 @@ Documentation
 
 * [DB2TM, User's Guide](db2tm/user-guide.html)
 
-### TMRAP ###
-
-* [TMRAP, Developer's Guide](tmrap/dev-guide.html)
-
 ### Automated classification ###
 
 * [Automatic Classification, Developer's Guide](classify/dev-guide.html)
