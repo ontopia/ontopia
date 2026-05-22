@@ -52,11 +52,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-tmrap</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>ontopia-rdf</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
@@ -119,12 +114,6 @@
 			<version>${project.parent.version}</version>
 			<type>war</type>
 		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>webapp-tmrap</artifactId>
-			<version>${project.parent.version}</version>
-			<type>war</type>
-		</dependency>
 
 		<!-- Webapp dependencies -->
 		<dependency>
@@ -139,12 +128,6 @@
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-vizigator</artifactId>
-			<version>${project.parent.version}</version>
-			<classifier>vizlet</classifier>
 		</dependency>
 	</dependencies>
 

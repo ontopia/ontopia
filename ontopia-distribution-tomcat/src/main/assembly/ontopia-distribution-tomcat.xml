@@ -91,18 +91,8 @@
 			<useProjectArtifact>false</useProjectArtifact>
 			<excludes>
 				<exclude>*:war:*</exclude>
-				<exclude>*:vizlet:*</exclude>
 				<exclude>*:standard:*</exclude>
 			</excludes>
-		</dependencySet>
-		
-		<dependencySet>
-			<outputDirectory>extras</outputDirectory>
-			<useProjectArtifact>false</useProjectArtifact>
-			<includes>
-				<include>*:vizlet:*</include>
-			</includes>
-			<outputFileNameMapping>ontopia-vizlet-${version}.jar</outputFileNameMapping>
 		</dependencySet>
 		
 		<!-- add ROOT webapp -->
@@ -213,45 +203,6 @@
 			</unpackOptions>
 		</dependencySet>
 		
-		<!-- add tmrap -->
-		<dependencySet>
-			<includes><include>*:webapp-tmrap:war</include></includes>
-			<outputDirectory>apache-tomcat/webapps/tmrap</outputDirectory>
-			<useProjectArtifact>false</useProjectArtifact>
-			<unpack>true</unpack>
-			<unpackOptions>
-				<excludes>
-					<exclude>META-INF/**</exclude>
-					<!-- exclude all shared ontopia jar's -->
-					<exclude>WEB-INF/lib/antlr*</exclude>
-					<exclude>WEB-INF/lib/commons-collections*</exclude>
-					<exclude>WEB-INF/lib/commons-dbcp*</exclude>
-					<exclude>WEB-INF/lib/commons-fileupload*</exclude>
-					<exclude>WEB-INF/lib/commons-io*</exclude>
-					<exclude>WEB-INF/lib/commons-logging*</exclude>
-					<exclude>WEB-INF/lib/commons-pool*</exclude>
-					<exclude>WEB-INF/lib/concurrent*</exclude>
-					<exclude>WEB-INF/lib/geronimo-stax-api_1.0_spec*</exclude>
-					<exclude>WEB-INF/lib/icu4j*</exclude>
-					<exclude>WEB-INF/lib/iri*</exclude>
-					<exclude>WEB-INF/lib/java-getopt*</exclude>
-					<exclude>WEB-INF/lib/jena*</exclude>
-					<exclude>WEB-INF/lib/jgroups*</exclude>
-					<exclude>WEB-INF/lib/jing*</exclude>
-					<exclude>WEB-INF/lib/jstl*</exclude>
-					<exclude>WEB-INF/lib/log4j*</exclude>
-					<exclude>WEB-INF/lib/lucene*</exclude>
-					<exclude>WEB-INF/lib/ontopia*</exclude>
-					<exclude>WEB-INF/lib/slf4j*</exclude>
-					<exclude>WEB-INF/lib/standard*</exclude>
-					<exclude>WEB-INF/lib/tagsoup*</exclude>
-					<exclude>WEB-INF/lib/tmapi*</exclude>
-					<exclude>WEB-INF/lib/trove4j*</exclude>
-					<exclude>WEB-INF/lib/xercesImpl*</exclude>
-					<exclude>WEB-INF/lib/servlet-api*</exclude>
-				</excludes>
-			</unpackOptions>
-		</dependencySet>
 	</dependencySets>
 
 </assembly>
