@@ -61,23 +61,6 @@
       </ul>
     </table>
 
-    <td><!-- ===== VISUALIZE ===== -->
-    <table class=frontbox><tr><td>
-      <h2>Visualize</h2>
-
-      <table class=anglelink><tr><td class=angles>>>
-      <td><a href="omnigator/plugins/viz/viz.jsp?tm=ItalianOpera.ltm&id=puccini">Test
-      Vizigator on the Opera topic map</a></table>
-
-      <b>Features:</b>
-
-      <ul>
-        <li>Visualize any topic map within Ontopoly or Omnigator
-        <li>Navigate freely in the visualized topic map
-        <li>Customize display
-      </ul>
-    </table>
-
   <tr><td>
 
     <!-- ===== TALK TO US ===== -->

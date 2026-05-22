@@ -126,7 +126,6 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
   
   public static TypesConfigFrame createAssociationTypeConfigFrame(
       VizController controller, VizDesktop desktop) {
-    controller.loadAssociationTypes();
     TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
     frame.setAssociationTypeModel();
     frame.build();
@@ -135,7 +134,6 @@ public class TypesConfigFrame extends JFrame implements ListSelectionListener {
 
   public static TypesConfigFrame createTopicTypeConfigFrame(
       VizController controller, VizDesktop desktop) {
-    controller.loadTopicTypes();
     TypesConfigFrame frame = new TypesConfigFrame(controller, desktop);
     frame.setTopicTypeModel();
     frame.build();

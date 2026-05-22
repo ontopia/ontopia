@@ -36,28 +36,9 @@
     </servlet-class>
   </servlet>
 
-  <servlet>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <servlet-class>
-      net.ontopia.topicmaps.utils.tmrap.RAPServlet
-    </servlet-class>
-    <init-param>
-      <param-name>view_uri</param-name>
-      <param-value>http://localhost:8080/manage/models/topic_complete.jsp?tm=&#37;tmid&#37;&amp;id=&#37;topicid&#37;</param-value>
-    </init-param>
-  </servlet>
-
   <servlet-mapping>
     <servlet-name>PNGTreeServlet</servlet-name>
     <url-pattern>/models/pngtree.jsp</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <url-pattern>/plugins/viz/get-topic</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <url-pattern>/plugins/viz/get-topic-page</url-pattern>
   </servlet-mapping>
 
   <!-- Session parameters for this web application -->

@@ -61,7 +61,6 @@ public class NavigateUI extends TGUserInterface {
   private JMenuItem propertiesMenuItem;
   private JMenuItem setStartNodeMenuItem;
   private JMenuItem copyNameMenuItem;
-  private JMenuItem gotoTopicMenuItem;
   private TextTransfer textTransfer = new TextTransfer();
   
   public static final String ITEM_ID_EXPAND_NODE = "expand.node";
@@ -214,10 +213,6 @@ public class NavigateUI extends TGUserInterface {
 
     // addMenuItem(nodePopup, "Debug", OP_DEBUG);
 
-    gotoTopicMenuItem = 
-        makeMenuItem(nodePopup, Messages.getString("Viz.PopupGoToTopic"),
-                    OP_GO_TO_TOPIC, ITEM_ID_GO_TO_TOPIC_PAGE);
-
     return nodePopup;
   }
   
@@ -367,13 +362,10 @@ public class NavigateUI extends TGUserInterface {
         if (popupNode instanceof TMAssociationNode) {
           propertiesMenuItem.setEnabled(false);
           setStartNodeMenuItem.setEnabled(false);
-          gotoTopicMenuItem.setEnabled(false);
         } else {
           propertiesMenuItem.setEnabled(true);
-          setStartNodeMenuItem.setEnabled(!controller.isApplet()
-              && !((TMTopicNode) popupNode).getTopic().equals(
+          setStartNodeMenuItem.setEnabled(!((TMTopicNode) popupNode).getTopic().equals(
                   controller.getStartTopic()));
-          gotoTopicMenuItem.setEnabled(controller.isApplet());
         }
         
         if (popupNode instanceof TMTopicNode) {

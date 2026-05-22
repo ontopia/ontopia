@@ -79,7 +79,6 @@
 	<li><a href="#" class="has-arrow"><i class="fa fa-fw fa-wrench"></i>Tools </i></a>
 		<ul class="nav">
 			<li><a href="${root}db2tm/user-guide.html">DB2TM</a></li>
-			<li><a href="${root}tmrap/dev-guide.html">TMRAP</a></li>
 			<li><a href="${root}classify/dev-guide.html">Classification</a></li>
 		</ul>
 	</li>
@@ -91,9 +90,6 @@
 	#end
 	#if ($id == "ontopia-db2tm")
 		<li><a href="${root}db2tm/user-guide.html"><i class="fa fa-fw fa-database"></i>DB2TM user guide</a></li>
-	#end
-	#if ($id == "ontopia-tmrap")
-		<li><a href="${root}tmrap/dev-guide.html"><i class="fa fa-fw fa-cog"></i>TMRAP developer guide</a></li>
 	#end
 	#if ($id == "ontopia-vizigator")
 		<li><a href="${root}vizigator/userguide.html"><i class="fa fa-fw fa-image"></i>Vizigator user guide</a></li>

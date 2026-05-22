@@ -52,11 +52,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-tmrap</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>ontopia-rdf</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
@@ -119,14 +114,12 @@
 			<version>${project.parent.version}</version>
 			<type>war</type>
 		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>webapp-tmrap</artifactId>
-			<version>${project.parent.version}</version>
-			<type>war</type>
-		</dependency>
 
 		<!-- Webapp dependencies -->
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>ontopia-deprecated-utils</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
@@ -141,12 +134,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-reload4j</artifactId>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-vizigator</artifactId>
-			<version>${project.parent.version}</version>
-			<classifier>vizlet</classifier>
 		</dependency>
 	</dependencies>
 

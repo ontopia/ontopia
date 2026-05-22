@@ -55,8 +55,6 @@
 		<module>ontopia-navigator</module>
 		<module>ontopia-contentstore</module>
 		<module>ontopia-db2tm</module>
-		<module>ontopia-tmrap</module>
-		<module>ontopia-tmrap-aar</module>
 		<module>ontopia-vizigator</module>
 		<module>ontopia-classify</module>
 		<module>ontopia-realm</module>
@@ -77,7 +75,6 @@
 		<module>webapp-manage</module>
 		<module>webapp-omnigator</module>
 		<module>webapp-ontopoly</module>
-		<module>webapp-tmrap</module>
 
 		<!-- Distribution -->
 		<module>ontopia-distribution-tomcat</module>

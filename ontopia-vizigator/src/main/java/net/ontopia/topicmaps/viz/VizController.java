@@ -46,12 +46,8 @@ import javax.swing.JOptionPane;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
-import net.ontopia.utils.OntopiaRuntimeException;
-
 import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGPaintListener;
 import com.touchgraph.graphlayout.TGPanel;
@@ -171,10 +167,6 @@ public class VizController {
 
   public boolean hasTopicMap() {
     return view != null;
-  }
-
-  public boolean isApplet() {
-    return appContext.isApplet();
   }
 
   // --- model introspection -----------------------------------------------
@@ -371,16 +363,6 @@ public class VizController {
   }
 
   // --- environment actions -----------------------------------------------
-
-  /**
-   * Opens the supplied url string in a browser window. Which window is used is
-   * defined by the 'propTarget' applet parameter
-   * 
-   * @param url String representing the target url
-   */
-  public void openPropertiesURL(String url) {
-    appContext.openPropertiesURL(url);
-  }
 
   public void goToTopic(TopicIF topic) {
     appContext.goToTopic(topic);
@@ -811,19 +793,6 @@ public class VizController {
     undoManager.startOperation(new DoExpandNode(this, 
         (NodeRecoveryObjectIF)node.getRecreator()));
 
-    // HACK: make sure that we load expanded nodes and related. This code should
-    // possibly go somewhere else.
-    if (node instanceof TMTopicNode) {
-      TopicIF topic = ((TMTopicNode)node).getTopic();
-      if (topic instanceof net.ontopia.topicmaps.impl.remote.RemoteTopic) {
-        RemoteTopicMapStore store = (RemoteTopicMapStore)topic.getTopicMap().getStore();
-        RemoteTopicIndex tindex = store.getTopicIndex();
-        tindex.loadRelatedTopics(topic.getSubjectIdentifiers(),
-                                 topic.getItemIdentifiers(),
-                                 topic.getSubjectLocators(),
-                                 false); // only 1 step out, not 2
-      }
-    }
     loadNode(node);
 
     view.getTGPanel().expandNode(node); 
@@ -1167,48 +1136,6 @@ public class VizController {
     VizDebugUtils.debug("VizController.getEnabledItemIds() - enabledItemIds" + 
         enabledItemIds);
     return enabledItemIds;
-  }
-
-  public void loadAssociationTypes() {
-    if (!appContext.isApplet()) {
-      return; // no loading to do on desktop
-    }
-
-    if (assocTypesLoaded) {
-      return;
-    }
-
-    try {
-      TopicMapIF topicmap = view.getTopicMap();
-      RemoteTopicMapStore store = (RemoteTopicMapStore) topicmap.getStore();
-      RemoteTopicIndex tindex = store.getTopicIndex();
-      tindex.loadAssociationTypes(topicmap);
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-
-    assocTypesLoaded = true;
-  }
-
-  public void loadTopicTypes() {
-    if (!appContext.isApplet()) {
-      return; // no loading to do on desktop
-    }
-    
-    if (topicTypesLoaded) {
-      return;
-    }
-
-    try {
-      TopicMapIF topicmap = view.getTopicMap();
-      RemoteTopicMapStore store = (RemoteTopicMapStore) topicmap.getStore();
-      RemoteTopicIndex tindex = store.getTopicIndex();
-      tindex.loadTopicTypes(topicmap);
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-    
-    topicTypesLoaded = true;
   }
 
   // ----------- Nested classes and interfaces -------------

@@ -6,20 +6,19 @@ User's Guide
 
 <p class="introduction">
 This document introduces the reader to Vizigator. It provides guidance on the use of Vizigator to:
-<ul> 
-<li>visualize and navigate topic maps;</li> 
-<li>customize the visualization characteristics of a topic map for an application; and</li> 
-<li>embed a visualization window in web applications built using Ontopia.</li> 
+<ul>
+<li>visualize and navigate topic maps; and</li>
+<li>customize the visualization characteristics of a topic map for an application</li>
 </ul>
 </p>
 
 <p class="introduction">
 Reading this document assumes some basic knowledge about topic maps. If you are not familiar with
-topic maps, try reading one of the simple introductions, such as 
-<a href="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of Topic Maps</a>, available 
-from the Ontopia web site. If you are technically minded, you might also want to look at the 
-<a href="http://www.topicmaps.org/xtm/1.0/">XTM Specification</a> or the latest drafts of the new 
-version of ISO 13250, especially the 
+topic maps, try reading one of the simple introductions, such as
+<a href="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of Topic Maps</a>, available
+from the Ontopia web site. If you are technically minded, you might also want to look at the
+<a href="http://www.topicmaps.org/xtm/1.0/">XTM Specification</a> or the latest drafts of the new
+version of ISO 13250, especially the
 <a href="http://www.isotopicmaps.org/sam/sam-model/">Data Model</a>.
 </p>
 
@@ -58,18 +57,8 @@ Vizigator consists of three components which are related/dependent on each other
     VizDesktop can be used without any other Ontopia browsing environment. However, it is primarily a
     configuration tool for application designers to determine whether and/or how various topic types and
     associations will be graphically displayed. This is the entry point to the entire Ontopia Vizigator.
-    To get started, see 
+    To get started, see
     [VizDesktop - Getting started with Vizigator](#vizdesktop-getting-started-with-vizigator)
-*  **VizLet** - reusable applet component
-
-    All of the visualization capability of VizDesktop, but without the configuration toolkit, VizLet can
-    be used within other web applications. To bring topic map visualization to any web site, see 
-    [VizLet - Vizigating in web applications](#vizlet-vizigating-in-web-applications)
-*  **VizPlugin** - Omnigator plug-in
-
-    Based on VizLet, VizPlugin can be used to visualize any topic currently under view in Omnigator. To
-    find out more about navigating visually in Omnigator, see 
-    [VizPlugin - Vizigating in Omnigator](#vizplugin-vizigating-in-omnigator)
 
 Vizigator uses TouchGraph, an open source toolkit for graph visualization, which is maintained as a
 Sourceforge project. For further information, please see the [Sourceforge project
@@ -98,16 +87,14 @@ Creating and editing topic maps via Vizigator is not supported at this time.
 
 Vizigator has internationalization support for translating the user interface into any language. The
 following table lists the currently supported languages and the codes that should be used to
-designate their use (see [Starting VizDesktop](#starting-vizdesktop) and [Using VizLet in a web
-application](#using-vizlet-in-a-web-application)). Additional languages will be added over
-time.
+designate their use (see [Starting VizDesktop](#starting-vizdesktop). Additional languages will be added over time.
 
-| Language | Code | Translation Acknowledgements | 
+| Language | Code | Translation Acknowledgements |
 |---|---|---|
-| English | en | &dash; | 
-| Japanese | ja | Thank you to Motomu Naito, CEO of partner [Knowledge Synergy](http://www.knowledge-synergy.com/), Inc., Japan  | 
-| German | de | Thank you to Ingo Schönfeld, Knowledge Engineer at ATLAS Elektronik GmbH, Germany | 
-| Norwegian | no | &dash; | 
+| English | en | &dash; |
+| Japanese | ja | Thank you to Motomu Naito, CEO of partner [Knowledge Synergy](http://www.knowledge-synergy.com/), Inc., Japan  |
+| German | de | Thank you to Ingo Schönfeld, Knowledge Engineer at ATLAS Elektronik GmbH, Germany |
+| Norwegian | no | &dash; |
 
 > **Note**
 > Users interested in translating the interface to an unsupported language should contact the
@@ -115,10 +102,7 @@ time.
 
 ### VizDesktop - Getting started with Vizigator ###
 
-VizDesktop provides:
-
-*  a simple graphical topic map browser;
-*  tools to configure views for Omnigator (VizPlugin) or your own application (VizLet).
+VizDesktop provides a simple graphical topic map browser.
 
 > **Note**
 > The VizDesktop application is developed using the GUI toolkit (Java Foundation Classes(JFC)/Swing)
@@ -170,9 +154,9 @@ Conventions for visualization of topic map constructs are as follows:
     expand._
     *  use an unscoped name (randomly selected if more than 1),
     *  else, use a scoped name (randomly selected if more than 1).
-    > **Note** Very long topic names will be shortened algorithmically to aid visualization. 
-	> Shortened names will end in '...' and holding the mouse over the node will cause the name to 
-	> expand.	
+    > **Note** Very long topic names will be shortened algorithmically to aid visualization.
+	> Shortened names will end in '...' and holding the mouse over the node will cause the name to
+	> expand.
 *  **Topic Types** are distinguishable based on the shape, color, and other style characteristics
     applied to the node. The name of the type is available on the Properties box.
 *  **Associations** between topics are shown as edges (lines). Association types are distinguishable
@@ -182,10 +166,6 @@ Conventions for visualization of topic map constructs are as follows:
     By default, all associations in all scopes are displayed. It is possible to filter associations by
     scope using the *Association Scoping* menu item (see [Association
     Scoping](#association-scoping)).
-*  **Occurrences**, grouped by type, are viewable via the Properties box. _It is not possible to
-    navigate to the occurrences in VizDesktop, only in VizLet and VizPlugin._
-    > **Note** It is not possible to navigate to the occurrences in VizDesktop, only in VizLet and 
-    > VizPlugin.
 
 If no predefined configuration is associated with a topic map, each type of topic and each type of
 association is automatically and randomly assigned a color each time the topic map is opened. These
@@ -231,7 +211,7 @@ Topic View
     double clicking on a topic or by defining or using a *Start Topic*. If in Map View at the time a
     Focus Node is chosen, the display changes to Topic View; if in Topic View, the display refocuses on
     the new Focus Node.
-    > **Note** The Focus Node is identified visually by a deep yellow color. Use of this color in a 
+    > **Note** The Focus Node is identified visually by a deep yellow color. Use of this color in a
     > configuration should be avoided.
     *  **Start Topic**. The node that is focused when the topic map is opened (if there is a pre-defined
    configuration that includes a Start Topic). Topic View is initiated when a topic is designated as
@@ -243,9 +223,6 @@ Topic View
 When initially loading a topic map, dialog boxes allow the user to choose a Focus Node, to proceed
 with modelling a Map View, or to cancel the loading. From a Topic View, Map View can be can be
 restored via the `View\Map View` menu item.
-
-VizLet (and VizPlugin) and VizDesktop behave the same way, with the exception that VizLet always
-operates in topic view.
 
 ##### Screen Layout #####
 
@@ -296,8 +273,8 @@ display through use of the check box.
 The main menu bar consists of the following menu items:
 
 *  **File** - menu choices include loading a topic map into the viewer, saving a configuration, and
-   specifying an RDF mapping file. 
-   
+   specifying an RDF mapping file.
+
     > **Note** When vizigating a topic map view of an RDF file, Vizigator looks
     > for an RDF mapping file. The default file is `mapping.rdff` and is located in
     > ``$TOMCAT_HOME\webapps\omnigator\WEB-INF\topicmaps`` (the default location for the mapping file used by
@@ -628,261 +605,3 @@ for topic and association type displays.
 > file itself. What this means is that if the file is moved to another location, the references may
 > break. The moral of this story is always use subject identifiers, especially for typing
 > topics.
-
-### VizLet - Vizigating in web applications ###
-
-VizLet is an applet that provides the same visualization functionality as VizDesktop, except that
-the menu bar (and all the functionality available through it), is unavailable. VizLet is intended to
-be used to add visualization functionality to web applications and can be embedded in any web
-application.
-
-#### Comparing VizLet to VizDesktop ####
-
-The following restrictions apply to VizLet compared to VizDesktop:
-
-*  The configuration cannot be changed. That is, filter settings, colors, etc., are loaded from the
-   server and cannot be modified by the user.
-*  The topic map to be vizigated is given in the settings loaded from the server and cannot be
-   changed.
-
-The following differences apply to VizLet compared to VizDesktop:
-
-*  Each time VizLet is entered, it will be:
-    *  in Topic View;
-    *  with locality of 1; and
-    *  with the topic used to initiate vizigation set as the Focus Node.
-*  There is no Map View.
-*  Even if a Start Topic has been specified in the configuration, there is no provision to access it in
-   the VizLet interface.
-*  It is possible to navigate to the Occurences listed in the Properties box.
-*  A topic's context menu (right click) contains the "Go to Topic Page" item, supporting reverse
-   navigation back to the text-based view of the topic map.
-*  The `Association Scoping` menu is available on the popup menu when right-clicking on the background.
-   It will have the same functionality as in VizDesktop, but will only contain the topics used in the
-   scope of associations in the topic map fragment held by the VizLet at that
-   time.
-
-#### Using VizLet in a web application ####
-
-VizLet can be added to a web page by adding the following HTML to the page:
-
-````application/x-jsp
-  <applet width="800" height="800" alt="Ontopia vizlet" 
-          code="net.ontopia.topicmaps.viz.Vizlet.class"
-          archive="ontopia-vizlet.jar">
-    <param name="baseuri"  value="omnigator/plugins/viz/"/>
-    <param name="tmid"     value="opera.ltm"/>
-    <param name="idtype"   value="indicator"/>
-    <param name="idvalue"  value="http://www.topicmaps.org/xtm/1.0/country.xtm#cn"/>
-  </applet>
-````
-
-The applet parameters are as follows:
-
-tmrap
-:   This is the URL on the server where the TMRAP servlet can be found. (More about how to set these up
-    below.) The URL is resolved relative to the code base of the applet.
-
-config
-:   This is the URL on the server where the configuration topic map in XTM syntax can be found. VizLet
-    will load it directly from this URL. The URL is resolved relative to the code base of the applet. If
-    this parameter is omitted, VizLet will work without a configuration.
-
-tmid
-:   This is the ID of the topic map in the topic map registry.
-
-idvalue
-:   This is the identifying value used to look up the Focus Node to be loaded in VizLet. This is always
-    a URI.
-
-idtype
-:   This tells VizLet what kind of identifier is contained in the `idvalue` parameter. The alternatives
-    are `"source"` (meaning item identifier), `"indicator"` (meaning subject identifier), and
-    `"subject"` (meaning subject locator).
-
-gototarget
-:   The name of the HTML frame in which Vizlet should open topic pages when the user selects the "Go to
-    Topic Page" menu item in Vizlet. Defaults to the current frame if not set.
-
-proptarget
-:   The name of the HTML frame in which Vizlet should open URLs when the user selects a URL in the
-    Properties box. Defaults to `_blank` (meaning new frame every time) if not set.
-
-scopevalue
-:   The identifying value used to look up the topic used for name scoping, identified by URI. A value
-    set here will override a value saved in the Vizigator configuration.
-
-scopetype
-:   This tells VizLet what kind of identifier is contained in the `scopevalue` parameter. The
-    alternatives are the same as for `idtype`.
-
-controlsVisible
-:   A boolean value of 'true' or 'false' that specifies whether the control panel should be visible or
-    not. The default is 'true'.
-
-lang
-:   Specifies the language that is to be used in the user interface. The default is 'en' (English). See
-    [Scope of Use](#scope-of-use) for the currently supported languages.
-
-menufile
-:   Specifies the location of a file which describes which menu items in popup menus are to be enabled
-    or disabled. The value is a URI relative to the URI the applet was loaded from. For more detail, see
-    [The menufile parameter](#the-menufile-parameter).
-
-locality
-:   The locality setting VizLet starts with on loading. The default is 1.
-
-max-locality
-:   The largest locality value which VizLet will accept. The default is 5.
-
-wallpaper_image
-:   A URL pointing to an image to be used as a wallpaper background in the Vizlet. If no URL is
-    provided, no background will be shown.
-
-In order for this to work, a number of things need to be set up on the server side, and we will walk
-through them one by one. One example of how this can be done can be found in VizPlugin for
-Omnigator; looking at its source code may be instructive.
-
-The first step is to make the `${ONTOPIA_HOME}/extras/ontopia-vizlet.jar` file available on the
-server side. Put it anywhere you want, then make the `applet` element refer to it. Use the Java
-console of your web browser to check whether you have succeeded or not. For more information consult
-[the HTML 4.01
-Recommendation](http://www.w3.org/TR/html401/struct/objects.html#h-13.4).
-
-The next step is to set up the TMRAP (topic map remote access protocol) servlet used by the applet
-to download topic map fragments for the visualization. This is done by adding the following to the
-`web.xml` file of the web application:
-
-````xml
-  <servlet>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <servlet-class>
-      net.ontopia.topicmaps.utils.tmrap.RAPServlet
-    </servlet-class>
-    <init-param>
-      <param-name>view_uri</param-name>
-      <param-value>http://localhost:8080/omnigator/models/topic_complete.jsp?tm=%tmid%&amp;id=%topicid%</param-value>
-    </init-param>
-    <init-param>
-      <param-name>edit_uri</param-name>
-      <param-value>http://localhost:8080/ontopoly/enter.ted?tm=%tmid%&amp;id=%topicid%</param-value>
-    </init-param>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <url-pattern>/plugins/viz/xtm-fragment</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TMRAPServlet</servlet-name>
-    <url-pattern>/plugins/viz/topic-page</url-pattern>
-  </servlet-mapping>
-````
-
-The `url-pattern` parameter must match what is given in the `tmrap` parameter to the applet, so that
-the servlet is made available where the applet expects to find it. Also, the `uri` parameter to the
-servlet must be a URI template where once the topic map ID and topic ID are filled in, the main page
-for the topic can be found. VizLet will go to this URI when the "Go to Topic Page" option is
-selected in VizLet.
-
-The final part is to place the configuration XTM file somewhere on the server so that VizLet can
-download it. This must be in the location that the `config` parameter refers to. VizPlugin uses a
-JSP file to do this, because it needs to be able to support multiple configurations, but if you only
-have a single configuration file you can just refer to it directly and store it on the server as a
-normal file.
-
-If you experience unexpected results with VizLet, please do the following:
-
-*  empty the browser cache, restart the brower, and try again, to make sure you have the latest version
-   of the VizLet;
-*  check the Java Console, as the VizLet will print its version number and build number there; and
-*  check the Java Console for exceptions, which we would very much like to see in any bug reports.
-
-##### The menufile parameter #####
-
-As stated above, this parameter specifies the location of a file which describes which menu items in
-popup menus should be visible. The menu file is a normal text file, of which an example can be seen
-below:
-
-````properties
-expand.node=on
-collapse.node=on
-hide.node=on
-hide.edge=on
-sticky=on
-properties=off       # users never use this, anyway
-set.start.topic=on
-go.to.topic.page=off # we don't have topic pages
-search.bar=off
-````
-
-Menu items that are not mentioned in the file will be displayed (and if the parameter is not given
-all items are displayed). The list of menu choice names is:
-
-|---|---|
-| expand.node | Expand node | 
-| collapse.node | Collapse node | 
-| hide.node | Hide node | 
-| hide.edge | Hide edge | 
-| sticky | Sticky | 
-| properties | Properties | 
-| set.start.topic | Set start topic | 
-| copy.name | Copy name | 
-| go.to.topic.page | Go to topic page | 
-| show.search.bar | Show search bar | 
-| toggle.controls | Toggle controls | 
-| set.all.nodes.sticky | Set all nodes sticky | 
-| set.all.nodes.unsticky | Set all nodes unsticky | 
-| stop.moving.nodes | Stop moving nodes | 
-| enable.motion.killer | Start/stop motion reduction | 
-| undo | Undo | 
-| redo | Redo | 
-| enable.neighbour.circle | Enable neighbour circle | 
-| topic.styles | Topic type configuration | 
-| association.styles | Association type configuration | 
-
-#### The "Copy name" operation ####
-
-In VizDesktop the popup menu on topic nodes contains a "Copy name" choice, which copies the name of
-the node to the system clipboard. This menu choice is by default not present in VizLet because for
-security reasons applets do not have access to the clipboard. (Otherwise, web pages would be able to
-spy on your clipboard, or spam it with unwelcome content.)
-
-To solve this, there is another version of the VizLet in the
-`${ONTOPIA_HOME}/extras/signed-vizlet.jar` file, which is cryptographically signed. This gives the
-VizLet access to the clipboard, provided users accept the certificate with which it was signed. In
-order to avoid bothering users with certificates the VizPlugin (see [VizPlugin - Vizigating in
-Omnigator](#vizplugin-vizigating-in-omnigator)) does not use the signed applet.
-
-Using the signed applet is not in itself enough to enable the "Copy name" menu item. To do this, use
-the `menufile` parameter to VizLet as described in [The menufile
-parameter](#the-menufile-parameter).
-
-### VizPlugin - Vizigating in Omnigator ###
-
-VizPlugin is an Omnigator plug-in that adds support for graphic visual navigation of topic maps. It
-uses VizLet (described in [VizLet - Vizigating in web
-applications](#vizlet-vizigating-in-web-applications)) to support visualization directly in the
-browser. Like the other plug-ins, it appears as a button (*Vizigate*) in the row of links at the top
-of Omnigator topic pages.
-
-All of the restrictions and differences that apply to VizLet, when compared to VizDesktop, also
-apply to VizPlugin.
-
-#### Using VizPlugin ####
-
-To use VizPlugin, click on the `Vizigate` link, and the current topic will be loaded into VizLet and
-displayed. To return to the Omnigator view, right click on the topic to be viewed in Omnigator and
-choose the additional menu item available , *Go to Topic Page*.
-
-> **Note**
-> For this to work, support for Java applets must be turned on in your browser, and it must also
-> support Swing applets.
-
-![ VizPlugin is VizLet as used in the Omnigator](vizplugin.png " VizPlugin is VizLet as used in the Omnigator")
-
-VizPlugin will work for any topic map, regardless of whether a configuration has been created for it
-or not, but results are more likely to be more consistent if a configuration
-exists.
-
-

@@ -52,8 +52,6 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
-import net.ontopia.topicmaps.utils.tmrap.TopicIndexIF;
 import net.ontopia.topicmaps.viz.TMClassInstanceAssociation.Key;
 import net.ontopia.topicmaps.viz.VizController.VizHoverHelpManager;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -957,13 +955,6 @@ public class TopicMapView {
 
   public TopicMapIF getTopicMap() {
     return topicmap;
-  }
-
-  public Collection getPagesFor(TopicIF topic) {
-    TopicIndexIF ix = ((RemoteTopicMapStore) topicmap.getStore())
-        .getTopicIndex();
-    return ix.getTopicPages(topic.getSubjectIdentifiers(), 
-														topic.getItemIdentifiers(), topic.getSubjectLocators());
   }
 
   /**
