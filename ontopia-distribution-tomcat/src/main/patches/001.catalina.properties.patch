@@ -19,12 +19,13 @@
  
  # Default list of JAR files that should be scanned that overrides the default
  # jarsToSkip list above. This is typically used to include a specific JAR that
-@@ -207,7 +208,9 @@
+@@ -207,7 +208,10 @@
  log4j-taglib*.jar,\
  log4j-web*.jar,\
  log4javascript*.jar,\
 -slf4j-taglib*.jar
 +slf4j-taglib*.jar,\
++ontopia-lucene-*,\
 +ontopia-navigator-*.jar,\
 +jstl-*.jar
  
