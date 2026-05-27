@@ -29,5 +29,15 @@ jobs:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: "**/jacoco.xml"
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v4
+
     - name: Build with Docker
-      run: docker build .
+      uses: docker/build-push-action@v7
+      with:
+        platforms: linux/amd64,linux/arm64
+        push: false
+        tags: ontopia/ontopia:master
