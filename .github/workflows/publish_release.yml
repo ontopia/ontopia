@@ -19,7 +19,7 @@ jobs:
       run: |
         ref="${{ github.ref }}"
         version="${ref#"refs/tags/release-"}"
-        echo "{VERSION}={$version}" >> "$GITHUB_ENV"
+        echo "VERSION=$version" >> "$GITHUB_ENV"
 
     - name: Debug
       run: export
