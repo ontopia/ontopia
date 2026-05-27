@@ -1,0 +1,35 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - 'release-**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Resolve version
+      run: echo "{VERSION}={${"${{ github.ref }}"#"release-"}}" >> "$GITHUB_ENV"
+
+    - name: Set up Maven
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version-file: '.java-version'
+        cache: maven
+
+    - name: Build distribution
+      run: mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+
+    - name: Save distribution
+      uses: actions/upload-artifact@v7
+      with:
+        name: ontopia-${{env.VERSION}}
+        path: ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip
