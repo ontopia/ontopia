@@ -38,6 +38,7 @@ jobs:
     - name: Build with Docker
       uses: docker/build-push-action@v7
       with:
+        context: '.'
         platforms: linux/amd64,linux/arm64
         push: false
         tags: ontopia/ontopia:master
