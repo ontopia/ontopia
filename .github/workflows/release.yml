@@ -38,7 +38,7 @@ jobs:
         gpg-passphrase: GPG_PASSPHRASE
         cache: maven
 
-    - name: Publish to Apache Maven Central
+    - name: Release and deploy to Maven Central
       run: |
         mvn -B -Dstyle.color=always release:prepare -DreleaseVersion=${{ github.event.inputs.version }}
         mvn -B -Dstyle.color=always release:perform -DdeploymentName="Release ${{ github.event.inputs.version }}"
