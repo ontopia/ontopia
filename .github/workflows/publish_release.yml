@@ -21,21 +21,18 @@ jobs:
         version="${ref#"refs/tags/release-"}"
         echo "VERSION=$version" >> "$GITHUB_ENV"
 
-    - name: Debug
-      run: export
+    - name: Set up Maven
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version-file: '.java-version'
+        cache: maven
 
-#    - name: Set up Maven
-#      uses: actions/setup-java@v5
-#      with:
-#        distribution: 'temurin'
-#        java-version-file: '.java-version'
-#        cache: maven
-#
-#    - name: Build distribution
-#      run: mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
-#
-#    - name: Save distribution
-#      uses: actions/upload-artifact@v7
-#      with:
-#        name: ontopia-${{env.VERSION}}
-#        path: ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip
+    - name: Build distribution
+      run: mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+
+    - name: Save distribution
+      uses: actions/upload-artifact@v7
+      with:
+        name: ontopia-${{env.VERSION}}
+        path: ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip
