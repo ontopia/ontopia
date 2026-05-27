@@ -16,7 +16,10 @@ jobs:
     - uses: actions/checkout@v6
 
     - name: Resolve version
-      run: echo "{VERSION}={${"${{ github.ref }}"#"release-"}}" >> "$GITHUB_ENV"
+      run: |
+        ref="${{ github.ref }}"
+        version="${ref#"refs/tags/release-"}"
+        echo "{VERSION}={$version}" >> "$GITHUB_ENV"
 
     - name: Set up Maven
       uses: actions/setup-java@v5
