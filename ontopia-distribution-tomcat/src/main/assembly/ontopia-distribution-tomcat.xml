@@ -91,7 +91,6 @@
 			<useProjectArtifact>false</useProjectArtifact>
 			<excludes>
 				<exclude>*:war:*</exclude>
-				<exclude>*:standard:*</exclude>
 			</excludes>
 		</dependencySet>
 		
@@ -119,7 +118,7 @@
 			<unpackOptions>
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
-					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>WEB-INF/classes/org/apache/jsp/**</exclude>
 					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
@@ -164,7 +163,7 @@
 			<unpackOptions>
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
-					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>WEB-INF/classes/org/apache/jsp/**</exclude>
 					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
@@ -182,7 +181,6 @@
 					<include>examples/*.jsp</include>
 					<include>WEB-INF/web.xml</include>
 					<include>WEB-INF/config/**</include>
-					<include>WEB-INF/lib/wicket*.jar</include>
 					<include>WEB-INF/lib/ontopoly*.jar</include>
 				</includes>
 			</unpackOptions>

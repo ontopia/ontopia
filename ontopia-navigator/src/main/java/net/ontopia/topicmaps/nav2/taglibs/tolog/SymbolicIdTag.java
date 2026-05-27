@@ -21,8 +21,8 @@
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.JspWriter;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;

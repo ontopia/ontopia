@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.schema.impl.osl.nav.plugins;
 
 import java.io.File;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import net.ontopia.topicmaps.nav2.plugins.DefaultPlugin;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;

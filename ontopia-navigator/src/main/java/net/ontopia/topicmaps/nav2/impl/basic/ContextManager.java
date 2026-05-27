@@ -26,7 +26,7 @@ import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.PageContext;
   
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;

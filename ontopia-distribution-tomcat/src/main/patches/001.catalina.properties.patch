@@ -26,7 +26,7 @@
 -slf4j-taglib*.jar
 +slf4j-taglib*.jar,\
 +ontopia-navigator-*.jar,\
-+jstl-*.jar
++jakarta.servlet.jsp.*.jar
  
  # String cache configuration.
  tomcat.util.buf.StringCache.byte.enabled=true

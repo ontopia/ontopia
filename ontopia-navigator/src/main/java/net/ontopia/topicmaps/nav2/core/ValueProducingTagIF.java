@@ -21,7 +21,7 @@
 package net.ontopia.topicmaps.nav2.core;
 
 import java.util.Collection;
-import javax.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspException;
 
 /**
  * INTERNAL: Implemented by tags whose functionality is such that they

@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
-import javax.servlet.jsp.tagext.TagExtraInfo;
-import javax.servlet.jsp.tagext.TagData;
-import javax.servlet.jsp.tagext.VariableInfo;
+import jakarta.servlet.jsp.tagext.TagExtraInfo;
+import jakarta.servlet.jsp.tagext.TagData;
+import jakarta.servlet.jsp.tagext.VariableInfo;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 

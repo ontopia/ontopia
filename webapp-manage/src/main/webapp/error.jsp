@@ -34,9 +34,9 @@ if (exception != null) {
 
   // --- get out real root cause exception
   Throwable e = exception;
-  while (e instanceof javax.servlet.ServletException
-         && ((javax.servlet.ServletException)e).getRootCause() != null)
-    e = ((javax.servlet.ServletException)e).getRootCause();
+  while (e instanceof jakarta.servlet.ServletException
+         && ((jakarta.servlet.ServletException)e).getRootCause() != null)
+    e = ((jakarta.servlet.ServletException)e).getRootCause();
 
   if (e instanceof OutOfMemoryError)
     pageContext.forward("out-of-memory.jsp");

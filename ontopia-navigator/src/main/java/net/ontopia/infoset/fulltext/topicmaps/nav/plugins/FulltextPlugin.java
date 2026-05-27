@@ -21,8 +21,8 @@
 package net.ontopia.infoset.fulltext.topicmaps.nav.plugins;
 
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import net.ontopia.infoset.fulltext.core.SearcherIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.plugins.DefaultPlugin;

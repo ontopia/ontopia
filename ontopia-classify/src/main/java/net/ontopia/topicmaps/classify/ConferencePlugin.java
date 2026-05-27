@@ -23,7 +23,7 @@ package net.ontopia.topicmaps.classify;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;

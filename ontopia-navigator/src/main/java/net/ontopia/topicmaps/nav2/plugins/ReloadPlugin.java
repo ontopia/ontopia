@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.nav2.plugins;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 

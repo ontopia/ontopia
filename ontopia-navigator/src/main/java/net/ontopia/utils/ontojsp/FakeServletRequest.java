@@ -30,19 +30,19 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.Part;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -292,12 +292,12 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public javax.servlet.http.HttpSession getSession(boolean create) {
+  public jakarta.servlet.http.HttpSession getSession(boolean create) {
     throw new UnsupportedOperationException();
   }
   
   @Override
-  public javax.servlet.http.HttpSession getSession() {
+  public jakarta.servlet.http.HttpSession getSession() {
     if (session == null) {
       session = new FakeHttpSession(context);
     }
@@ -438,6 +438,23 @@ public class FakeServletRequest implements HttpServletRequest {
     throw new UnsupportedOperationException();
   }  
 
+  // servlet 4.0.0
+
+  @Override
+  public long getContentLengthLong() {
+    return getContentLength();
+  }
+
+  @Override
+  public String changeSessionId() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+    throw new UnsupportedOperationException();
+  }
+
   // --- Extra methods
 
   public void setServletContext(FakeServletContext context) {
@@ -456,22 +473,5 @@ public class FakeServletRequest implements HttpServletRequest {
       }
     }
     return result;
-  }
-
-  // servlet 4.0.0
-
-  @Override
-  public long getContentLengthLong() {
-    return getContentLength();
-  }
-
-  @Override
-  public String changeSessionId() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
-    throw new UnsupportedOperationException();
   }
 }
