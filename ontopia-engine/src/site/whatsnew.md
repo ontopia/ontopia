@@ -21,6 +21,9 @@ The following changes have been made:
   * The `ontopia-tmrap-aar` module
   * The `webapp-tmrap` webapplication
   * The Omnigator and Ontology plugins
+* JDBCSpy has been removed, it can be replaced with tools like
+  * [lbaeumer:jdbcspy](https://github.com/lbaeumer/jdbcspy)
+  * In database metrics, such as `pg_stat_statements` for PostgreSQL
 
 
 ### Ontopia 5.7.0 release notes ###

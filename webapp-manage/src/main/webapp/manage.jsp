@@ -364,32 +364,6 @@ if (action != null) {
       </td>
       </tr>
       </table>
-<%
-try {
-  Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
-%>        
-      &nbsp;
-      <h3>jdbcspy</h3>
-      <table>
-      <tr valign="top">
-      <td>
-      <p>
-        jdbcspy is a SQL profiler which can tell you how much time is spent on
-        each of the SQL queries run by Ontopia. This is useful for analyzing
-        performance problems with the RDBMS backend.
-      </p>
-      </td>
-      <td>
-      <form method="post" action="jdbcspy.jsp">
-      <input type="submit" value="Report">
-      </form>
-      </td>
-      </tr>
-      </table>
-<%
-} catch (Exception e) {
-}
-%>      
        
 <%!
   private final static NumberFormat formatter =
