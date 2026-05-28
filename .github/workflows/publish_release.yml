@@ -70,7 +70,8 @@ jobs:
 
       - name: Package docs
         run: |
-          unzip ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip doc/\* -d tmpdocs
+          cp ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip dist.zip
+          unzip dist.zip doc/\* -d tmpdocs
           mv tmpdocs/doc ${{env.VERSION}}
           tar --no-xattr -czf docs-${{env.VERSION}}.tar.gz ${{env.VERSION}}
 
