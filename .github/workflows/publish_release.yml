@@ -66,6 +66,20 @@ jobs:
           path: ontopia-${{env.VERSION}}.zip
 
 
+      # --- Docs zip
+
+      - name: Package docs
+        run: |
+          cp -r ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*-SNAPSHOT/doc ${{env.VERSION}}
+          tar -czf --no-xattr docs-${{env.VERSION}}.tar.gz ${{env.VERSION}}
+
+      - name: Save docs
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-${{env.VERSION}}.tar.gz
+          path: docs-${{env.VERSION}}.tar.gz
+
+
       # --- Github release
 
       - name: Release
