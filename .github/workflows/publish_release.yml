@@ -18,6 +18,8 @@ jobs:
       # --- Prepare
 
       - uses: actions/checkout@v6
+        with:
+          fetch-tags: true
 
       - name: Resolve version
         run: |
