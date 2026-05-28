@@ -91,7 +91,6 @@
 		<!-- reused dependency versions -->
 		<lucene.version>8.11.4</lucene.version>
 		<lucene.snowball.version>3.0.3</lucene.snowball.version>
-		<axis2.version>1.6.4</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
 		<tmapi-tests.version>2.1.1</tmapi-tests.version>
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
@@ -235,24 +234,6 @@
 						<encoding>utf-8</encoding>
 						<failOnError>false</failOnError>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.axis2</groupId>
-					<artifactId>axis2-wsdl2code-maven-plugin</artifactId>
-					<version>${axis2.version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>wsdl2code</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.axis2</groupId>
-					<artifactId>axis2-aar-maven-plugin</artifactId>
-					<version>${axis2.version}</version>
-					<extensions>true</extensions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -638,16 +619,6 @@
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-extensions</artifactId>
 				<version>1.4.8</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.axis2</groupId>
-				<artifactId>axis2-kernel</artifactId>
-				<version>${axis2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.axis2</groupId>
-				<artifactId>axis2-java2wsdl</artifactId>
-				<version>${axis2.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.ontopia</groupId>
