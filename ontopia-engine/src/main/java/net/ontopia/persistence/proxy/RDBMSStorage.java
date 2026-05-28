@@ -298,13 +298,6 @@ public class RDBMSStorage implements StorageIF {
     this.sqlbuilder = new SQLBuilder(getMapping(), Boolean.parseBoolean(getProperty("net.ontopia.persistence.query.sql.SQLBuilder.debug")));
     this.sqlgen = GenericSQLGenerator.getSQLGenerator(getPlatforms(), properties);
 
-    // Register jdbcspy driver
-    try {
-      Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
-    } catch (ClassNotFoundException e) {
-      // ignore if not exists
-    }
-
     // initialize cluster
     String clusterId = getProperty("net.ontopia.topicmaps.impl.rdbms.Cluster.id");
     if (clusterId != null) {

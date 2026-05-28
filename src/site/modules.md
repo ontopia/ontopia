@@ -44,9 +44,6 @@ your POM:
 :    The core engine of Ontopia. This is the smallest package required to work with Ontopia as a
      dependency.
 
-`ontopia-jdbcspy7`
-:    Contains the JDBC Spy Driver that allows debugging of Ontopia RDBMS queries for Java 7.
-
 `ontopia-lucene`
 :    Contains the full text implementation based on Apache Lucene.
 

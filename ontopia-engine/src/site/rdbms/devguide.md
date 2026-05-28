@@ -69,7 +69,7 @@ through the same access point.
 > __Important__ If you get hold of your RDBMSTopicMapStore instances through either
 > ImportExportUtils or create them yourself you will not be able to take advantage of a shared cache
 > and store pooling. Use the TopicMapSourceIF implementations, or access the topic maps stores through
-> the mechanisms in the Navigator Framework instead. 
+> the mechanisms in the Navigator Framework instead.
 
 > It is very important that you close the
 > TopicMapStoreIF instance when you are done with it, i.e. call the TopicMapStoreIF.close() method.
@@ -443,7 +443,6 @@ java net.ontopia.topicmaps.cmdlineutils.rdbms.RDBMSImport [options] <dbprops> <t
     --validate=true|false : if true topic map document will be validated (default: true)
     --suppress=true|false: suppress duplicate characteristics (default: false)
     --loadExternal=true|false : if true external topic references will be resolved (default: true)
-    --jdbcspy=<filename> : write jdbcspy report to the given file
 
   <dbprops>:   the database configuration file
   <tmfile#>:   the topic map files to import
@@ -558,27 +557,3 @@ Done.
 ````
 
 Note that the output is printed to stdout, so you can redirect the output to a file.
-
-### Performance tuning ###
-
-Ontopia comes with a SQL profiler called jdbcspy, which can be used to check the performance of the
-SQL queries sent to the database by the database backend. To enable jdbcspy, please add "jdbcspy:"
-at the front of your JDBC URL in the `rdbms.properties` file. That is, if the setting
-was:
-
-````properties
-net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:mysql://localhost/topicmaps  
-````
-
-then change it to:
-
-````properties
-net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbcspy:jdbc:mysql://localhost/topicmaps  
-````
-
-This is sufficient to make jdbcspy log all SQL queries. To get a report, go to the "Manage" page in
-the Ontopia web interface, and click on the jdbcspy report button on the right-hand side. This will
-show a report of all SQL queries sent, which can then be used to analyze performance
-problems.
-
-

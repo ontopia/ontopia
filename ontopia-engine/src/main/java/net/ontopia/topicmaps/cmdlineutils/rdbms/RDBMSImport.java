@@ -66,7 +66,6 @@ public class RDBMSImport {
     options.addLong(ohandler, "suppress", 's', true);
     options.addLong(ohandler, "loadExternal", 'e', true);
     options.addLong(ohandler, "validate", 'v', true);
-    options.addLong(ohandler, "jdbcspy", 'j', true);
     options.addLong(ohandler, "progress", 'p', true);
       
     // parse command line options
@@ -152,17 +151,6 @@ public class RDBMSImport {
 
     }
 
-    if (ohandler.jdbcspyFile != null) {
-      try {
-        Class<?> spyDriverClass = Class.forName("net.ontopia.persistence.jdbcspy.SpyDriver");
-        Method method = spyDriverClass.getMethod("writeReport", String.class);
-        method.invoke(null, ohandler.jdbcspyFile);
-      } catch (ClassNotFoundException cnfe) {
-        System.out.println("JDBC-Spy driver was not found on the classpath, make sure you have the"
-                + " ontopia-jdbcspy jar of the correct java version on your classpath");
-      }
-    }
-
     // close store (and database connection)    
     store.close();
   }
@@ -180,7 +168,6 @@ public class RDBMSImport {
     System.out.println("    --validate=true|false : if true topic map document will be validated (default: true)");
     System.out.println("    --suppress=true|false: suppress duplicate characteristics (default: false)");
     System.out.println("    --loadExternal=true|false : if true external topic references will be resolved (default: true)");
-    System.out.println("    --jdbcspy=<filename> : write jdbcspy report to the given file");
     System.out.println("    --progress=true|false: write progress report while importing (default: false)");
     System.out.println("");
     System.out.println("  <dbprops>:   the database configuration file");
@@ -193,7 +180,6 @@ public class RDBMSImport {
     private boolean validate = true;
     private boolean suppress = false;
     private boolean loadExternal = true;
-    private String jdbcspyFile;
     private String topicMapTitle;
     private String topicMapComments;
     private boolean progress;
@@ -211,9 +197,6 @@ public class RDBMSImport {
       }
       if (option == 's') {
         suppress = Boolean.valueOf(value).booleanValue();
-      }
-      if (option == 'j') {
-        jdbcspyFile = value;
       }
       if (option == 't') {
         topicMapTitle = value;
