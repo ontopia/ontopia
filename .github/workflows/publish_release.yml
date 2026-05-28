@@ -29,6 +29,7 @@ jobs:
           prevversion="${ref#"release-"}"
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "PREVIOUS=$prevversion" >> "$GITHUB_ENV"
+          echo "version = $version, previous = $prevversion"
 
       - name: Set up Maven
         uses: actions/setup-java@v5
@@ -48,8 +49,8 @@ jobs:
       - name: Save distribution
         uses: actions/upload-artifact@v7
         with:
-          name: ontopia-${{env.VERSION}}
-          path: ontopia-${{env.VERSION}}
+          name: ontopia-${{env.VERSION}}.zip
+          path: ontopia-${{env.VERSION}}.zip
 
 
       # --- Github release
@@ -57,8 +58,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
+          draft: true
           name: Ontopia ${{env.VERSION}}
-          files: ontopia-$VERSION.zip
+          files: ontopia-${{env.VERSION}}.zip
           body: |
             [Release notes](https://ontopia.net/doc/${{env.VERSION}}/whatsnew.html)
 
