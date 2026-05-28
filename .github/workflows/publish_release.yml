@@ -30,7 +30,7 @@ jobs:
           ref="${{ github.ref_name }}"
           version="${ref#"release-"}"
           prevref=`git tag --sort=-creatordate | grep -A 1 ${{ github.ref_name }} | tail -n 1`
-          prevversion="${ref#"release-"}"
+          prevversion="${prevref#"release-"}"
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "PREVIOUS=$prevversion" >> "$GITHUB_ENV"
           echo "version = $version, previous = $prevversion"
