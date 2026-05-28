@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "ref=${{ github.ref }}"
           echo "ref_name=${{ github.ref_name }}"
-          git tag -b
+          git tag
           git describe --tags --abbrev=0 ${{ github.ref }}^
 
 
