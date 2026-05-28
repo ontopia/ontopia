@@ -23,6 +23,7 @@ jobs:
 
       - name: Resolve version
         run: |
+          git tag --sort=-creatordate | grep -A 1 ${{ github.ref_name }}
           ref="${{ github.ref_name }}"
           version="${ref#"release-"}"
           prevref=`git tag --sort=-creatordate | grep -A 1 ${{ github.ref_name }} | tail -n 1`
