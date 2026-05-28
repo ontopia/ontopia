@@ -21,10 +21,10 @@ jobs:
 
       - name: Resolve version
         run: |
-          ref="${{ github.ref }}"
-          version="${ref#"refs/tags/release-"}"
-          prevref=`git describe --tags --abbrev=0 ${{ github.ref }}^`
-          prevversion="${ref#"refs/tags/release-"}"
+          ref="${{ github.ref_name }}"
+          version="${ref#"release-"}"
+          prevref=`git describe --tags --abbrev=0 ${{ github.ref_name }}^`
+          prevversion="${ref#"release-"}"
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "PREVIOUS=$prevversion" >> "$GITHUB_ENV"
 
