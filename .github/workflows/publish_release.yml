@@ -57,7 +57,7 @@ jobs:
       - name: Build distribution
         run: |
           mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
-          mv ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip ontopia-$VERSION.zip
+          mv ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip ontopia-${{env.VERSION}}.zip
 
       - name: Save distribution
         uses: actions/upload-artifact@v7
@@ -70,8 +70,7 @@ jobs:
 
       - name: Package docs
         run: |
-          cp ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip dist.zip
-          unzip dist.zip doc/\* -d tmpdocs
+          unzip ontopia-${{env.VERSION}}.zip doc/\* -d tmpdocs
           mv tmpdocs/doc ${{env.VERSION}}
           tar --no-xattr -czf docs-${{env.VERSION}}.tar.gz ${{env.VERSION}}
 
