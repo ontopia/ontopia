@@ -11,28 +11,97 @@ jobs:
 
     permissions:
       contents: write
-      
+
     steps:
-    - uses: actions/checkout@v6
 
-    - name: Resolve version
-      run: |
-        ref="${{ github.ref }}"
-        version="${ref#"refs/tags/release-"}"
-        echo "{VERSION}={$version}" >> "$GITHUB_ENV"
 
-    - name: Set up Maven
-      uses: actions/setup-java@v5
-      with:
-        distribution: 'temurin'
-        java-version-file: '.java-version'
-        cache: maven
+      # --- Prepare
 
-    - name: Build distribution
-      run: mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+      - uses: actions/checkout@v6
+        with:
+          fetch-tags: true
 
-    - name: Save distribution
-      uses: actions/upload-artifact@v7
-      with:
-        name: ontopia-${{env.VERSION}}
-        path: ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip
+      - name: Resolve version
+        run: |
+          ref="${{ github.ref_name }}"
+          version="${ref#"release-"}"
+          prevref=`git tag --sort=-creatordate | grep -A 1 ${{ github.ref_name }} | tail -n 1`
+          prevversion="${prevref#"release-"}"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "PREVIOUS=$prevversion" >> "$GITHUB_ENV"
+          echo "version = $version, previous = $prevversion"
+
+      - name: Set up Maven
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version-file: '.java-version'
+          cache: maven
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+
+      # --- Distribution zip
+
+      - name: Build distribution
+        run: |
+          mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+          cp ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip ontopia-${{env.VERSION}}.zip
+
+      - name: Save distribution
+        uses: actions/upload-artifact@v7
+        with:
+          name: ontopia-${{env.VERSION}}.zip
+          path: ontopia-${{env.VERSION}}.zip
+
+
+      # --- Docs zip
+
+      - name: Package docs
+        run: |
+          unzip -q ontopia-${{env.VERSION}}.zip doc/\* -d tmpdocs
+          mv tmpdocs/doc ${{env.VERSION}}
+          tar --no-xattr -czf docs-${{env.VERSION}}.tar.gz ${{env.VERSION}}
+
+      - name: Save docs
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-${{env.VERSION}}.tar.gz
+          path: docs-${{env.VERSION}}.tar.gz
+
+
+      # --- Github release
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          draft: true
+          name: Ontopia ${{env.VERSION}}
+          files: ontopia-${{env.VERSION}}.zip
+          body: |
+            [Release notes](https://ontopia.net/doc/${{env.VERSION}}/whatsnew.html)
+
+            **Full Changelog**: https://github.com/ontopia/ontopia/compare/release-${{env.PREVIOUS}}...release-${{env.VERSION}}
+
+
+      # --- Publish docker image
+
+      - name: Build and push to Docker
+        uses: docker/build-push-action@v7
+        with:
+          context: '.'
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ontopia/ontopia:${{env.VERSION}}
+            ontopia/ontopia:latest
