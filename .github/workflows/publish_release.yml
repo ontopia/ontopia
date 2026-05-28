@@ -11,28 +11,53 @@ jobs:
 
     permissions:
       contents: write
-      
+
     steps:
-    - uses: actions/checkout@v6
 
-    - name: Resolve version
-      run: |
-        ref="${{ github.ref }}"
-        version="${ref#"refs/tags/release-"}"
-        echo "VERSION=$version" >> "$GITHUB_ENV"
 
-    - name: Set up Maven
-      uses: actions/setup-java@v5
-      with:
-        distribution: 'temurin'
-        java-version-file: '.java-version'
-        cache: maven
+      # --- Prepare
 
-    - name: Build distribution
-      run: mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+      - uses: actions/checkout@v6
 
-    - name: Save distribution
-      uses: actions/upload-artifact@v7
-      with:
-        name: ontopia-${{env.VERSION}}
-        path: ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip
+      - name: Resolve version
+        run: |
+          ref="${{ github.ref }}"
+          version="${ref#"refs/tags/release-"}"
+          prevref=`git describe --tags --abbrev=0 ${{ github.ref }}^`
+          prevversion="${ref#"refs/tags/release-"}"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "PREVIOUS=$prevversion" >> "$GITHUB_ENV"
+
+      - name: Set up Maven
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version-file: '.java-version'
+          cache: maven
+
+
+      # --- Distribution zip
+
+      - name: Build distribution
+        run: |
+          mvn -B -Dstyle.color=always verify -Pontopia-distribution-tomcat -DskipTests -Djetty.skip=true
+          mv ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip ontopia-$VERSION.zip
+
+      - name: Save distribution
+        uses: actions/upload-artifact@v7
+        with:
+          name: ontopia-${{env.VERSION}}
+          path: ontopia-${{env.VERSION}}
+
+
+      # --- Github release
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: Ontopia ${{env.VERSION}}
+          files: ontopia-$VERSION.zip
+          body: |
+            [Release notes](https://ontopia.net/doc/${{env.VERSION}}/whatsnew.html)
+
+            **Full Changelog**: https://github.com/ontopia/ontopia/compare/release-${{env.PREVIOUS}}...release-${{env.VERSION}}
