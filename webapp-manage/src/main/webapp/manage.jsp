@@ -14,7 +14,7 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 
-<%@page import="org.apache.commons.fileupload2.jakarta.servlet5.JakartaServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload"%>
 <%@page import="org.apache.commons.fileupload2.core.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload2.core.FileItem"%>
 <framework:response/>
