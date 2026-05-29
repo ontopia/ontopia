@@ -228,26 +228,6 @@ public class FakeServletContext implements ServletContext {
   public void log(String msg, Throwable t) {
     logger.info(msg, t);
   }
-  
-  @Override
-  public void log(Exception e, String msg) {
-    logger.info(msg, e);
-  }
-
-  @Override
-  public Servlet getServlet(String name) throws ServletException {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Enumeration<Servlet> getServlets() {
-    return Collections.enumeration(Collections.<Servlet>emptySet());
-  }
-    
-  @Override
-  public Enumeration<String> getServletNames() {
-    return Collections.enumeration(Collections.<String>emptySet());
-  }
 
   @Override
   public String getServletContextName() {

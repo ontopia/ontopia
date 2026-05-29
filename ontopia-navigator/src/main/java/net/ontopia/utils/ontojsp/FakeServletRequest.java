@@ -30,9 +30,11 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
@@ -50,6 +52,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class FakeServletRequest implements HttpServletRequest {
 
+  private static AtomicLong counter = new AtomicLong(0);
+
   private Map<String, String[]> params;
   private Map<String, Object> attrs;
   private Map<String, String> headers;
@@ -57,6 +61,7 @@ public class FakeServletRequest implements HttpServletRequest {
   private String user;
   private FakeHttpSession session;
   private FakeServletContext context;
+  private long id;
 
   public FakeServletRequest() {
     this(new HashMap<String, String[]>(), new HashMap<String, Object>());
@@ -67,6 +72,7 @@ public class FakeServletRequest implements HttpServletRequest {
   }
       
   public FakeServletRequest(Map<String, String[]> params, Map<String, Object> attrs) {
+    this.id = counter.incrementAndGet();
     this.params = params;
     this.attrs = attrs;
     this.headers = new HashMap<String, String>();
@@ -282,11 +288,6 @@ public class FakeServletRequest implements HttpServletRequest {
   }
 
   @Override
-  public String getRealPath(String name) {
-    throw new UnsupportedOperationException();
-  }
-    
-  @Override
   public boolean isSecure() {
     throw new UnsupportedOperationException();
   }
@@ -314,10 +315,6 @@ public class FakeServletRequest implements HttpServletRequest {
   }
   @Override
   public boolean isRequestedSessionIdFromURL() {
-    throw new UnsupportedOperationException();
-  }
-  @Override
-  public boolean isRequestedSessionIdFromUrl() {
     throw new UnsupportedOperationException();
   }
 
@@ -452,6 +449,23 @@ public class FakeServletRequest implements HttpServletRequest {
 
   @Override
   public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+    throw new UnsupportedOperationException();
+  }
+
+  // servlet 6.0.0
+
+  @Override
+  public String getRequestId() {
+    return "fake-" + id;
+  }
+
+  @Override
+  public String getProtocolRequestId() {
+    return getRequestId();
+  }
+
+  @Override
+  public ServletConnection getServletConnection() {
     throw new UnsupportedOperationException();
   }
 

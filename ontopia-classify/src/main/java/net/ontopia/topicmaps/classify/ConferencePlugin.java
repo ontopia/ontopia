@@ -101,7 +101,7 @@ public class ConferencePlugin implements ClassifyPluginIF, HttpServletRequestAwa
 
   protected String getResolvedPaperPath() {
     try {
-      return new File(request.getRealPath("/") + "../conference/WEB-INF/papers/").getCanonicalPath();
+      return new File(request.getServletContext().getRealPath("/") + "../conference/WEB-INF/papers/").getCanonicalPath();
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
