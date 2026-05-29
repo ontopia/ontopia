@@ -30,6 +30,7 @@ import java.util.Map;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
@@ -149,10 +150,6 @@ public class HttpRequestWrapper implements HttpServletRequest {
     return request.isRequestedSessionIdFromURL();
   }
   @Override
-  public boolean isRequestedSessionIdFromUrl() {
-    return request.isRequestedSessionIdFromUrl();
-  }
-  @Override
   public String getScheme() {
     return request.getScheme();
   }
@@ -250,10 +247,6 @@ public class HttpRequestWrapper implements HttpServletRequest {
   @Override
   public RequestDispatcher getRequestDispatcher(String attr0) {
     return request.getRequestDispatcher(attr0);
-  }
-  @Override
-  public String getRealPath(String attr0) {
-    return request.getRealPath(attr0);
   }
 
   // servlets 2.4
@@ -355,5 +348,20 @@ public class HttpRequestWrapper implements HttpServletRequest {
   @Override
   public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
     return request.upgrade(handlerClass);
+  }
+
+  // servlet 6.0.0
+
+  @Override
+  public String getRequestId() {
+    return request.getRequestId();
+  }
+  @Override
+  public String getProtocolRequestId() {
+    return request.getProtocolRequestId();
+  }
+  @Override
+  public ServletConnection getServletConnection() {
+    return request.getServletConnection();
   }
 }

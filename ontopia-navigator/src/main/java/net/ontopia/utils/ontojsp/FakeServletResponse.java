@@ -140,22 +140,12 @@ public class FakeServletResponse implements HttpServletResponse {
   public boolean containsHeader(String name) {
     return false;
   }
-  
-  @Override
-  public String encodeRedirectUrl(String url) {
-    return url;
-  }
 
   @Override
   public String encodeRedirectURL(String url) {
     return url;
   }
-  
-  @Override
-  public String encodeUrl(String url) {
-    return url;
-  }
-  
+
   @Override
   public String encodeURL(String url) {
     return url;
@@ -195,12 +185,6 @@ public class FakeServletResponse implements HttpServletResponse {
   @Override
   public void setStatus(int code) {
     this.status = code;
-  }
-  
-  @Override
-  public void setStatus(int code, String msg) {
-    this.status = code;
-    this.statusMessage = msg;
   }
 
   // --- Extra utility methods
@@ -247,6 +231,13 @@ public class FakeServletResponse implements HttpServletResponse {
 
   @Override
   public void setContentLengthLong(long len) {
+    // no-op
+  }
+
+  // servlet 6.0.0
+
+  @Override
+  public void sendRedirect(String location, int sc, boolean clearBuffer) throws IOException {
     // no-op
   }
 }

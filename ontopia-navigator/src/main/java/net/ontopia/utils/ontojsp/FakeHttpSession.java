@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpSessionContext;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
@@ -74,31 +73,7 @@ public class FakeHttpSession implements HttpSession {
       attrs.put(name, value);
     }
   }
-  
-  @Override
-  public Object getValue(String name) {
-    // Note: deprecated
-    return getAttribute(name);
-  }
-  
-  @Override
-  public String[] getValueNames() {
-    // Note: deprecated
-    return attrs.keySet().toArray(new String[attrs.keySet().size()]);
-  }
-  
-  @Override
-  public void putValue(String name, Object value) {
-    // Note: deprecated
-    setAttribute(name, value);
-  }
-  
-  @Override
-  public void removeValue(String name) {
-    // Note: deprecated
-    removeAttribute(name);
-  }
-  
+
   @Override
   public long getCreationTime() {
     // TODO
@@ -120,12 +95,6 @@ public class FakeHttpSession implements HttpSession {
   @Override
   public int getMaxInactiveInterval() {
     return maxInactiveInterval;
-  }
-  
-  @Override
-  public HttpSessionContext getSessionContext() {
-    // Note: deprecated
-    return null;
   }
 
   @Override
