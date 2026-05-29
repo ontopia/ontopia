@@ -133,7 +133,7 @@
 	</dependencies>
 
 	<properties>
-		<tomcat.version>10.1.55</tomcat.version>
+		<tomcat.version>11.0.22</tomcat.version>
 		<rdbms-schema>classpath:net/ontopia/topicmaps/impl/rdbms/config/schema.xml</rdbms-schema>
 		<rdbms-setup>${project.build.directory}/rdbms/</rdbms-setup>
 		<rdbms-create-postfix>.create.sql</rdbms-create-postfix>
@@ -194,11 +194,13 @@
 						<artifactId>cargo-maven3-plugin</artifactId>
 						<configuration>
 							<container>
-								<containerId>tomcat10x</containerId>
-								<zipUrlInstaller>
-									<url>https://archive.apache.org/dist/tomcat/tomcat-10/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}-windows-x64.zip</url>
+								<containerId>tomcat11x</containerId>
+								<artifactInstaller>
+									<groupId>org.apache.tomcat</groupId>
+									<artifactId>tomcat</artifactId>
+									<version>${tomcat.version}</version>
 									<extractDir>${project.build.directory}</extractDir>
-								</zipUrlInstaller>
+								</artifactInstaller>
 							</container>
 						</configuration>
 						<executions>
@@ -211,28 +213,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-patch-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>patch-tomcat-config</id>
-								<phase>prepare-package</phase>
-								<goals>
-									<goal>apply</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<binary>true</binary>
-							<optimizations>false</optimizations>
-							<patchDirectory>src/main/patches</patchDirectory>
-							<patches>001.catalina.properties.patch</patches>
-							<targetDirectory>${project.build.directory}/apache-tomcat-${tomcat.version}-windows-x64/apache-tomcat-${tomcat.version}</targetDirectory>
-						</configuration>
-					</plugin>
-
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>

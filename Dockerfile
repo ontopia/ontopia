@@ -7,9 +7,9 @@
 # unzip distribution
 FROM busybox AS unzip
 COPY ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-*.zip /tmp/dist.zip
-RUN unzip /tmp/dist.zip -d /tmp/ontopia-dist
+RUN unzip -q /tmp/dist.zip -d /tmp/ontopia-dist
 
-FROM tomcat:10-jdk17
+FROM tomcat:11-jdk17
 
 ENV ONTOPIA_HOME=/usr/local/ontopia
 ENV ONTOPIA_DIST=/usr/local/ontopia.dist
@@ -32,6 +32,8 @@ ADD $ASSEMBLY/topicmaps $ONTOPIA_DIST/topicmaps
 ENV DIST=/tmp/ontopia-dist
 ENV TOMCAT=$DIST/apache-tomcat
 
+# version
+COPY --from=unzip $DIST/VERSION /usr/local/ONTOPIA_VERSION
 # jars
 COPY --from=unzip $DIST/lib/* $CATALINA_HOME/lib
 # webapps
