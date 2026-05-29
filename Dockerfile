@@ -42,7 +42,8 @@ COPY --from=unzip $TOMCAT/webapps $CATALINA_HOME/webapps
 # --- copy docker specific files
 ENV SRC=src/docker
 
-COPY $SRC/log4j.properties $CATALINA_HOME/lib
+COPY --from=unzip $TOMCAT/conf/logging.properties $CATALINA_HOME/conf
+COPY --from=unzip $TOMCAT/lib/log4j.properties $CATALINA_HOME/lib
 COPY $SRC/catalina.properties $CATALINA_HOME/conf
 COPY $SRC/server.xml $CATALINA_HOME/conf
 

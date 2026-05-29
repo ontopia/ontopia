@@ -20,8 +20,9 @@
 				<!-- exclude all runnable files, copied later with correct mods -->
 				<exclude>bin/*.sh</exclude>
 
-				<!-- exclude catalina.properties, a modified version will be added -->
+				<!-- exclude overridden config -->
 				<exclude>conf/catalina.properties</exclude>
+				<exclude>conf/logging.properties</exclude>
 			</excludes>
 		</fileSet>
 		
