@@ -37,8 +37,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
-import jakarta.servlet.jsp.el.ExpressionEvaluator;
-import jakarta.servlet.jsp.el.VariableResolver;
 import jakarta.servlet.jsp.tagext.BodyContent;
 
 /**
@@ -303,16 +301,6 @@ public class FakePageContext extends PageContext {
   @Override
   public void include ( String relativeUrlPath, boolean flush ) 
     throws ServletException, IOException {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public VariableResolver getVariableResolver() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public ExpressionEvaluator getExpressionEvaluator() {
     throw new UnsupportedOperationException();
   }
 
