@@ -133,7 +133,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.5.5</version>
+					<version>3.5.6</version>
 					<configuration>
 						<argLine>-Dontopia.jetty.port=${ontopia.jetty.port} -Xmx1024m</argLine>
 						<includes>
@@ -179,7 +179,7 @@
 				<plugin>
 					<groupId>org.eclipse.jetty.ee9</groupId>
 					<artifactId>jetty-ee9-jspc-maven-plugin</artifactId>
-					<version>12.0.21</version>
+					<version>12.1.9</version>
 					<executions>
 						<execution>
 							<id>jspc</id>
@@ -197,7 +197,7 @@
 				<plugin>
 					<groupId>org.codehaus.cargo</groupId>
 					<artifactId>cargo-maven3-plugin</artifactId>
-					<version>1.10.19</version>
+					<version>1.10.27</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
@@ -358,7 +358,7 @@
 			<!-- disabled default site to allow our own implementation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.21.0</version>
+				<version>3.22.0</version>
 				<configuration>
 					<skip>true</skip>
 					<generateReports>false</generateReports>
