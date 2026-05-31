@@ -9,9 +9,9 @@ This document describes what has changed in Ontopia between releases, both at a 
 more detail.
 </p>
 
-<span class="version">5.8.0 2026-05-22 TBD</p>
+<span class="version">6.0.0 2026-06-01</p>
 
-### Ontopia 5.8.0 release notes ###
+### Ontopia 6.0.0 release notes ###
 
 The following changes have been made:
 
