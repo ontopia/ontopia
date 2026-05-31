@@ -15,15 +15,32 @@ more detail.
 
 The following changes have been made:
 
+* **Switched from Javax to Jakarta**
+    * [PR #582](https://github.com/ontopia/ontopia/pull/582): Switch to Jakarta
+    * [PR #644](https://github.com/ontopia/ontopia/pull/644): Upgrade to Jakarta Servlet API 6.1.0
+    * [PR #642](https://github.com/ontopia/ontopia/pull/642): Upgrade to Jakarta JSP API 4.0.0
+    * [PR #636](https://github.com/ontopia/ontopia/pull/636): Upgrade to Jakarta EL-api 6.0.1
+    * [PR #643](https://github.com/ontopia/ontopia/pull/643): Upgrade to Jakarta JSTL API 3.0.2
+    * [PR #639](https://github.com/ontopia/ontopia/pull/639): Upgrade to Jakarta JSTL 3.0.1
+    * [PR #638](https://github.com/ontopia/ontopia/pull/638): Switch to Commons Fileupload2 Jakarta6 2.0.0-M5
 * Vizlet was removed as Java Applets have been discontinued for a while
 * TMRAP was removed as SOAP has been a deprecated technology for a while, this includes:
-  * The `ontopia-tmrap` module
-  * The `ontopia-tmrap-aar` module
-  * The `webapp-tmrap` webapplication
-  * The Omnigator and Ontology plugins
-* JDBCSpy has been removed, it can be replaced with tools like
-  * [lbaeumer:jdbcspy](https://github.com/lbaeumer/jdbcspy)
-  * In database metrics, such as `pg_stat_statements` for PostgreSQL
+    * The `ontopia-tmrap` module
+    * The `ontopia-tmrap-aar` module
+    * The `webapp-tmrap` webapplication
+    * The Omnigator and Ontology plugins
+* [PR #635](https://github.com/ontopia/ontopia/pull/635): JDBCSpy has been removed, it can be replaced with tools like
+    * [lbaeumer:jdbcspy](https://github.com/lbaeumer/jdbcspy)
+    * In database metrics, such as `pg_stat_statements` for PostgreSQL
+
+#### The following issues are no longer valid and were closed:
+
+* [Issue #303](https://github.com/ontopia/ontopia/issues/303): java code for calling get topic method
+* [Issue #127](https://github.com/ontopia/ontopia/issues/127): Publish TMRAP tutorial as part of documentation somehow
+* [Issue #76](https://github.com/ontopia/ontopia/issues/76): Vizlet: open topic page in new window
+* [Issue #75](https://github.com/ontopia/ontopia/issues/75): Show instances in Vizlet
+* [Issue #365](https://github.com/ontopia/ontopia/issues/365): Support for DELETE, UPDATE, INSERT, and MERGE statements in one tmrap tolog-update call
+* [PR #588](https://github.com/ontopia/ontopia/pull/588): Bump axis2.version from 1.6.4 to 2.0.0
 
 
 ### Ontopia 5.7.0 release notes ###
@@ -31,9 +48,9 @@ The following changes have been made:
 The following changes have been made:
 
 * [PR 543](https://github.com/ontopia/ontopia/pull/543) Refactored URILocator to use Java's URI as backing object, removing the specific and outdated implementation of the URI spec. This also fixes:
-  * [Issue 366](https://github.com/ontopia/ontopia/issues/366) RDFToTopicMapConverter throws MalformedURLException for double byte character
-  * [Issue 414](https://github.com/ontopia/ontopia/issues/414) URLLocator: Spaces in fragments not allowed?
-  * [Issue 289](https://github.com/ontopia/ontopia/issues/289) problem with character + (plus)
+    * [Issue 366](https://github.com/ontopia/ontopia/issues/366) RDFToTopicMapConverter throws MalformedURLException for double byte character
+    * [Issue 414](https://github.com/ontopia/ontopia/issues/414) URLLocator: Spaces in fragments not allowed?
+    * [Issue 289](https://github.com/ontopia/ontopia/issues/289) problem with character + (plus)
 * Fixed missed use of `LocatorIF` in LTM include statments
 * Simplified version and build date parsing
 * Fixed broken sub imports in `LTMTopicmapReader`
