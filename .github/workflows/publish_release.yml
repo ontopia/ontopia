@@ -1,5 +1,7 @@
 name: Publish release
 
+run-name: Publish Ontopia ${{ github.ref_name }}
+
 on:
   push:
     tags:
