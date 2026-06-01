@@ -78,7 +78,6 @@ applications listed there will give you plenty to do.
 * We have a [home page](http://www.ontopia.net).
 * We have a [blog](http://ontopia.wordpress.com/).
 * A [mailing list](http://groups.google.com/group/ontopia) has been set up.
-* Join us for a chat on IRC: irc.freenode.net#ontopia ([log](http://logs.subjektzentrisch.de/ontopia/)).
 * We are on [Twitter](http://twitter.com/ontopia).
 
 
