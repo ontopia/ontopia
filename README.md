@@ -7,10 +7,10 @@
 
 <img width="192" height="101" alt="Ontopia Logo" src="https://github.com/user-attachments/assets/d60899fa-cbcd-4e46-b66f-a84c8d42d8c1" />
 
-Welcome to Ontopia, the open source tools for building, maintaining and deploying 
-[Topic Maps](http://en.wikipedia.org/wiki/Topic_Maps)-based applications. 
+Welcome to Ontopia, the open source tools for building, maintaining and deploying
+[Topic Maps](http://en.wikipedia.org/wiki/Topic_Maps)-based applications.
 
-If you are a starting user of Ontopia, or want more general information, we recommend you check out 
+If you are a starting user of Ontopia, or want more general information, we recommend you check out
 [the Ontopia.net website](http://ontopia.net).
 
 ## Get Ontopia
@@ -24,12 +24,12 @@ If you are a starting user of Ontopia, or want more general information, we reco
 ---
 
 ## Using Ontopia
-You can use the above link to download a full Ontopia package that includes a fully configured 
-[Tomcat](http://tomcat.apache.org/) instance that you can run on your local machine. This will allow you to start 
+You can use the above link to download a full Ontopia package that includes a fully configured
+[Tomcat](http://tomcat.apache.org/) instance that you can run on your local machine. This will allow you to start
 working with Topic Maps. See the [requirements](https://github.com/ontopia/ontopia/wiki/InstallGuide#requirements) and [installation guide](https://github.com/ontopia/ontopia/wiki/InstallGuide).
 
 ### Maven
-You can also use Ontopia as a [maven](https://maven.apache.org/) dependency, allowing you to build Topic Maps 
+You can also use Ontopia as a [maven](https://maven.apache.org/) dependency, allowing you to build Topic Maps
 applications yourself:
 ```xml
 <dependencies>
@@ -49,16 +49,16 @@ To build the current Ontopia distribution run
 $ mvn clean install -Pontopia-distribution-tomcat
 ```
 
-from a terminal. The distribution can then be found in 
+from a terminal. The distribution can then be found in
 `ontopia-distribution-tomcat/target/ontopia-distribution-tomcat-X.Y.Z-SNAPSHOT/`
 where X, Y and Z are the current development version numbers.
 
-Once you build the current Ontopia distribution you will probably 
+Once you build the current Ontopia distribution you will probably
 want to play with the software.
 
 Everything you want will be inside the distribution you just built;
 the rest of the subversion checkout serves only to generate that
-distribution. You can find the documentation within the distribution 
+distribution. You can find the documentation within the distribution
 under the 'doc' directory.
 
 If you're not already familiar with Ontopia, a good document to start
@@ -78,5 +78,3 @@ applications listed there will give you plenty to do.
 * A [mailing list](http://groups.google.com/group/ontopia) has been set up.
 * Join us for a chat on IRC: irc.freenode.net#ontopia ([log](http://logs.subjektzentrisch.de/ontopia/)).
 * We are on [Twitter](http://twitter.com/ontopia).
-
-
