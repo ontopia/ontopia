@@ -38,7 +38,7 @@ applications yourself:
     <dependency>
         <groupId>net.ontopia</groupId>
         <artifactId>ontopia-engine</artifactId>
-        <version>5.6.0</version>
+        <version>6.0.0</version>
     </dependency>
 </dependencies>
 ````
