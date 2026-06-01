@@ -17,9 +17,11 @@ If you are a starting user of Ontopia, or want more general information, we reco
 [<img width="287" height="90" alt="image" src="https://github.com/user-attachments/assets/46268553-94d7-4e16-abc6-4db293c841f1" />](https://github.com/ontopia/ontopia/releases/latest)
 
 ### Older versions
- * [Ontopia 5.5.0](https://github.com/ontopia/ontopia/releases/tag/release-5.5.0)
+ * [Ontopia 5.7.0](https://github.com/ontopia/ontopia/releases/tag/release-5.7.0)
 
 > **Note**: Using older versions is not advised
+
+> **Note**: Ontopia 5.x uses Javax Servlet, while Ontopia 6.x uses Jakarta Servlet
 
 ---
 
