@@ -19,6 +19,8 @@ jobs:
       
     steps:
     - uses: actions/checkout@v6
+      with:
+        token: ${{ secrets.GH_PAT }}
     
     - name: Setup GPG key
       uses: crazy-max/ghaction-import-gpg@v7
