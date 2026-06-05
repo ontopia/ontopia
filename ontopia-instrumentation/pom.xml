@@ -15,7 +15,7 @@
 	<description>Ontopia metrics for prometheus</description>
 
 	<properties>
-		<prometheus.version>1.6.1</prometheus.version>
+		<prometheus.version>1.7.0</prometheus.version>
 	</properties>
 
 	<dependencies>
