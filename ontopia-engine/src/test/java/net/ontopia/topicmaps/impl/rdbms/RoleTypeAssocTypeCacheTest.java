@@ -131,7 +131,8 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
         logger.debug("[{}] commit", Thread.currentThread().getName());
         store.commit();
       } catch (Throwable e) {
-        throw new RuntimeException(e);
+        logger.error("Unexpected exception: {}", e.getMessage(), e);
+        Assert.fail("Unexpected exception");
       }
   }
 
@@ -153,7 +154,8 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
         logger.debug("[{}] abort", Thread.currentThread().getName());
         store.abort();
       } catch (Throwable e) {
-        throw new RuntimeException(e);
+        logger.error("Unexpected exception: {}", e.getMessage(), e);
+        Assert.fail("Unexpected exception");
       }
   }
 
