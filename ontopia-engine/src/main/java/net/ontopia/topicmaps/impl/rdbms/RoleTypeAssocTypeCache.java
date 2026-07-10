@@ -367,75 +367,80 @@ public class RoleTypeAssocTypeCache {
       
       // check query cache
       ParameterArray params = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
-      Collection<IdentityIF> result = rolesByType.get(params);
-      if (result != null) {
-        return syncWithTransaction(result, params, playerid, rtypeid, atypeid, tmid);
-      }
-      //! System.out.println("CM: " + params);
 
-      // Get ticket
-      TicketIF ticket = registrar.getTicket();
-
-      // run individual query
-      Connection conn = access.getConnection();
-      PreparedStatement stm = conn.prepareStatement(sql_individual);
-      stm.setFetchSize(500);
-      
-      int offset = 1;
-      // bind: r.topicmap_id
-      offset = bind(TopicMapIF_idfield, tmid, stm, offset);
-      // bind: r.type_id
-      offset = bind(TopicIF_idfield, rtypeid, stm, offset);
-      // bind: a.topicmap_id
-      offset = bind(TopicMapIF_idfield, tmid, stm, offset);
-      // bind: a.type_id
-      offset = bind(TopicIF_idfield, atypeid, stm, offset);
-      // bind: r.player_id*
-      offset = bind(TopicIF_idfield, playerid, stm, offset);
-      
       Collection<IdentityIF> roles = new HashSet<IdentityIF>();
-      
-      try {
-        
-        // execute statement
-        if (log.isDebugEnabled()) {
-          log.debug("Executing: " + sql_individual);
+
+      // block other threads updating the cache while we compute, see #661
+      synchronized(rolesByType) {
+        Collection<IdentityIF> result = rolesByType.get(params);
+        if (result != null) {
+          return syncWithTransaction(result, params, playerid, rtypeid, atypeid, tmid);
         }
-        ResultSet rs = stm.executeQuery();
+        //! System.out.println("CM: " + params);
+
+        // Get ticket
+        TicketIF ticket = registrar.getTicket();
+
+        // run individual query
+        Connection conn = access.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql_individual);
+        stm.setFetchSize(500);
         
-        // zero or more rows expected
-        while (rs.next()) {
-          offset = 1;
-          // load association role identity
-          IdentityIF rid = (IdentityIF)AssociationRoleIF_idfield.load(registrar, ticket, rs, offset, false);
-          offset += AssociationRoleIF_idfield.getColumnCount();
-          // load association identity
-          IdentityIF aid = (IdentityIF)AssociationIF_idfield.load(registrar, ticket, rs, offset, false);
-          offset += AssociationIF_idfield.getColumnCount();
-          
-          // update roles list
-          roles.add(rid);
-          
-          // update storage cache
-          registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_topicmap, tmid);
-          registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_type, rtypeid);
-          registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_player, playerid);
-          registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_association, aid);
-          
-          registrar.registerField(ticket, aid, Prefetcher.AssociationIF_topicmap, tmid);
-          registrar.registerField(ticket, aid, Prefetcher.AssociationIF_type, atypeid);
-        }
-        // close result set
-        rs.close();
+        int offset = 1;
+        // bind: r.topicmap_id
+        offset = bind(TopicMapIF_idfield, tmid, stm, offset);
+        // bind: r.type_id
+        offset = bind(TopicIF_idfield, rtypeid, stm, offset);
+        // bind: a.topicmap_id
+        offset = bind(TopicMapIF_idfield, tmid, stm, offset);
+        // bind: a.type_id
+        offset = bind(TopicIF_idfield, atypeid, stm, offset);
+        // bind: r.player_id*
+        offset = bind(TopicIF_idfield, playerid, stm, offset);
         
-      } finally {
-        if (stm != null) {
-          stm.close();
+        
+        try {
+          
+          // execute statement
+          if (log.isDebugEnabled()) {
+            log.debug("Executing: " + sql_individual);
+          }
+          ResultSet rs = stm.executeQuery();
+          
+          // zero or more rows expected
+          while (rs.next()) {
+            offset = 1;
+            // load association role identity
+            IdentityIF rid = (IdentityIF)AssociationRoleIF_idfield.load(registrar, ticket, rs, offset, false);
+            offset += AssociationRoleIF_idfield.getColumnCount();
+            // load association identity
+            IdentityIF aid = (IdentityIF)AssociationIF_idfield.load(registrar, ticket, rs, offset, false);
+            offset += AssociationIF_idfield.getColumnCount();
+            
+            // update roles list
+            roles.add(rid);
+            
+            // update storage cache
+            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_topicmap, tmid);
+            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_type, rtypeid);
+            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_player, playerid);
+            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_association, aid);
+            
+            registrar.registerField(ticket, aid, Prefetcher.AssociationIF_topicmap, tmid);
+            registrar.registerField(ticket, aid, Prefetcher.AssociationIF_type, atypeid);
+          }
+          // close result set
+          rs.close();
+          
+        } finally {
+          if (stm != null) {
+            stm.close();
+          }
         }
+
+        // update query cache
+        rolesByType.put(params, roles);
       }
-      
-      // update query cache
-      rolesByType.put(params, roles);
       
       // sync changes with transaction      
       return syncWithTransaction(roles, params, playerid, rtypeid, atypeid, tmid);
