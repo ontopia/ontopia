@@ -227,101 +227,106 @@ public class RoleTypeAssocTypeCache {
       ParameterArray params = new ParameterArray(key);
       
       Map<IdentityIF, Collection<IdentityIF>> rbt = new HashMap<IdentityIF, Collection<IdentityIF>>(players.size());
-      Iterator iter = players.iterator();
-      while (iter.hasNext()) {
-        key[0] = i(iter.next());
-        // filter out parameters that are already in the cache
-        if (key[0] != null && rolesByType.get(params) == null) {
-          rbt.put(key[0], new HashSet<IdentityIF>());
-        }
-      }
-      if (rbt.size() < 1) {
-        return;
-      }
-      
+
       // collection associations for prefetching
       Collection<IdentityIF> assocs = new HashSet<IdentityIF>();
 
-      // Get ticket
-      TicketIF ticket = registrar.getTicket();
-      
-      // run batch query
-      Connection conn = access.getConnection();
-      PreparedStatement stm = conn.prepareStatement(sql);
-      stm.setFetchSize(1000);
-      
-      Collection<IdentityIF> filteredPlayerIds = rbt.keySet();
-      Iterator<IdentityIF> filteredPlayerIter = filteredPlayerIds.iterator();
-      
-      try {
+      // block other threads updating the cache while we compute, see #661
+      synchronized(rolesByType) {
+
+        Iterator iter = players.iterator();
+        while (iter.hasNext()) {
+          key[0] = i(iter.next());
+          // filter out parameters that are already in the cache
+          if (key[0] != null && rolesByType.get(params) == null) {
+            rbt.put(key[0], new HashSet<IdentityIF>());
+          }
+        }
+        if (rbt.size() < 1) {
+          return;
+        }
         
+        // Get ticket
+        TicketIF ticket = registrar.getTicket();
+        
+        // run batch query
+        Connection conn = access.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setFetchSize(1000);
+        
+        Collection<IdentityIF> filteredPlayerIds = rbt.keySet();
+        Iterator<IdentityIF> filteredPlayerIter = filteredPlayerIds.iterator();
+        
+        try {
+          
+          while (filteredPlayerIter.hasNext()) {
+            
+            int offset = 1;
+            // bind: r.topicmap_id
+            offset = bind(TopicMapIF_idfield, tmid, stm, offset);
+            // bind: r.type_id
+            offset = bind(TopicIF_idfield, rtypeid, stm, offset);
+            // bind: a.topicmap_id
+            offset = bind(TopicMapIF_idfield, tmid, stm, offset);
+            // bind: a.type_id
+            offset = bind(TopicIF_idfield, atypeid, stm, offset);
+            // bind: r.player_id*
+            SQLGenerator.bindMultipleParameters(filteredPlayerIter, 
+                TopicIF_idfield, stm, offset, batchSize);
+            
+            // execute statement
+            if (log.isDebugEnabled()) {
+              log.debug("Executing: " + sql);
+            }
+            ResultSet rs = stm.executeQuery();
+            
+            // zero or more rows expected
+            while (rs.next()) {
+              offset = 1;
+              // load player identity
+              IdentityIF pid = (IdentityIF)TopicIF_idfield.load(registrar, ticket, rs, offset, false);
+              offset += TopicIF_idfield.getColumnCount();
+              // load association role identity
+              IdentityIF rid = (IdentityIF)AssociationRoleIF_idfield.load(registrar, ticket, rs, offset, false);
+              offset += AssociationRoleIF_idfield.getColumnCount();
+              // load association identity
+              IdentityIF aid = (IdentityIF)AssociationIF_idfield.load(registrar, ticket, rs, offset, false);
+              offset += AssociationIF_idfield.getColumnCount();
+              
+              // update roles list
+              Collection<IdentityIF> roles = rbt.get(pid);
+              roles.add(rid);
+              
+              // collect association
+              assocs.add(aid);
+              
+              // update storage cache
+              registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_topicmap, tmid);
+              registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_type, rtypeid);
+              registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_player, pid);
+              registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_association, aid);
+              
+              registrar.registerField(ticket, aid, Prefetcher.AssociationIF_topicmap, tmid);
+              registrar.registerField(ticket, aid, Prefetcher.AssociationIF_type, atypeid);
+            }
+            // close result set
+            rs.close();
+          }
+          
+        } finally {
+          if (stm != null) {
+            stm.close();
+          }
+        }
+        
+        // update query cache
+        filteredPlayerIter = filteredPlayerIds.iterator();
         while (filteredPlayerIter.hasNext()) {
-          
-          int offset = 1;
-          // bind: r.topicmap_id
-          offset = bind(TopicMapIF_idfield, tmid, stm, offset);
-          // bind: r.type_id
-          offset = bind(TopicIF_idfield, rtypeid, stm, offset);
-          // bind: a.topicmap_id
-          offset = bind(TopicMapIF_idfield, tmid, stm, offset);
-          // bind: a.type_id
-          offset = bind(TopicIF_idfield, atypeid, stm, offset);
-          // bind: r.player_id*
-          SQLGenerator.bindMultipleParameters(filteredPlayerIter, 
-              TopicIF_idfield, stm, offset, batchSize);
-          
-          // execute statement
-          if (log.isDebugEnabled()) {
-            log.debug("Executing: " + sql);
-          }
-          ResultSet rs = stm.executeQuery();
-          
-          // zero or more rows expected
-          while (rs.next()) {
-            offset = 1;
-            // load player identity
-            IdentityIF pid = (IdentityIF)TopicIF_idfield.load(registrar, ticket, rs, offset, false);
-            offset += TopicIF_idfield.getColumnCount();
-            // load association role identity
-            IdentityIF rid = (IdentityIF)AssociationRoleIF_idfield.load(registrar, ticket, rs, offset, false);
-            offset += AssociationRoleIF_idfield.getColumnCount();
-            // load association identity
-            IdentityIF aid = (IdentityIF)AssociationIF_idfield.load(registrar, ticket, rs, offset, false);
-            offset += AssociationIF_idfield.getColumnCount();
-            
-            // update roles list
-            Collection<IdentityIF> roles = rbt.get(pid);
-            roles.add(rid);
-            
-            // collect association
-            assocs.add(aid);
-            
-            // update storage cache
-            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_topicmap, tmid);
-            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_type, rtypeid);
-            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_player, pid);
-            registrar.registerField(ticket, rid, Prefetcher.AssociationRoleIF_association, aid);
-            
-            registrar.registerField(ticket, aid, Prefetcher.AssociationIF_topicmap, tmid);
-            registrar.registerField(ticket, aid, Prefetcher.AssociationIF_type, atypeid);
-          }
-          // close result set
-          rs.close();
+          IdentityIF playerid = filteredPlayerIter.next();
+          Collection<IdentityIF> r = rbt.get(playerid);
+          ParameterArray k = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
+          rolesByType.put(k, r);
         }
-        
-      } finally {
-        if (stm != null) {
-          stm.close();
-        }
-      }
-      
-      // update query cache
-      filteredPlayerIter = filteredPlayerIds.iterator();
-      while (filteredPlayerIter.hasNext()) {
-        IdentityIF playerid = filteredPlayerIter.next();
-        Collection<IdentityIF> r = rbt.get(playerid);
-        ParameterArray k = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
-        rolesByType.put(k, r);
       }
       
       // prefetch A.roles.player
