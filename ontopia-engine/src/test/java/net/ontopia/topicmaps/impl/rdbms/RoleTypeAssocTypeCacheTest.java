@@ -28,7 +28,6 @@ import net.ontopia.persistence.proxy.CacheIF;
 import net.ontopia.persistence.proxy.CachesIF;
 import net.ontopia.persistence.proxy.EvictableIF;
 import net.ontopia.persistence.proxy.IdentityIF;
-import net.ontopia.persistence.proxy.LongIdentity;
 import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.TransactionalLRULookupIndex;
@@ -59,10 +58,6 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
   private TopicIF at;
 
   private IdentityIF tmId;
-  private LongIdentity tId;
-  private LongIdentity rtId;
-  private LongIdentity atId;
-
   private ParameterArray key;
 
   private CyclicBarrier gate = new CyclicBarrier(2);
@@ -83,11 +78,7 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
     at = builder.makeTopic();
 
     tmId = ((PersistentIF) topicmap)._p_getIdentity();
-    tId = (LongIdentity) ((PersistentIF) t)._p_getIdentity();
-    rtId = (LongIdentity) ((PersistentIF) rt)._p_getIdentity();
-    atId = (LongIdentity) ((PersistentIF) at)._p_getIdentity();
-
-    key = new ParameterArray(new Object[] {tId, rtId, atId});
+    key = new ParameterArray(new Object[] {((PersistentIF) t)._p_getIdentity(), ((PersistentIF) rt)._p_getIdentity(), ((PersistentIF) at)._p_getIdentity()});
 
     builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
     builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
