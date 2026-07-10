@@ -48,8 +48,9 @@ public class QueryCache<K, E> implements EvictableIF<K, E>, CacheMetricsIF {
     this.lrusize = lrusize;
     NULLOBJECT = nullObject;
   }
-  
-  public E executeQuery(StorageAccessIF access, K cachekey, Object[] query_params) {
+
+  // synchronized to prevent cache corruption by race condition, see #661
+  public synchronized E executeQuery(StorageAccessIF access, K cachekey, Object[] query_params) {
     try {
       E result = cache.get(cachekey);
       if (result == null) {
