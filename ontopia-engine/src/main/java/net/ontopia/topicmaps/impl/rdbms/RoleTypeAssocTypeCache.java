@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-
+import java.util.concurrent.locks.Lock;
 import net.ontopia.persistence.proxy.AccessRegistrarIF;
 import net.ontopia.persistence.proxy.CachesIF;
 import net.ontopia.persistence.proxy.FieldInfoIF;
@@ -55,7 +55,7 @@ import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.utils.OntopiaRuntimeException;
-
+import net.ontopia.utils.Striped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,7 +232,9 @@ public class RoleTypeAssocTypeCache {
       Collection<IdentityIF> assocs = new HashSet<IdentityIF>();
 
       // block other threads updating the cache while we compute, see #661
-      synchronized(rolesByType) {
+      Lock lock = Striped.getInstance().get(params);
+      try {
+        lock.lock();
 
         Iterator iter = players.iterator();
         while (iter.hasNext()) {
@@ -327,6 +329,8 @@ public class RoleTypeAssocTypeCache {
           ParameterArray k = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
           rolesByType.put(k, r);
         }
+      } finally {
+        lock.unlock();
       }
       
       // prefetch A.roles.player
@@ -376,7 +380,10 @@ public class RoleTypeAssocTypeCache {
       Collection<IdentityIF> roles = new HashSet<IdentityIF>();
 
       // block other threads updating the cache while we compute, see #661
-      synchronized(rolesByType) {
+      Lock lock = Striped.getInstance().get(params);
+      try {
+        lock.lock();
+
         Collection<IdentityIF> result = rolesByType.get(params);
         if (result != null) {
           return syncWithTransaction(result, params, playerid, rtypeid, atypeid, tmid);
@@ -445,6 +452,8 @@ public class RoleTypeAssocTypeCache {
 
         // update query cache
         rolesByType.put(params, roles);
+      } finally {
+        lock.unlock();
       }
       
       // sync changes with transaction      
