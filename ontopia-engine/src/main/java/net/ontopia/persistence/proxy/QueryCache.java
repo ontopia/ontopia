@@ -24,8 +24,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.Lock;
 import net.ontopia.persistence.query.sql.DetachedQueryIF;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.Striped;
 import org.apache.commons.collections4.map.LRUMap;
 
 /**
@@ -48,9 +50,13 @@ public class QueryCache<K, E> implements EvictableIF<K, E>, CacheMetricsIF {
     this.lrusize = lrusize;
     NULLOBJECT = nullObject;
   }
-  
+
+  // synchronized to prevent cache corruption by race condition, see #661
   public E executeQuery(StorageAccessIF access, K cachekey, Object[] query_params) {
+    Lock lock = Striped.getInstance().get(cachekey);
     try {
+      lock.lock();
+
       E result = cache.get(cachekey);
       if (result == null) {
         // cache miss
@@ -67,6 +73,8 @@ public class QueryCache<K, E> implements EvictableIF<K, E>, CacheMetricsIF {
       throw e1;
     } catch (Exception e2) {
       throw new OntopiaRuntimeException(e2);
+    } finally {
+      lock.unlock();
     }
   }
 
