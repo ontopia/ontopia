@@ -232,9 +232,7 @@ public class RoleTypeAssocTypeCache {
       Collection<IdentityIF> assocs = new HashSet<IdentityIF>();
 
       // block other threads updating the cache while we compute, see #661
-      Lock lock = Striped.getInstance().get(params);
-      try {
-        lock.lock();
+      synchronized(rolesByType) {
 
         Iterator iter = players.iterator();
         while (iter.hasNext()) {
@@ -250,7 +248,7 @@ public class RoleTypeAssocTypeCache {
         
         // Get ticket
         TicketIF ticket = registrar.getTicket();
-        
+
         // run batch query
         Connection conn = access.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
@@ -329,8 +327,6 @@ public class RoleTypeAssocTypeCache {
           ParameterArray k = new ParameterArray(new Object[] { playerid, rtypeid, atypeid });
           rolesByType.put(k, r);
         }
-      } finally {
-        lock.unlock();
       }
       
       // prefetch A.roles.player
