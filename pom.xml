@@ -5,7 +5,7 @@
 	<groupId>net.ontopia</groupId>
 	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>5.7.1</version>
+	<version>5.7.2-SNAPSHOT</version>
 
 	<name>Ontopia</name>
 	<description>Ontopia: Complete Topic Maps solution</description>
