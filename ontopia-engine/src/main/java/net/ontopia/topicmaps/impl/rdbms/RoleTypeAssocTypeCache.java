@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -163,20 +162,30 @@ public class RoleTypeAssocTypeCache {
       // invalidate shared query cache entries
       if (!radd.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList<ParameterArray>(radd.keySet()));
+          radd.keySet().forEach(this::evict);
         } finally {
           radd = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
       if (!rrem.isEmpty()) {
         try {
-          rolesByType.removeAll(new ArrayList<ParameterArray>(rrem.keySet()));
+          rrem.keySet().forEach(this::evict);
         } finally {
           rrem = new HashMap<ParameterArray, Collection<AssociationRoleIF>>();
         }
       }
     }
     rolesByType.commit();
+  }
+
+  protected void evict(ParameterArray key) {
+    Lock lock = Striped.getInstance().get(key);
+    try {
+      lock.lock();
+      rolesByType.remove(key);
+    } finally {
+      lock.unlock();
+    }
   }
   
   public void abort() {
