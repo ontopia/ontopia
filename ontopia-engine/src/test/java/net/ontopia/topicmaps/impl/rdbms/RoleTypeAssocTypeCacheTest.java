@@ -105,6 +105,22 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
     }
   }
 
+  @Test
+  public void testCacheCorruptionEvictIssue661() throws InterruptedException, IOException, BrokenBarrierException {
+    Thread tst1 = new Thread(this::fastWriter2, FAST_TEST_THREAD_NAME);
+    Thread tst2 = new Thread(this::slowReader, DELAYED_TEST_THREAD_NAME);
+    tst1.start();
+    tst2.start();
+    tst1.join();
+    tst2.join();
+
+    // post corruption check
+    Collection<IdentityIF> cached = (Collection<IdentityIF>) cache.get(key);
+    if (cached != null) { // evicted cache is acceptable
+      Assert.assertEquals("Cache got corrupted,", 4, cached.size());
+    }
+  }
+
   // adds 2 roles
   private void fastWriter() {
       try (TopicMapStoreIF store = topicmapRef.createStore(false)) {
@@ -126,6 +142,33 @@ public class RoleTypeAssocTypeCacheTest extends AbstractTopicMapTest {
         // add two roles
         builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
         builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
+
+        // commit: clears the cache due to added roles
+        logger.debug("[{}] commit", Thread.currentThread().getName());
+        store.commit();
+      } catch (Throwable e) {
+        logger.error("Unexpected exception: {}", e.getMessage(), e);
+        Assert.fail("Unexpected exception");
+      }
+  }
+
+  // adds 2 roles, but does not use cache
+  private void fastWriter2() {
+      try (TopicMapStoreIF store = topicmapRef.createStore(false)) {
+        TopicMapIF tm = store.getTopicMap();
+        TopicMapBuilderIF builder = tm.getBuilder();
+        TopicIF t = (TopicIF) tm.getObjectById(RoleTypeAssocTypeCacheTest.this.t.getObjectId());
+        TopicIF rt = (TopicIF) tm.getObjectById(RoleTypeAssocTypeCacheTest.this.rt.getObjectId());
+        TopicIF at = (TopicIF) tm.getObjectById(RoleTypeAssocTypeCacheTest.this.at.getObjectId());
+
+        // add two roles
+        builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
+        builder.makeAssociationRole(builder.makeAssociation(at), rt, t);
+
+        gate.await();
+
+        // minor delay to let tst2 read the cache first
+        Thread.sleep(100);
 
         // commit: clears the cache due to added roles
         logger.debug("[{}] commit", Thread.currentThread().getName());
