@@ -95,7 +95,9 @@ public class RoleTypeAssocTypeCache {
   
   private final static boolean[] Prefetcher_RBT_traverse =
     new boolean[] { false, false };
-  
+
+  private static final Striped<Lock> LOCKS = Striped.getInstance();
+
   public RoleTypeAssocTypeCache(TopicMapTransactionIF txn, EventManagerIF emanager,
       EventManagerIF otree) {
     this.txn = txn;
@@ -179,7 +181,7 @@ public class RoleTypeAssocTypeCache {
   }
 
   protected void evict(ParameterArray key) {
-    Lock lock = Striped.getInstance().get(key);
+    Lock lock = LOCKS.get(key);
     try {
       lock.lock();
       rolesByType.remove(key);
@@ -385,7 +387,7 @@ public class RoleTypeAssocTypeCache {
       Collection<IdentityIF> roles = new HashSet<IdentityIF>();
 
       // block other threads updating the cache while we compute, see #661
-      Lock lock = Striped.getInstance().get(params);
+      Lock lock = LOCKS.get(params);
       try {
         lock.lock();
 
