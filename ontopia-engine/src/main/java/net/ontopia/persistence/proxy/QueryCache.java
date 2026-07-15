@@ -95,12 +95,18 @@ public class QueryCache<K, E> implements EvictableIF<K, E>, CacheMetricsIF {
 
   @Override
   public E remove(K key, boolean notifyCluster) {
-    return cache.remove(key, notifyCluster);
+    Lock lock = Striped.getInstance().get(key);
+    try {
+      lock.lock();
+      return cache.remove(key, notifyCluster);
+    } finally {
+      lock.unlock();
+    }
   }
   
   @Override
   public void removeAll(Collection<K> keys, boolean notifyCluster) {
-    cache.removeAll(keys, notifyCluster);
+    keys.forEach(k -> remove(k, notifyCluster));
   }  
   
   @Override
