@@ -95,7 +95,7 @@
 		<tmapi.group>net.ontopia.external.org.tmapi</tmapi.group>
 		<jena.version>5.6.0</jena.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
-		<poi.version>5.5.1</poi.version>
+		<poi.version>6.0.0</poi.version>
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
